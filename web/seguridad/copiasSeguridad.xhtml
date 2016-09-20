@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:f="http://java.sun.com/jsf/core">  
+    <h:head>
+        <title>Copias seguridad</title>
+        <link href="../recursos/css/estilos.css" rel="stylesheet"/>        
+        <link href="../recursos/css/metro-bootstrap.css" rel="stylesheet"/>
+        <link href="../recursos/css/iconFont.css" rel="stylesheet"/>     
+        <script type="text/javascript">
+            function pageInactive() {//muestra la pagina deshabilitada                    
+                document.getElementById('IdInactivityLayer').style.display = "block";
+            }
+            function pageActive() {//muestra la pagina habilitada
+                document.getElementById('IdInactivityLayer').style.display = "none";
+            }
+        </script> 
+    </h:head>
+    <h:body style="font-size: 11px; overflow: hidden;">  
+        <div class="InactivityLayer" id="IdInactivityLayer"> <h2>PROCESANDO POR FAVOR ESPERE</h2></div>            
+        #{copiasSeguridadMB.inicializar()}
+        <h:form id="IdFormCopias">  
+            <p:growl id="IdMensajeUsuarios"  showDetail="true" sticky="false" autoUpdate="true" life="4000"  />
+            <br/>
+            <div>
+                <p:commandButton 
+                    title="Nueva copia de seguridad" value="&nbsp;"                                        
+                    styleClass="icon-new fg-lightBlue bg-white no-border"
+                    oncomplete="PF('dialogNew').show()"
+                    style="font-size: 20px; width: 20px; height: 20px; left: 20px; "/>                 
+                &nbsp;
+                <p:commandButton                     
+                    title="Eliminar copia de seguridad" value="&nbsp;"                                        
+                    styleClass="icon-cancel fg-lightBlue bg-white no-border" 
+                    actionListener="#{copiasSeguridadMB.clickBtnEliminarCopia}"                    
+                    style="font-size: 20px; width: 20px; height: 20px; left: 20px; "/> 
+                &nbsp;
+                <p:commandButton 
+                    title="Restaurar copia de seguridad" value="&nbsp;"                                        
+                    styleClass="icon-database fg-lightBlue bg-white no-border" 
+                    actionListener="#{copiasSeguridadMB.clickBtnRestaurarCopia}"                    
+                    style="font-size: 20px; width: 20px; height: 20px; left: 20px; "/> 
+                &nbsp;
+                <p:commandButton 
+                    title="Descargar copia seguridad" value="&nbsp;"                                        
+                    styleClass="icon-download fg-lightBlue bg-white no-border" 
+                    actionListener="#{copiasSeguridadMB.clickBtnDescargarCopia}"
+                    update=":IdForm2:IdDialogDownload"
+                    style="font-size: 20px; width: 20px; height: 20px; left: 20px; "/> 
+            </div>
+            <br/>
+
+            <p:tabView style=" width: 95%;  margin-left: 15px;" id="IdTabView" > 
+                <p:tab title="COPIAS DE SEGURIDAD"> 
+                    <p:dataTable 
+                        id="IdSearchTable" var="copia" 
+                        value="#{copiasSeguridadMB.listaCopiasSeguridad}" 
+                        rowKey="#{copia.idCopia}"  
+                        selection="#{copiasSeguridadMB.copiaSeguridadSeleccionada}" 
+                        paginator="true"
+                        rows="10"                                    
+                        paginatorPosition="bottom"                                
+                        emptyMessage="No existen copias de seguridad creadas"
+                        scrollable="true"
+                        scrollHeight="300"                                    
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="5,10,15"
+                        pageLinks="5"
+                        selectionMode="single"
+                        resizableColumns="true">                                                                
+                        <p:column headerText="CREACION" width="130">  
+                            <h:outputText value="#{copia.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" ></f:convertDateTime>
+                            </h:outputText>
+                        </p:column>  
+                        <p:column headerText="TIPO" width="130">  
+                            #{copia.tipo}  
+                        </p:column>  
+                        <p:column headerText="NOMBRE DE LA COPIA" width="320">  
+                            #{copia.nombre}  
+                        </p:column>                                  
+
+                    </p:dataTable>                            
+
+                </p:tab>
+
+            </p:tabView>            
+        </h:form>       
+        <h:form id="IdForm2">
+            <!--   DIALOGO RESTAURAR COPIA -->
+            <p:dialog id="IdDialogEdit" header="Restaurar Copia de Seguridad" widgetVar="dialogEdit" resizable="false" modal="true">  
+                <br/>
+                <p:inputTextarea 
+                    value="Se procedera a restaurar una copia de seguridad, se recomienda crear una copia de seguridad antes de realizar la restauración ya que el sistema se reiniciara y finalizara todas las sesiones que se encuentren abiertas, desea continuar?" 
+                    readonly="true" 
+                    style="text-align: match-parent; background: #ebf4fb; font-size: 13px; font-weight: 900; height: 80px; width: 320px;"/>
+                <br/><br/>
+                <p:commandButton 
+                    value="Restaurar" 
+                    icon="ui-icon-disk"
+                    oncomplete="pageActive();"
+                    onclick="PF('dialogEdit').hide();
+                            pageInactive();"
+                    actionListener="#{copiasSeguridadMB.restaurarCopiaDeSeguridad}"
+                    update=":IdFormCopias:IdTabView:IdSearchTable :IdFormCopias:IdMensajeUsuarios"/>                
+                <br/><br/>
+            </p:dialog> 
+            <!--   DIALOGO NUEVO -->
+            <p:dialog id="IdDialogNew" header="Nueva Copia de Seguridad" widgetVar="dialogNew" resizable="false" modal="true">  
+                <br/>
+                <h:outputText value="NOMBRE:" />&nbsp;&nbsp;
+                <p:inputText size="40" value="#{copiasSeguridadMB.nombreCopiaSeguridad}" /> 
+                <br/><br/>
+                <p:commandButton 
+                    value="Crear" 
+                    icon="ui-icon-disk"                                   
+                    onclick="PF('dialogNew').hide();
+                            pageInactive();"
+                    oncomplete="pageActive();"
+                    actionListener="#{copiasSeguridadMB.crearCopiaDeSeguridad}"
+                    update=":IdFormCopias:IdTabView:IdSearchTable :IdFormCopias:IdMensajeUsuarios"/>                
+                <br/><br/>
+            </p:dialog> 
+            <!-- DIALOGO ELIMINAR-->
+            <p:dialog                                                         
+                id="IdDialogDelete"
+                modal="true"
+                resizable="false"
+                header="Eliminar copia de seguridad" 
+                widgetVar="dialogDelete"> 
+                <br/>
+                <p:inputTextarea 
+                    value="Se procedera a eliminar la copia de seguridad seleccionada, desea continuar?" 
+                    readonly="true" 
+                    style="text-align: match-parent; background: #ebf4fb; font-size: 13px; font-weight: 900; height: 50px; width: 220px;"/>
+                <br/><br/>
+                <p:commandButton                                                           
+                    oncomplete="PF('dialogDelete').hide();"
+                    actionListener="#{copiasSeguridadMB.eliminarCopiaDeSeguridad}"
+                    value="Eliminar" 
+                    update=":IdFormCopias:IdTabView:IdSearchTable :IdFormCopias:IdMensajeUsuarios"/>   
+
+                <br/><br/>
+            </p:dialog>
+            <!-- DIALOGO DESCARGAR-->
+            <p:dialog                                                         
+                id="IdDialogDownload"
+                modal="true"
+                resizable="false"
+                header="Descargar copia de seguridad" 
+                widgetVar="dialogDownload"> 
+                <br/>
+                <p:inputTextarea 
+                    value="Se procedera a descargar la copia de seguridad: #{copiasSeguridadMB.nombreCopiaDescargar} " 
+                    readonly="true" 
+                    style="text-align: match-parent; background: #ebf4fb; font-size: 13px; font-weight: 900; height: 50px; width: 220px;"/>
+                <br/><br/>
+                <h:commandButton 
+                    value="Descargar"                     
+                    onclick="PF('dialogDownload').hide()"
+                    title="Descargar copia de seguridad">  
+                    <p:fileDownload value="#{copiasSeguridadMB.fileBackup}"/>  
+                </h:commandButton>                                         
+
+                <br/><br/>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+
+
+
+
+
+
+
