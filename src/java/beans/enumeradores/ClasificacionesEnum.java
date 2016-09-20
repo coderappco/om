@@ -9,6 +9,7 @@ package beans.enumeradores;
  *
  * @author SANTOS
  */
+
 public enum ClasificacionesEnum {
     //---------------------------------------------
     //categorias contenidas en cfg_clasificaciones
