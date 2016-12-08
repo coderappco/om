@@ -373,10 +373,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 if (nodArbolHisSeleccionado.getTipoDeNodo() == TipoNodoEnum.REGISTRO_HISTORIAL) {
                     if (tipoRegistroEncontrado == -1) {
                         tipoRegistroEncontrado = nodArbolHisSeleccionado.getIdTipoRegistro();
-                    } else {
-                        if (tipoRegistroEncontrado != nodArbolHisSeleccionado.getIdTipoRegistro()) {
-                            igualTipoRegistro = false;
-                        }
+                    } else if (tipoRegistroEncontrado != nodArbolHisSeleccionado.getIdTipoRegistro()) {
+                        igualTipoRegistro = false;
                     }
                     contadorRegistrosSeleccionadosHistorial++;
                 }
@@ -387,14 +385,13 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             } else if (contadorRegistrosSeleccionadosHistorial == 1) {//solo es uno
                 btnHistorialDisabled = false;
                 btnPdfAgrupadoDisabled = true;
-            } else {//hay mas de uno
-                if (igualTipoRegistro) {//son del mismo tipo
-                    btnHistorialDisabled = true;
-                    btnPdfAgrupadoDisabled = false;
-                } else {//no son del mismo tipo
-                    btnHistorialDisabled = true;
-                    btnPdfAgrupadoDisabled = true;
-                }
+            } else//hay mas de uno
+            if (igualTipoRegistro) {//son del mismo tipo
+                btnHistorialDisabled = true;
+                btnPdfAgrupadoDisabled = false;
+            } else {//no son del mismo tipo
+                btnHistorialDisabled = true;
+                btnPdfAgrupadoDisabled = true;
             }
         }
     }
@@ -593,7 +590,6 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(82, "<b>" + empresa.getTipoDoc().getDescripcion() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
         datosReporte.setValor(83, empresa.getWebsite());//sitio web       
 
-        
         datosReporte.setValor(97, empresa.getNomRepLegal());//CONSTANSA PORTILLA BENAVIDES
         datosReporte.setValor(98, empresa.getTipoDoc().getDescripcion() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones());//OPTOMETRA U.L SALLE-BOGOTA        
         datosReporte.setValor(100, empresa.getRazonSocial());//
@@ -604,6 +600,248 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
         //----------------------------------------------------------------------
         for (HcDetalle campoDeRegistroEncontrado : listaCamposDeRegistroEncontrado) {
+            if (campoDeRegistroEncontrado.getHcCamposReg().getTabla() != null) {//ES CATEGORIA (realizar busqueda)
+                switch (campoDeRegistroEncontrado.getHcCamposReg().getTabla()) {
+                    case "cfg_clasificaciones":
+                        clasificacionBuscada = clasificacionesFacade.find(Integer.parseInt(campoDeRegistroEncontrado.getValor()));
+                        if (clasificacionBuscada != null) {
+                            datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + clasificacionBuscada.getDescripcion());
+                        }
+                        break;
+                    case "cfg_clasificaciones_2"://el mismo anterior pero imprimiendo tambien el codigo de la clasificacion
+                        clasificacionBuscada = clasificacionesFacade.find(Integer.parseInt(campoDeRegistroEncontrado.getValor()));
+                        if (clasificacionBuscada != null) {
+                            datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + clasificacionBuscada.getCodigo() + " - " + clasificacionBuscada.getDescripcion());
+                        }
+                        break;
+                    case "fac_servicio":
+                        servicioBuscado = servicioFacade.find(Integer.parseInt(campoDeRegistroEncontrado.getValor()));
+                        if (servicioBuscado != null) {
+                            datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + servicioBuscado.getNombreServicio());
+                        }
+                        break;
+                    case "boolean":
+                        if (campoDeRegistroEncontrado.getValor().compareTo("true") == 0) {
+                            datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b> SI");
+                        } else {
+                            datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b> NO");
+                        }
+                        break;
+                    case "date":
+                    case "html":
+                        datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor());
+                        break;
+                }
+            } else {//NO ES CATEGORIA (sacar valor)
+                datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor());
+            }
+        }
+        //datosReporte.setListaDatosAdicionales(listadoDatosAdicionales);//CUANDO SE USE SUBRREPORTES USAR ESTA LINEA
+        listaRegistrosParaPdf.add(datosReporte);
+    }
+
+    /**
+     * Para reportes con mas de 100 campos
+     *
+     * @param regEncontrado
+     */
+    private void cargarFuenteDatosReportesGrandes(HcRegistro regEncontrado) {
+
+        System.out.println("iniciando Desde cargarFuenteDatosReportesGrandes ... ");
+
+        listaRegistrosParaPdf = new ArrayList<>();
+        DatosFormularioHistoria datosReporte = new DatosFormularioHistoria();
+        List<HcDetalle> listaCamposDeRegistroEncontrado = regEncontrado.getHcDetalleList();//busca todos los datos
+        //----------------------------------------------------------------------
+        //CARGO TITULOS TODOS LOS CAMPOS (hc_campos_registro)-------------------
+        //----------------------------------------------------------------------
+        List<HcCamposReg> listaCamposPorTipoDeRegistro = camposRegFacade.buscarPorTipoRegistro(regEncontrado.getIdTipoReg().getIdTipoReg());
+        for (HcCamposReg campoPorTipoRegistro : listaCamposPorTipoDeRegistro) {
+            datosReporte.setValor(campoPorTipoRegistro.getPosicion(), "<b>" + campoPorTipoRegistro.getNombrePdf() + " </b>");
+        }
+        //nota!!!!!! algunos de los siguientes campos tambien incluirlos en la tabla hc_campos_reg(para que se coloquen titulos en el ciclo anterior)        
+        //----------------------------------------------------------------------
+        //CARGO DATOS DESDE (hc_registro)(cfg_empresa) -------------------------
+        //----------------------------------------------------------------------
+        //44
+        datosReporte.setValor(200, "<b>PRIMER NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerNombre()));//
+        //45
+        datosReporte.setValor(201, "<b>SEGUNDO NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoNombre()));//
+        //45
+        datosReporte.setValor(202, "<b>PRIMER APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerApellido()));//
+        //47
+        datosReporte.setValor(203, "<b>SEGUNDO APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
+        //48
+        datosReporte.setValor(204, "<b>CELULAR: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
+        //49
+        datosReporte.setValor(205, "<b>CORREO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getEmail()));//
+        //50
+        datosReporte.setValor(206, "<b>FOLIO: </b>" + regEncontrado.getFolio());//folio
+        //51
+        datosReporte.setValor(207, "<b>HISTORIA No: </b>" + regEncontrado.getIdPaciente().getIdentificacion());//numero de historia
+        //53
+        datosReporte.setValor(208, "<b>NOMBRE: </b>" + pacienteSeleccionado.nombreCompleto());//NOMBRES PACIENTE        
+
+        //54
+        datosReporte.setValor(209, "<b>FECHA: </b> " + sdfDateHour.format(regEncontrado.getFechaReg()));
+        //88
+        datosReporte.setValor(210, "<b>FECHA: </b> " + sdfDate.format(regEncontrado.getFechaReg()) + "<b> HORA: </b> " + sdfHour.format(regEncontrado.getFechaReg()));
+
+        //55
+        if (pacienteSeleccionado.getIdAdministradora() != null) {
+            datosReporte.setValor(211, "<b>ENTIDAD: </b> " + pacienteSeleccionado.getIdAdministradora().getRazonSocial());
+        } else {
+            datosReporte.setValor(211, "<b>ENTIDAD: </b> ");
+        }
+
+        //56,43
+        if (pacienteSeleccionado.getFechaNacimiento() != null) {
+            datosReporte.setValor(211, "<b>EDAD: </b> " + calcularEdad(pacienteSeleccionado.getFechaNacimiento()));
+            datosReporte.setValor(212, "<b>FECHA NACIMIENTO: </b>" + sdfDate.format(pacienteSeleccionado.getFechaNacimiento()));
+        } else {
+            datosReporte.setValor(211, "<b>EDAD: </b> ");
+            datosReporte.setValor(212, "<b>FECHA NACIMIENTO: </b>");
+        }
+        //57
+        if (pacienteSeleccionado.getGenero() != null) {
+            datosReporte.setValor(213, "<b>SEXO: </b> " + pacienteSeleccionado.getGenero().getDescripcion());
+        } else {
+            datosReporte.setValor(214, "<b>SEXO: </b> ");
+        }
+        //58
+        if (pacienteSeleccionado.getOcupacion() != null) {
+            datosReporte.setValor(215, "<b>OCUPACION: </b> " + pacienteSeleccionado.getOcupacion().getDescripcion());
+        } else {
+            datosReporte.setValor(215, "<b>OCUPACION: </b> ");
+        }
+        //59
+        datosReporte.setValor(216, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion()));
+        //60
+        datosReporte.setValor(216, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResidencia()));
+
+        //69,61
+        if (pacienteSeleccionado.getTipoIdentificacion() != null) {
+            datosReporte.setValor(217, pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
+        } else {
+            datosReporte.setValor(217, pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getIdentificacion());
+        }
+        //62,42
+        if (pacienteSeleccionado.getRegimen() != null) {
+            datosReporte.setValor(219, "<b>TIPO AFILIACION: </b> " + pacienteSeleccionado.getRegimen().getDescripcion());
+            datosReporte.setValor(220, "<b>COBERTURA EN SALUD: </b>" + pacienteSeleccionado.getRegimen().getDescripcion());
+        } else {
+            datosReporte.setValor(219, "<b>TIPO AFILIACION: </b> ");
+            datosReporte.setValor(220, "<b>COBERTURA EN SALUD: </b>");
+        }
+        //63
+        datosReporte.setValor(221, "<b>RESPONSABLE: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getResponsable()));
+        //64
+        datosReporte.setValor(222, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResponsable()));
+
+        //65
+        if (pacienteSeleccionado.getEstadoCivil() != null) {
+            datosReporte.setValor(223, "<b>ESTADO CIVIL: </b> " + pacienteSeleccionado.getEstadoCivil().getDescripcion());
+        } else {
+            datosReporte.setValor(223, "<b>ESTADO CIVIL: </b> ");
+        }
+
+        //66
+        if (pacienteSeleccionado.getDepartamento() != null) {
+            datosReporte.setValor(224, "<b>DEPARTAMENTO: </b>" + pacienteSeleccionado.getDepartamento().getDescripcion() + " " + pacienteSeleccionado.getDepartamento().getCodigo());
+        } else {
+            datosReporte.setValor(224, "<b>DEPARTAMENTO: </b>");
+        }
+
+        //67
+        if (pacienteSeleccionado.getMunicipio() != null) {
+            datosReporte.setValor(225, "<b>MUNICIPIO: </b>" + pacienteSeleccionado.getMunicipio().getDescripcion() + " " + pacienteSeleccionado.getMunicipio().getCodigo());//TELEFONO EMPRESA                
+        } else {
+            datosReporte.setValor(225, "<b>MUNICIPIO: </b>");//TELEFONO EMPRESA                
+        }
+
+        //68
+        if (pacienteSeleccionado.getFirma() != null) {//firma paciente
+            datosReporte.setValor(226, loginMB.getRutaCarpetaImagenes() + pacienteSeleccionado.getFirma().getUrlImagen());//FIRMA MEDICO
+        } else {
+            datosReporte.setValor(226, null);
+        }
+
+        //69
+        datosReporte.setValor(227, pacienteSeleccionado.nombreCompleto() + "<br/>" + datosReporte.getValor(227));//NOMBRE EN FIRMA PACIENTE        
+
+        //70
+        //empresa
+        if (loginMB.getEmpresaActual().getLogo() != null) {
+            datosReporte.setValor(228, loginMB.getRutaCarpetaImagenes() + loginMB.getEmpresaActual().getLogo().getUrlImagen());//IMAGEN LOGO
+        } else {
+            datosReporte.setValor(228, null);//IMAGEN LOGO
+        }
+
+        if (regEncontrado.getIdMedico() != null) {
+
+            //71
+            datosReporte.setValor(229, regEncontrado.getIdMedico().nombreCompleto());//NOMBRE MEDICO
+            //86
+            datosReporte.setValor(230, regEncontrado.getIdMedico().getTelefonoResidencia());//TELEFONO MEDICO
+            //87
+            datosReporte.setValor(231, regEncontrado.getIdMedico().getTelefonoOficina());//CELULAR MEDICO
+            //84
+            datosReporte.setValor(232, regEncontrado.getIdMedico().nombreCompleto());//PARA FIRMA NOMBRE MEDICO
+
+            if (regEncontrado.getIdMedico().getEspecialidad() != null) {
+                //72
+                datosReporte.setValor(233, regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//ESPECIALIDAD MEDICO
+                //84
+                datosReporte.setValor(234, datosReporte.getValor(234) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//PARA FIRMA  NOMBRE MEDICO
+            }
+            //73
+            datosReporte.setValor(235, obtenerCadenaNoNula(regEncontrado.getIdMedico().getRegistroProfesional()));//REGISTRO PROFESIONAL MEDICO
+            //84
+            datosReporte.setValor(235, datosReporte.getValor(235) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional());//NOMBRE MEDICO
+
+            //74
+            if (regEncontrado.getIdMedico().getFirma() != null) {
+                datosReporte.setValor(236, loginMB.getRutaCarpetaImagenes() + regEncontrado.getIdMedico().getFirma().getUrlImagen());//FIRMA MEDICO            
+            } else {
+                datosReporte.setValor(236, null);//FIRMA MEDICO
+            }
+        }
+
+        //75
+        datosReporte.setValor(237, "<b>Dirección: </b> " + empresa.getDireccion() + "      " + empresa.getWebsite() + "      <b>Teléfono: </b> " + empresa.getTelefono1());//DIR TEL EMPRESA        
+        //76
+        datosReporte.setValor(238, "<b>NOMBRE: </b>" + empresa.getRazonSocial());//NOMBRE EMPRESA                
+        //77
+        datosReporte.setValor(239, "<b>CODIGO: </b>" + empresa.getCodigoEmpresa());//CODIGO EMPRESA                
+        //78
+        datosReporte.setValor(240, "<b>DIRECCION: </b>" + empresa.getDireccion());//DIRECCION EMPRESA                
+        //79
+        datosReporte.setValor(241, "<b>TELEFONO: </b>" + empresa.getTelefono1());//TELEFONO EMPRESA                
+        //80
+        datosReporte.setValor(242, "<b>DEPARTAMENTO: </b>" + empresa.getCodDepartamento().getCodigo() + " " + empresa.getCodDepartamento().getDescripcion());//TELEFONO EMPRESA                
+        //81
+        datosReporte.setValor(243, "<b>MUNICIPIO: </b>" + empresa.getCodMunicipio().getCodigo() + " " + empresa.getCodMunicipio().getDescripcion());//TELEFONO EMPRESA                
+        //82
+        datosReporte.setValor(244, "<b>" + empresa.getTipoDoc().getDescripcion() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
+        //83
+        datosReporte.setValor(245, empresa.getWebsite());//sitio web       
+
+        //97
+        datosReporte.setValor(246, empresa.getNomRepLegal());//CONSTANSA PORTILLA BENAVIDES
+        //98
+        datosReporte.setValor(247, empresa.getTipoDoc().getDescripcion() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones());//OPTOMETRA U.L SALLE-BOGOTA        
+        //100
+        datosReporte.setValor(248, empresa.getRazonSocial());//
+        //99
+        datosReporte.setValor(249, "CONSULTORIO " + empresa.getDireccion() + " " + empresa.getCodMunicipio().getDescripcion() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
+        //datosReporte.setValor(85, "<b>ASEGURADORA RESPONSABLE DE LA ATENCION, NUMERO DE POLIZA SI ES SOAT Y VIGENCIA: </b> ");
+
+        //----------------------------------------------------------------------
+        //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
+        //----------------------------------------------------------------------
+        for (HcDetalle campoDeRegistroEncontrado : listaCamposDeRegistroEncontrado) { //recorre la lista de datos encontrados
             if (campoDeRegistroEncontrado.getHcCamposReg().getTabla() != null) {//ES CATEGORIA (realizar busqueda)
                 switch (campoDeRegistroEncontrado.getHcCamposReg().getTabla()) {
                     case "cfg_clasificaciones":
@@ -664,11 +902,21 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             return;
         }
         HcRegistro regEncontrado = registroFacade.find(nodArbolHisSeleccionado.getIdRegistro());
+        System.out.println("...regEncontrado " + regEncontrado.getHcDetalleList().size());
 
         //----------------------------------------------------------------------
         //SE CARGA LA FUENTE DE DATOS PARA EL PDF ------------------------------
         //----------------------------------------------------------------------
-        cargarFuenteDatos(regEncontrado);
+        System.out.println("Tipo registro  " + regEncontrado.getIdTipoReg().getUrlPagina());
+        System.out.println(" regEncontrado.getIdTipoReg()..getUrlPagina().startsWith(g_)  = " + regEncontrado.getIdTipoReg().getNombre().startsWith("g_"));
+
+        if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_")) { //si es de los nuevos reportes con mas de 40 campos
+            cargarFuenteDatosReportesGrandes(regEncontrado);
+        } else {
+            cargarFuenteDatos(regEncontrado);
+        }
+
+        System.out.println("...Num datos encontrados " + listaRegistrosParaPdf.size());
 
         //----------------------------------------------------------------------
         //CREACION DEL PDF -----------------------------------------------------
@@ -680,6 +928,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         rutaReporte = rutaReporte + regEncontrado.getIdTipoReg().getUrlPagina();
         rutaReporte = rutaReporte.substring(0, rutaReporte.length() - 6);//quito .xhtml
         rutaReporte = rutaReporte + ".jasper";
+
+        System.out.println("Reporte" + rutaReporte);
 
         beanCollectionDataSource = new JRBeanCollectionDataSource(listaRegistrosParaPdf);
         httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -837,7 +1087,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         registroEncontrado.setFechaSis(fechaSis);
         registroEncontrado.setIdPaciente(pacienteSeleccionado);
         registroFacade.edit(registroEncontrado);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) { //maximo 200 campos,  por ahora el maximo tiene 177 ...
             if (datosFormulario.getValor(i) != null && datosFormulario.getValor(i).toString().length() != 0) {
                 campoResgistro = camposRegFacade.buscarPorTipoRegistroYPosicion(tipoRegistroClinicoActual.getIdTipoReg(), i);
                 if (campoResgistro != null) {
@@ -918,7 +1168,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
         registroFacade.create(nuevoRegistro);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             if (datosFormulario.getValor(i) != null && datosFormulario.getValor(i).toString().length() != 0) {
                 campoResgistro = camposRegFacade.buscarPorTipoRegistroYPosicion(tipoRegistroClinicoActual.getIdTipoReg(), i);
                 if (campoResgistro != null) {
@@ -1109,45 +1359,40 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 txtPredefinidoActual.setDetalle(detalleTextoPredef);
                 txtPredefinidosFacade.edit(txtPredefinidoActual);
                 imprimirMensaje("Correcto", "El texto predefinido se ha actualizado", FacesMessage.SEVERITY_INFO);
+            } else if (nombreTextoPredefinido.trim().length() == 0) {
+                imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
+            } else//es nuevo se debe crear
+            if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+                imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
             } else {
-                if (nombreTextoPredefinido.trim().length() == 0) {
-                    imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
-                } else {//es nuevo se debe crear
-                    if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
-                        imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
-                    } else {
-                        CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
-                        nuevoPredefinido.setNombre(nombreTextoPredefinido);
-                        nuevoPredefinido.setIdMaestro(txtPredefinidoActual.getIdMaestro());
-                        nuevoPredefinido.setDetalle(detalleTextoPredef);
-                        txtPredefinidosFacade.create(nuevoPredefinido);
-                        recargarMaestrosTxtPredefinidos();
-                        RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
-                        imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
-                    }
-                }
+                CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
+                nuevoPredefinido.setNombre(nombreTextoPredefinido);
+                nuevoPredefinido.setIdMaestro(txtPredefinidoActual.getIdMaestro());
+                nuevoPredefinido.setDetalle(detalleTextoPredef);
+                txtPredefinidosFacade.create(nuevoPredefinido);
+                recargarMaestrosTxtPredefinidos();
+                RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
+                imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
             }
-        } else {//se debe agregar a la categoria
-            if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
-                if (nombreTextoPredefinido.trim().length() == 0) {
-                    imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
-                } else {//es nuevo se debe crear
-                    if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
-                        imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
-                    } else {
-                        CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
-                        nuevoPredefinido.setNombre(nombreTextoPredefinido);
-                        nuevoPredefinido.setIdMaestro(maestrosTxtPredefinidosFacade.find(Integer.parseInt(idMaestroTextoPredef)));
-                        nuevoPredefinido.setDetalle(detalleTextoPredef);
-                        txtPredefinidosFacade.create(nuevoPredefinido);
-                        recargarMaestrosTxtPredefinidos();
-                        RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
-                        imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
-                    }
-                }
+        } else//se debe agregar a la categoria
+        if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
+            if (nombreTextoPredefinido.trim().length() == 0) {
+                imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
+            } else//es nuevo se debe crear
+            if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+                imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
             } else {
-                imprimirMensaje("Error", "No se ha seleccionado ninguna categoría", FacesMessage.SEVERITY_ERROR);
+                CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
+                nuevoPredefinido.setNombre(nombreTextoPredefinido);
+                nuevoPredefinido.setIdMaestro(maestrosTxtPredefinidosFacade.find(Integer.parseInt(idMaestroTextoPredef)));
+                nuevoPredefinido.setDetalle(detalleTextoPredef);
+                txtPredefinidosFacade.create(nuevoPredefinido);
+                recargarMaestrosTxtPredefinidos();
+                RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
+                imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
             }
+        } else {
+            imprimirMensaje("Error", "No se ha seleccionado ninguna categoría", FacesMessage.SEVERITY_ERROR);
         }
     }
 
