@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CfgEmpresa.findByCodigoEmpresa", query = "SELECT c FROM CfgEmpresa c WHERE c.codigoEmpresa = :codigoEmpresa"),
     @NamedQuery(name = "CfgEmpresa.findByRegimen", query = "SELECT c FROM CfgEmpresa c WHERE c.regimen = :regimen")})
 public class CfgEmpresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -63,6 +64,8 @@ public class CfgEmpresa implements Serializable {
     private String telefono2;
     @Column(name = "website", length = 100)
     private String website;
+    @Column(name = "nivel", length = 100)
+    private String nivel;
     @Column(name = "observaciones", length = 2147483647)
     private String observaciones;
     @Column(name = "codigo_empresa", length = 50)
@@ -172,6 +175,13 @@ public class CfgEmpresa implements Serializable {
         this.website = website;
     }
 
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
     public String getObservaciones() {
         return observaciones;
     }
@@ -260,5 +270,5 @@ public class CfgEmpresa implements Serializable {
     public String toString() {
         return "modelo.entidades.CfgEmpresa[ codEmpresa=" + codEmpresa + " ]";
     }
-    
+
 }

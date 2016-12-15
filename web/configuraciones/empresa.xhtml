@@ -49,8 +49,8 @@
                                 <p:inputText   styleClass="campoFormulario"    value="#{empresaMB.direccion}" size="61"/>                                
                                 <p:outputLabel styleClass="campoObligatorio" value="Código Ministerio" />
                                 <p:inputText   styleClass="campoFormulario"    value="#{empresaMB.codigoMinisterio}" maxlength="12" size="25"/>
-                                
-                                
+
+
                             </td>
                         </tr>
                         <tr>                            
@@ -120,6 +120,9 @@
                                 <p:selectOneMenu   styleClass="campoFormulario" id="IdMunicipios" style="width: 160px;" value="#{empresaMB.municipio}" filter="true" filterMatchMode="contains">
                                     <f:selectItems value="#{empresaMB.listaMunicipios}" />
                                 </p:selectOneMenu>
+                                <p:outputLabel styleClass="campoNoObligatorio" value="Nivel"/>                                
+                                <p:inputText   styleClass="campoFormulario"    value="#{empresaMB.nivel}" size="10"/>
+
                             </td>
                         </tr>
                         <tr>                            

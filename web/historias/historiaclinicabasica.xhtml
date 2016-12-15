@@ -17,119 +17,138 @@
             <p:growl id="IdMensajeUsuarios"  showDetail="true" sticky="false" autoUpdate="true" life="2000"/>
             <table style="margin-left: auto; margin-right: auto;" >
 
-                <tr><td colspan="2"><h2>HISTORIA CLINICA BASICA</h2></td></tr>                                
+                <tr><td colspan="1"><h2>HISTORIA CLINICA BASICA</h2></td></tr>                                
 
 
                 <!--DATOS DEL ACUDIENTE-->
                 <div>
-                    <tr><td colspan="2"><h2>DATOS DEL ACUDIENTE</h2></td></tr>         
+                    <tr><td colspan="1"><h2>DATOS DEL ACUDIENTE</h2></td></tr>         
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Nombre" /></td>
+                        <td><p:outputLabel value="Nombre" /></td>
+                        <td><p:outputLabel value="Dirección" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.acompanante}"  /></td> <!--Este campo en realidad es el acudiente-->
+                        <td><p:inputText  disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.direccion}"  /></td>                    
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Acompañante" /></td>
+                        <td><p:outputLabel value="Parentesco" /></td>
                     </tr>
                     <tr>
                         <p:focus for="IdFocus" />
-                        <td colspan="2"><p:inputText id="IdFocus"  styleClass="width2" value="#{historiasMB.datosFormulario.dato0}"  /></td>
+                        <td><p:inputText id="IdFocus" styleClass="width1" value="#{historiasMB.datosFormulario.dato0}"  /></td>                    
+                        <td>
+                            <p:selectOneMenu  style="width: 100%;" value="#{historiasMB.datosFormulario.dato1}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="" itemValue=""/>
+                                <f:selectItems value="#{aplicacionGeneralMB.listaParentesco}" />
+                            </p:selectOneMenu>  
+
+
+                        </td>                    
+                    </tr>
+
+                    <tr>
+                        <td><p:outputLabel value="Teléfono" /></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Dirección" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato1}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Acompañante" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato2}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Parentesco" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato3}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Telefono" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato4}"  /></td>                    
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato2}"  /></td>                    
                     </tr>
                 </div>
                 <!--FIN DATOS DEL ACUDIENTE-->
 
                 <!--ENFOQUE DIFERENCIAL-->
                 <div>
-                    <tr><td colspan="2"><h2>ENFOQUE DIFERENCIAL</h2></td></tr>         
+                    <tr><td colspan="1"><h2>ENFOQUE DIFERENCIAL</h2></td></tr>         
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Nivel educativo" /></td>
+                        <td><p:outputLabel value="Nivel educativo" /></td>
+                        <td><p:outputLabel value="Discapacidad" /></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato5}"  /></td>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.escolaridad.descripcion}"  /></td>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.discapacidad.descripcion}"  /></td>                    
                     </tr>
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Discapacidad" /></td>
+                        <td><p:outputLabel value="Gestación" /></td>
+                        <td><p:outputLabel value="Ocupación" /></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato6}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.gestacion.descripcion}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.ocupacion.descripcion}"  /></td>                    
                     </tr>
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Gestación" /></td>
+                        <td><p:outputLabel value="Religión" /></td>
+                        <td><p:outputLabel value="Etnia" /></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato7}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.religion.descripcion}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.etnia.descripcion}"  /></td>                    
                     </tr>
                     <tr>
-                        <td colspan="2"><p:outputLabel value="Ocupación" /></td>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Víctima de conflicto armado" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.victimaConflicto}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Población LBGT" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.poblacionLBGT}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
+
                     <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato8}"  /></td>                    
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Desplazado" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.desplazado}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Víctima de maltrato" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.victimaMaltrato}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Vic. conflicto armado" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato9}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Población LBGT" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato10}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Desplazado" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato11}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Etnia" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato12}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Religion" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato13}"  /></td>                    
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:outputLabel value="Vic. maltrato" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato14}"  /></td>                    
-                    </tr>
+
+
                 </div>
                 <!--FIN ENFOQUE DIFERENCIAL-->
 
 
                 <tr>
-                    <td colspan="2"><p:outputLabel value="MOTIVO CONSULTA"/></td>                                        
+                    <td colspan="2"><h2><p:outputLabel value="MOTIVO CONSULTA"/></h2></td>                                        
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <p:inputTextarea rows="15" styleClass="width2" value="#{historiasMB.datosFormulario.dato15}"/>
+                        <p:inputTextarea rows="10" styleClass="width2" value="#{historiasMB.datosFormulario.dato3}"/>
 
                     </td>                    
                 </tr>

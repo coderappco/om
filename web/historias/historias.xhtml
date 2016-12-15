@@ -29,7 +29,7 @@
                                         </p:inputText>  
                                         <p:watermark for="IdTxtIdentificacion" value="Digite identificación paciente"/>
                                         <p:commandButton styleClass="campoFormulario"     style="width: 22px; height: 22px;" title="Buscar paciente"    icon="ui-icon-search" onclick="PF('dlgSeleccionarPaciente').show();"/>
-                                        <p:commandButton styleClass="campoFormulario"     style="height: 22px;" title="Editiar Paciente"    icon="ui-icon-pencil" actionListener="#{historiasMB.editarPaciente}"  rendered="#{historiasMB.hayPacienteSeleccionado}"/>
+                                        <p:commandButton styleClass="campoFormulario"     style="height: 22px;" title="Editar Paciente"    icon="ui-icon-pencil" actionListener="#{historiasMB.editarPaciente}"  rendered="#{historiasMB.hayPacienteSeleccionado}"/>
                                         <p:commandButton styleClass="campoFormulario"     style="height: 22px;" title="Historial Paciente" actionListener="#{historiasMB.cargarHistorialCompleto}" icon="ui-icon-calendar" rendered="#{historiasMB.hayPacienteSeleccionado}" oncomplete="PF('dlgHistorico').show();" update=":IdFormHistorias:IdPanelHistorico"/>                            
                                         <p:outputLabel   styleClass="labelFormularioBold" value="Nombre" rendered="#{historiasMB.hayPacienteSeleccionado}"/>
                                         <p:outputLabel   styleClass="labelFormulario"     value="#{historiasMB.nombrePaciente}"  rendered="#{historiasMB.hayPacienteSeleccionado}"/>                            

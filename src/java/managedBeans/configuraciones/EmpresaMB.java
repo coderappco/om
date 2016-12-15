@@ -56,6 +56,7 @@ public class EmpresaMB extends MetodosGenerales implements Serializable {
     private String telefono1 = "";
     private String telefono2 = "";
     private String website = "";
+    private String nivel = "";
     private String urlLogo = "";
     private final String urlLogoPorDefecto = "../recursos/img/logoDefecto.png";
     private String observaciones = "";
@@ -87,6 +88,7 @@ public class EmpresaMB extends MetodosGenerales implements Serializable {
         telefono1 = "";
         telefono2 = "";
         website = "";
+        nivel = "";
         urlLogo = "";
         observaciones = "";
         archivoLogo = null;
@@ -117,6 +119,7 @@ public class EmpresaMB extends MetodosGenerales implements Serializable {
             municipio = empresa.getCodMunicipio().getId().toString();
         }
         website = empresa.getWebsite();
+        nivel = empresa.getNivel();
         observaciones = empresa.getObservaciones();
         if (empresa.getLogo() != null) {            
             urlLogo = "../imagenesOpenmedical/" + empresa.getLogo().getUrlImagen();
@@ -169,6 +172,7 @@ public class EmpresaMB extends MetodosGenerales implements Serializable {
             empresa.setCodMunicipio(clasificacionesFacade.find(Integer.parseInt(municipio)));
         }
         empresa.setWebsite(website);
+        empresa.setNivel(nivel);
         empresa.setObservaciones(observaciones);
         empresaFacade.edit(empresa);
         imprimirMensaje("Correcto", "Información de la empresa actualizada.", FacesMessage.SEVERITY_INFO);
@@ -321,6 +325,14 @@ public class EmpresaMB extends MetodosGenerales implements Serializable {
 
     public void setWebsite(String website) {
         this.website = website;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
     }
 
     public String getUrlLogo() {

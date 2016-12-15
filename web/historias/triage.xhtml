@@ -40,59 +40,60 @@
                 </tr>
 
                 <!--Ant personales-->
-                <tr>
-                    <td colspan="2"><h2><p:outputLabel value="ANTECEDENTES PERSONALES" /></h2></td>
-                </tr>
+                <div>
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="ANTECEDENTES PERSONALES" /></h2></td>
+                    </tr>
 
-                <tr>
-                    <td><p:outputLabel value="Grupo sanguineo" /></td>
-                    <td><p:outputLabel value="Patologicos" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato2}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato3}"/></td>
-                </tr>
+                    <tr>
+                        <td><p:outputLabel value="Grupo sanguineo" /></td>
+                        <td><p:outputLabel value="Patologicos" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato2}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato3}"/></td>
+                    </tr>
 
-                <tr>
-                    <td><p:outputLabel value="Traumaticos" /></td>
-                    <td><p:outputLabel value="Quirurgicos" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato4}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato5}"/></td>
-                </tr>
-                <tr>                   
-                    <td><p:outputLabel value="Inf. transmisión sexual" /></td>
-                    <td><p:outputLabel value="Alérgicos" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato6}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato7}"/></td>
-                </tr>
-                <tr>
-                    <td><p:outputLabel value="Inmunológicos" /></td>
-                    <td><p:outputLabel value="Tóxicos" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato8}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato9}"/></td>
-                </tr>
-                <tr>
-                    <td><p:outputLabel value="Farmacológicos" /></td>
-                    <td><p:outputLabel value="Cirugías/hospitalizaciones" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato10}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato11}"/></td>
-                </tr>
-                <tr><td><p:outputLabel value="Nutricionales" /></td>
-                    <td><p:outputLabel value="Otros antecedentes" /></td>
-                </tr>
-                <tr>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato12}"/></td>
-                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato13}"/></td>
-                </tr>
-
+                    <tr>
+                        <td><p:outputLabel value="Traumaticos" /></td>
+                        <td><p:outputLabel value="Quirurgicos" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato4}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato5}"/></td>
+                    </tr>
+                    <tr>                   
+                        <td><p:outputLabel value="Inf. transmisión sexual" /></td>
+                        <td><p:outputLabel value="Alérgicos" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato6}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato7}"/></td>
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Inmunológicos" /></td>
+                        <td><p:outputLabel value="Tóxicos" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato8}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato9}"/></td>
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Farmacológicos" /></td>
+                        <td><p:outputLabel value="Cirugías/hospitalizaciones" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato10}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato11}"/></td>
+                    </tr>
+                    <tr><td><p:outputLabel value="Nutricionales" /></td>
+                        <td><p:outputLabel value="Otros antecedentes" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato12}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato13}"/></td>
+                    </tr>
+                </div>
                 <!--Fin antecedentes personales-->
 
                 <!--ANTECEDENTES FAMILIARES-->
@@ -188,22 +189,29 @@
                 </tr>                
 
                 <tr>
-                    <td colspan="2"><p:outputLabel value="Peso"/></td>
+                    <td colspan="1"><p:outputLabel value="Peso (kg)"/></td>
+                    <td colspan="1"><p:outputLabel value="Talla (cm)"/></td>
                 </tr>    
                 <tr>
-                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato28}"/></td>
+                    <td colspan="1">
+                        <p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato28}">
+                            <p:ajax event="change" listener="#{historiasMB.calcularIMCHisCliTriage}" update="txtImc"/>
+                        </p:inputText>
+                    </td>
+                    <td colspan="1">
+                        <p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato29}">
+                            <p:ajax event="change" listener="#{historiasMB.calcularIMCHisCliTriage}" update="txtImc"/>
+                        </p:inputText>
+                    </td>
                 </tr>
+
                 <tr>
-                    <td colspan="2"><p:outputLabel value="Talla"/></td>
+                    <td colspan="1"><p:outputLabel value="IMC"/></td>
                 </tr>    
                 <tr>
-                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato29}"/></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><p:outputLabel value="IMC"/></td>
-                </tr>    
-                <tr>
-                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato30}"/></td>
+                    <td colspan="1">
+                        <p:inputText styleClass="width1" readonly = "true" id="txtImc" value="#{historiasMB.datosFormulario.dato30}"/>
+                    </td>
                 </tr>
                 <!--FIN DE EXAMEN FÍSICO-->
 

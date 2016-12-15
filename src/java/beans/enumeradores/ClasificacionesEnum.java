@@ -54,7 +54,10 @@ public enum ClasificacionesEnum {
     TipoTarifa,//Tipo de servicio
     TipoUsuario,//Tipos de usuarios,prestador,administrador..
     Zona,//Zonas urbana,rural,
-
+    Discapacidad,
+    Religion,
+    Gestacion,
+    
     //-----------------------------------------------------
     //no contenidas en cfg_clasificaciones (son tablas independientes)
     //-----------------------------------------------------

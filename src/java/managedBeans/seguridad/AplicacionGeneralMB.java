@@ -145,6 +145,11 @@ public class AplicacionGeneralMB {
     private List<FacAdministradora> listaAdministradoras;
     private List<SelectItem> listaTipoAdministradora;
 
+    //nuevos Luis CD
+    private List<SelectItem> listaReligion;
+    private List<SelectItem> listaDiscapacidad;
+    private List<SelectItem> listaGestacion;
+    
     //---------------------------------------------------
     //-----------------VARIABLES -------------------------
     //---------------------------------------------------
@@ -370,6 +375,9 @@ public class AplicacionGeneralMB {
             cargarClasificacion(ClasificacionesEnum.TipoUsuario);
             cargarClasificacion(ClasificacionesEnum.Usuarios);
             cargarClasificacion(ClasificacionesEnum.Zona);
+            cargarClasificacion(ClasificacionesEnum.Religion);
+            cargarClasificacion(ClasificacionesEnum.Gestacion);
+            cargarClasificacion(ClasificacionesEnum.Discapacidad);
         }
     }
 
@@ -519,6 +527,15 @@ public class AplicacionGeneralMB {
                 break;
             case Zona:
                 listaZona = cargarClasificacion(maestro.toString());
+                break;
+            case Discapacidad:
+                listaDiscapacidad = cargarClasificacion(maestro.toString());
+                break;
+            case Religion:
+                listaReligion = cargarClasificacion(maestro.toString());
+                break;
+            case Gestacion:
+                listaGestacion = cargarClasificacion(maestro.toString());
                 break;
         }
     }
@@ -1001,6 +1018,30 @@ public class AplicacionGeneralMB {
 
     public void setListaMunicipios(List<SelectItem> listaMunicipios) {
         this.listaMunicipios = listaMunicipios;
+    }
+
+    public List<SelectItem> getListaReligion() {
+        return listaReligion;
+    }
+
+    public void setListaReligion(List<SelectItem> listaReligion) {
+        this.listaReligion = listaReligion;
+    }
+
+    public List<SelectItem> getListaDiscapacidad() {
+        return listaDiscapacidad;
+    }
+
+    public void setListaDiscapacidad(List<SelectItem> listaDiscapacidad) {
+        this.listaDiscapacidad = listaDiscapacidad;
+    }
+
+    public List<SelectItem> getListaGestacion() {
+        return listaGestacion;
+    }
+
+    public void setListaGestacion(List<SelectItem> listaGestacion) {
+        this.listaGestacion = listaGestacion;
     }
 
 }

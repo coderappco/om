@@ -78,8 +78,10 @@ public class CfgClasificaciones implements Serializable {
     private List<CfgPacientes> cfgPacientesList;
     @OneToMany(mappedBy = "ocupacion")
     private List<CfgPacientes> cfgPacientesList1;
+   
     @OneToMany(mappedBy = "nivel")
     private List<CfgPacientes> cfgPacientesList2;
+    
     @OneToMany(mappedBy = "grupoSanguineo")
     private List<CfgPacientes> cfgPacientesList3;
     @OneToMany(mappedBy = "genero")

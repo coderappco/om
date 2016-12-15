@@ -116,6 +116,16 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
     private Date fechaVenceCarnet = null;
     private String observaciones = "";
 
+    //nuevos Luis CD
+    private String discapacidad;
+    private String gestacion;
+    private String religion;
+    private Boolean victimaConflicto;
+    private Boolean poblacionLBGT;
+    private Boolean desplazado;
+    private Boolean victimaMaltrato;
+    //    
+
     //---------------------------------------------------
     //----------------- FUNCIONES -------------------------
     //---------------------------------------------------      
@@ -197,6 +207,14 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
         carnet = "";
         fechaVenceCarnet = null;
         observaciones = "";
+        religion = "";
+        gestacion = "";
+        discapacidad = "";
+        victimaConflicto = false;
+        victimaMaltrato = false;
+        desplazado = false;
+        poblacionLBGT = false;
+
         cargarMunicipios();
 
     }
@@ -212,7 +230,7 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
             imprimirMensaje("Error", "Se debe seleccionar un paciente de la tabla", FacesMessage.SEVERITY_ERROR);
             return;
         }
-        limpiarFormulario();        
+        limpiarFormulario();
         pacienteSeleccionado = pacientesFachada.find(pacienteSeleccionadoTabla.getIdPaciente());
         tituloTabPacientes = "Datos paciente: " + pacienteSeleccionado.nombreCompleto();
         archivoFirma = null;
@@ -322,6 +340,43 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
         } else {
             escolaridad = "";
         }
+
+        if (pacienteSeleccionado.getReligion() != null) {
+            religion = pacienteSeleccionado.getReligion().getId().toString();
+        } else {
+            religion = "";
+        }
+        if (pacienteSeleccionado.getDiscapacidad() != null) {
+            discapacidad = pacienteSeleccionado.getDiscapacidad().getId().toString();
+        } else {
+            discapacidad = "";
+        }
+        if (pacienteSeleccionado.getGestacion() != null) {
+            gestacion = pacienteSeleccionado.getGestacion().getId().toString();
+        } else {
+            gestacion = "";
+        }
+        if (pacienteSeleccionado.getDesplazado() != null) {
+            desplazado = pacienteSeleccionado.getDesplazado();
+        } else {
+            desplazado = false;
+        }
+        if (pacienteSeleccionado.getPoblacionLBGT() != null) {
+            poblacionLBGT = pacienteSeleccionado.getPoblacionLBGT();
+        } else {
+            poblacionLBGT = false;
+        }
+        if (pacienteSeleccionado.getVictimaMaltrato() != null) {
+            victimaMaltrato = pacienteSeleccionado.getVictimaMaltrato();
+        } else {
+            victimaMaltrato = false;
+        }
+        if (pacienteSeleccionado.getVictimaConflicto() != null) {
+            victimaConflicto = pacienteSeleccionado.getVictimaConflicto();
+        } else {
+            victimaConflicto = false;
+        }
+
         numeroAutorizacion = pacienteSeleccionado.getNumeroAutorizacion();
         responsable = pacienteSeleccionado.getResponsable();
         telefonoResponsable = pacienteSeleccionado.getTelefonoResponsable();
@@ -351,6 +406,10 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
         }
         observaciones = pacienteSeleccionado.getObservaciones();
         tabActivaPacientes = "0";
+
+        System.out.println("Paciente ---> Id     :  " + pacienteSeleccionado.getIdPaciente());
+        System.out.println("Paciente ---> Nombre :  " + pacienteSeleccionado.getNombreCompleto());
+
     }
 
     public void guardarPaciente() {
@@ -445,6 +504,19 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
         if (validarNoVacio(ocupacion)) {
             nuevoPaciente.setOcupacion(clasificacionesFachada.find(Integer.parseInt(ocupacion)));
         }
+
+        if (validarNoVacio(religion)) {
+            nuevoPaciente.setReligion(clasificacionesFachada.find(Integer.parseInt(religion)));
+        }
+
+        if (validarNoVacio(gestacion)) {
+            nuevoPaciente.setGestacion(clasificacionesFachada.find(Integer.parseInt(gestacion)));
+        }
+
+        if (validarNoVacio(discapacidad)) {
+            nuevoPaciente.setDiscapacidad(clasificacionesFachada.find(Integer.parseInt(discapacidad)));
+        }
+
         nuevoPaciente.setTelefonoResidencia(telefonoResidencia);
         nuevoPaciente.setTelefonoOficina(telefonoOficina);
         nuevoPaciente.setCelular(celular);
@@ -500,6 +572,12 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
             nuevoPaciente.setFechaVenceCarnet(fechaVenceCarnet);
         }
         nuevoPaciente.setObservaciones(observaciones);
+
+        nuevoPaciente.setVictimaConflicto(victimaConflicto);
+        nuevoPaciente.setVictimaMaltrato(victimaMaltrato);
+        nuevoPaciente.setPoblacionLBGT(poblacionLBGT);
+        nuevoPaciente.setDesplazado(desplazado);
+
         pacientesFachada.create(nuevoPaciente);
         imprimirMensaje("Correcto", "Nuevo paciente creado correctamente", FacesMessage.SEVERITY_INFO);
         listaPacientes = new LazyPacienteDataModel(pacientesFachada);
@@ -633,6 +711,23 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
             pacienteSeleccionado.setFechaVenceCarnet(fechaVenceCarnet);
         }
         pacienteSeleccionado.setObservaciones(observaciones);
+
+        if (validarNoVacio(religion)) {
+            pacienteSeleccionado.setReligion(clasificacionesFachada.find(Integer.parseInt(religion)));
+        }
+
+        if (validarNoVacio(gestacion)) {
+            pacienteSeleccionado.setGestacion(clasificacionesFachada.find(Integer.parseInt(gestacion)));
+        }
+
+        if (validarNoVacio(discapacidad)) {
+            pacienteSeleccionado.setDiscapacidad(clasificacionesFachada.find(Integer.parseInt(discapacidad)));
+        }
+
+        pacienteSeleccionado.setVictimaConflicto(victimaConflicto);
+        pacienteSeleccionado.setVictimaMaltrato(victimaMaltrato);
+        pacienteSeleccionado.setPoblacionLBGT(poblacionLBGT);
+        pacienteSeleccionado.setDesplazado(desplazado);
 
         pacientesFachada.edit(pacienteSeleccionado);
         imprimirMensaje("Correcto", "Paciente actualizado correctamente", FacesMessage.SEVERITY_INFO);
@@ -1181,6 +1276,62 @@ public class PacientesMB extends MetodosGenerales implements Serializable {
 
     public void setTituloTabPacientes(String tituloTabPacientes) {
         this.tituloTabPacientes = tituloTabPacientes;
+    }
+
+    public String getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(String discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+
+    public String getGestacion() {
+        return gestacion;
+    }
+
+    public void setGestacion(String gestacion) {
+        this.gestacion = gestacion;
+    }
+
+    public String getReligion() {
+        return religion;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
+    public Boolean getVictimaConflicto() {
+        return victimaConflicto;
+    }
+
+    public void setVictimaConflicto(Boolean victimaConflicto) {
+        this.victimaConflicto = victimaConflicto;
+    }
+
+    public Boolean getPoblacionLBGT() {
+        return poblacionLBGT;
+    }
+
+    public void setPoblacionLBGT(Boolean poblacionLBGT) {
+        this.poblacionLBGT = poblacionLBGT;
+    }
+
+    public Boolean getDesplazado() {
+        return desplazado;
+    }
+
+    public void setDesplazado(Boolean desplazado) {
+        this.desplazado = desplazado;
+    }
+
+    public Boolean getVictimaMaltrato() {
+        return victimaMaltrato;
+    }
+
+    public void setVictimaMaltrato(Boolean victimaMaltrato) {
+        this.victimaMaltrato = victimaMaltrato;
     }
 
 }

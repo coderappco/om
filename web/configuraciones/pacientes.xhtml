@@ -46,7 +46,7 @@
                 &nbsp;
             </div>
             <br/>            
-            
+
             <p:tabView style=" width: 99%;" activeIndex="#{pacientesMB.tabActivaPacientes}" id="IdTabView" > 
                 <p:tab title="#{pacientesMB.tituloTabPacientes}">  
                     <table style="margin: 20px; margin-left: auto; margin-right: auto;">
@@ -261,9 +261,9 @@
                         </tr>
                         <tr>
                             <td>
-                                <p:outputLabel   styleClass="campoNoObligatorio" value="Acompañante"/>
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Acudiente"/>
                                 <p:inputText     styleClass="campoFormulario" value="#{pacientesMB.acompanante}" size="34"/>
-                                <p:outputLabel   styleClass="campoNoObligatorio" value="Tel. acompañante" />
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Tel. acudiente" />
                                 <p:inputText     styleClass="campoFormulario" value="#{pacientesMB.telefonoAcompanante}" size="12"/>
                             </td>
                         </tr>
@@ -277,6 +277,37 @@
                                 <p:inputText     styleClass="campoFormulario"    value="#{pacientesMB.carnet}" size="26"/>
                                 <p:outputLabel   styleClass="campoNoObligatorio" value="Vencimiento carnet  " />
                                 <p:calendar      styleClass="campoFormulario"    navigator="true" locale="es" pattern="dd/MM/yyyy" mask="true" size="10" value="#{pacientesMB.fechaVenceCarnet}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Discapacidad"/>
+                                <p:selectOneMenu styleClass="campoFormulario" style="width: 175px;" value="#{pacientesMB.discapacidad}" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{aplicacionGeneralMB.listaDiscapacidad}" />
+                                </p:selectOneMenu>   
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Gestación"/>
+                                <p:selectOneMenu styleClass="campoFormulario" style="width: 175px;" value="#{pacientesMB.gestacion}" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{aplicacionGeneralMB.listaGestacion}" />
+                                </p:selectOneMenu>   
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Religion"/>
+                                <p:selectOneMenu styleClass="campoFormulario" style="width: 175px;" value="#{pacientesMB.religion}" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="" itemValue=""/>
+                                    <f:selectItems value="#{aplicacionGeneralMB.listaReligion}" />
+                                </p:selectOneMenu>   
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Víctima de conflicto armado"/>
+                                <p:selectBooleanCheckbox styleClass="campoFormulario" value="#{pacientesMB.victimaConflicto}"/> 
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Población LBGT"/>
+                                <p:selectBooleanCheckbox styleClass="campoFormulario" value="#{pacientesMB.poblacionLBGT}"/> 
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Desplazado"/>
+                                <p:selectBooleanCheckbox styleClass="campoFormulario" value="#{pacientesMB.desplazado}"/> 
+                                <p:outputLabel   styleClass="campoNoObligatorio" value="Víctima de maltrato"/>
+                                <p:selectBooleanCheckbox styleClass="campoFormulario" value="#{pacientesMB.victimaMaltrato}"/> 
                             </td>
                         </tr>
                         <tr>

@@ -99,6 +99,16 @@ public class CfgPacientes implements Serializable {
     private String segundoNombre;
     @Column(name = "activo")
     private Boolean activo;
+
+    @Column(name = "victima_conflicto_armado")
+    private Boolean victimaConflicto;
+    @Column(name = "victima_maltrato")
+    private Boolean victimaMaltrato;
+    @Column(name = "poblacion_lbgt")
+    private Boolean poblacionLBGT;
+    @Column(name = "desplazado")
+    private Boolean desplazado;
+    
     @Column(name = "direccion", length = 80)
     private String direccion;
     @Column(name = "telefono_residencia", length = 100)
@@ -176,6 +186,20 @@ public class CfgPacientes implements Serializable {
     @JoinColumn(name = "ocupacion", referencedColumnName = "id")
     @ManyToOne
     private CfgClasificaciones ocupacion;
+   
+//    @JoinColumn(name = "id_administradora", referencedColumnName = "id_administradora")
+    @JoinColumn(name = "id_discapacidad", referencedColumnName = "id")
+    @ManyToOne
+    private CfgClasificaciones discapacidad;
+   
+    @JoinColumn(name = "id_religion", referencedColumnName = "id")
+    @ManyToOne
+    private CfgClasificaciones religion;
+   
+    @JoinColumn(name = "id_gestacion", referencedColumnName = "id")
+    @ManyToOne
+    private CfgClasificaciones gestacion;
+   
     @JoinColumn(name = "nivel", referencedColumnName = "id")
     @ManyToOne
     private CfgClasificaciones nivel;
@@ -266,6 +290,23 @@ public class CfgPacientes implements Serializable {
         }
         return strNombre;
     }
+    
+    public String getNombreCompleto() {
+        String strNombre = "";
+        if (primerNombre != null) {
+            strNombre = strNombre + primerNombre + " ";
+        }
+        if (segundoNombre != null) {
+            strNombre = strNombre + segundoNombre + " ";
+        }
+        if (primerApellido != null) {
+            strNombre = strNombre + primerApellido + " ";
+        }
+        if (segundoApellido != null) {
+            strNombre = strNombre + segundoApellido;
+        }
+        return strNombre.toUpperCase();
+    }
 
     public String getEdad() {
         return edad;
@@ -348,7 +389,7 @@ public class CfgPacientes implements Serializable {
     }
 
     public String getDireccion() {
-        return direccion;
+        return direccion.toUpperCase();
     }
 
     public void setDireccion(String direccion) {
@@ -420,7 +461,7 @@ public class CfgPacientes implements Serializable {
     }
 
     public String getAcompanante() {
-        return acompanante;
+        return acompanante.toUpperCase();
     }
 
     public void setAcompanante(String acompanante) {
@@ -613,6 +654,7 @@ public class CfgPacientes implements Serializable {
     }
 
     public CfgClasificaciones getNivel() {
+        System.out.println("nivel");
         return nivel;
     }
 
@@ -818,6 +860,62 @@ public class CfgPacientes implements Serializable {
     @Override
     public String toString() {
         return "modelo.entidades.CfgPacientes[ idPaciente=" + idPaciente + " ]";
+    }
+
+    public CfgClasificaciones getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(CfgClasificaciones discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+
+    public CfgClasificaciones getReligion() {
+        return religion;
+    }
+
+    public void setReligion(CfgClasificaciones religion) {
+        this.religion = religion;
+    }
+
+    public CfgClasificaciones getGestacion() {
+        return gestacion;
+    }
+
+    public void setGestacion(CfgClasificaciones gestacion) {
+        this.gestacion = gestacion;
+    }
+
+    public Boolean getVictimaConflicto() {
+        return victimaConflicto;
+    }
+
+    public void setVictimaConflicto(Boolean victimaConflicto) {
+        this.victimaConflicto = victimaConflicto;
+    }
+
+    public Boolean getVictimaMaltrato() {
+        return victimaMaltrato;
+    }
+
+    public void setVictimaMaltrato(Boolean victimaMaltrato) {
+        this.victimaMaltrato = victimaMaltrato;
+    }
+
+    public Boolean getPoblacionLBGT() {
+        return poblacionLBGT;
+    }
+
+    public void setPoblacionLBGT(Boolean poblacionLBGT) {
+        this.poblacionLBGT = poblacionLBGT;
+    }
+
+    public Boolean getDesplazado() {
+        return desplazado;
+    }
+
+    public void setDesplazado(Boolean desplazado) {
+        this.desplazado = desplazado;
     }
     
 }

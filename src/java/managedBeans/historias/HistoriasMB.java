@@ -177,7 +177,25 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     private final SimpleDateFormat sdfFechaString = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);//Thu Apr 30 19:00:00 COT 2015
     private final DecimalFormat formateadorDecimal = new DecimalFormat("#.##");
 
-    //---------------------------------------------------
+    private String etnia = "";
+    private String ocupacion = "";
+    private String escolaridad = "";
+    private String religion = "";
+    private String gestacion = "";
+    private String discapacidad = "";
+    
+    private Boolean victimaMaltrato = false; // Un booleano y un Str, el str es para mostrar nada, o SI o NO
+    private String victimaMaltratoStr = "";
+    private Boolean victimaConflicto = false;
+    private String victimaConflictoStr = "";
+    private Boolean desplazado = false;
+    private String desplazadoStr = "";
+    private Boolean poblacionLBGT = false;
+    private String poblacionLBGTStr = "";
+    
+    private String imc = "";
+
+//---------------------------------------------------
     //----------------- FUNCIONES INICIALES -----------------------
     //---------------------------------------------------
     public HistoriasMB() {
@@ -220,6 +238,99 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 //            if (tipoRegistroClinicoActual.getIdTipoReg() == 2) {
 //                datosFormulario.setDato1("475");//en este combo quede seleccionado ENFERMEDAD GENERAL                
 //            }
+        }
+    }
+
+    private String calcularIMC(float peso, float talla) {
+
+        //Infrapeso	IMC menos de 18.5
+        //Peso Normal	IMC de 18.5 a 24.9
+        //Sobrepeso	IMC de 25 a 29.9
+        //Obesidad	IMC 30 o mayor
+        //Obesidad Mórbida	IMC 40 o mayor
+        //        
+        float metros = talla / 100;
+        float imcCalculado = peso / (metros * metros);
+
+        String textoImc = "";
+        if (imcCalculado < 18.5) {
+            textoImc = "Infrapeso";
+        } else if (imcCalculado >= 18.5 && imcCalculado < 25) {
+            textoImc = "Peso Normal";
+        } else if (imcCalculado >= 25 && imcCalculado < 30) {
+            textoImc = "Sobrepeso";
+        } else if (imcCalculado >= 30 && imcCalculado < 40) {
+            textoImc = "Obesidad";
+        } else if (imcCalculado >= 40) {
+            textoImc = "Obesidad Mórbida";
+        }
+        double imcCalculadoD = (double) ((int) (imcCalculado * 100) / 100.0);
+        return String.valueOf(imcCalculadoD) + ", " + textoImc;
+    }
+
+    public void calcularIMCHisCliTriage() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato28().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato29().toString());
+            datosFormulario.setDato30(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+
+    public void calcularIMCHisCliUrgencias() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato64().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato65().toString());
+            datosFormulario.setDato66(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+
+    public void calcularIMCHisCliVisual() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato20().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato21().toString());
+            datosFormulario.setDato22(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+
+    public void calcularIMCCitologia() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato132().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato133().toString());
+            datosFormulario.setDato134(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+
+    public void calcularIMCHisRefContraRef() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato18().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato19().toString());
+            datosFormulario.setDato20(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+    
+    public void calcularIMCHisClinica() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato60().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato61().toString());
+            datosFormulario.setDato62(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
         }
     }
 
@@ -386,13 +497,13 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 btnHistorialDisabled = false;
                 btnPdfAgrupadoDisabled = true;
             } else//hay mas de uno
-            if (igualTipoRegistro) {//son del mismo tipo
-                btnHistorialDisabled = true;
-                btnPdfAgrupadoDisabled = false;
-            } else {//no son del mismo tipo
-                btnHistorialDisabled = true;
-                btnPdfAgrupadoDisabled = true;
-            }
+             if (igualTipoRegistro) {//son del mismo tipo
+                    btnHistorialDisabled = true;
+                    btnPdfAgrupadoDisabled = false;
+                } else {//no son del mismo tipo
+                    btnHistorialDisabled = true;
+                    btnPdfAgrupadoDisabled = true;
+                }
         }
     }
 
@@ -562,6 +673,9 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         } else {
             datosReporte.setValor(70, null);//IMAGEN LOGO
         }
+//        System.out.println("Imagen logo empres -> " + loginMB.getRutaCarpetaImagenes() + loginMB.getEmpresaActual().getLogo().getUrlImagen());
+        System.out.println("Datos encontrados ... " + listaCamposDeRegistroEncontrado.size());
+
         if (regEncontrado.getIdMedico() != null) {
             datosReporte.setValor(71, regEncontrado.getIdMedico().nombreCompleto());//NOMBRE MEDICO
             datosReporte.setValor(86, regEncontrado.getIdMedico().getTelefonoResidencia());//TELEFONO MEDICO
@@ -596,11 +710,42 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(99, "CONSULTORIO " + empresa.getDireccion() + " " + empresa.getCodMunicipio().getDescripcion() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
         //datosReporte.setValor(85, "<b>ASEGURADORA RESPONSABLE DE LA ATENCION, NUMERO DE POLIZA SI ES SOAT Y VIGENCIA: </b> ");
 
+        //datos fijos ... datos acudiente 
+        //El siguiente dato getAcompañantee() en realidad trae el dato Nombre del acudiente
+        datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
+        datosReporte.setValor(102, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
+
+        
+        //y enfoque diferencial        
+        datosReporte.setValor(103, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
+        datosReporte.setValor(104, "<b>DISCAPACIDAD :</b>" + discapacidad);
+        datosReporte.setValor(105, "<b>GESTACIÓN :</b>" + gestacion);
+        datosReporte.setValor(106, "<b>OCUPACIÓN :</b>" + ocupacion);
+        datosReporte.setValor(107, "<b>RELIGIÓN :</b>" + religion);
+        datosReporte.setValor(108, "<b>ETNIA :</b>" + etnia);
+        datosReporte.setValor(109, "<b>VIC. DE CONFLICTO ARMADO :</b>" + victimaConflictoStr);
+        datosReporte.setValor(110, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
+        datosReporte.setValor(111, "<b>DESPLAZADO :</b>" + desplazadoStr);
+        datosReporte.setValor(112, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
+        
+//        <td><p:outputLabel value="Nivel educativo" /></td>
+//        <td><p:outputLabel value="Discapacidad" /></td>
+//        <td><p:outputLabel value="Gestación" /></td>
+//        <td><p:outputLabel value="Ocupación" /></td>
+//        <td><p:outputLabel value="Religión" /></td>
+//        <td><p:outputLabel value="Etnia" /></td>
+//        <p:outputLabel value="Víctima de conflicto armado" />
+//        <p:outputLabel value="Población LBGT" />
+//        <p:outputLabel value="Desplazado" />
+//        <p:outputLabel value="Víctima de maltrato" />
+
+        
+        
         //----------------------------------------------------------------------
         //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
         //----------------------------------------------------------------------
         for (HcDetalle campoDeRegistroEncontrado : listaCamposDeRegistroEncontrado) {
-            if (campoDeRegistroEncontrado.getHcCamposReg().getTabla() != null) {//ES CATEGORIA (realizar busqueda)
+            if (campoDeRegistroEncontrado.getHcCamposReg().getTabla() != null && campoDeRegistroEncontrado.getHcCamposReg().getTabla().length() >= 5) {//ES CATEGORIA (realizar busqueda), y considerar que la tabla minimo debe tener 5 caracts...
                 switch (campoDeRegistroEncontrado.getHcCamposReg().getTabla()) {
                     case "cfg_clasificaciones":
                         clasificacionBuscada = clasificacionesFacade.find(Integer.parseInt(campoDeRegistroEncontrado.getValor()));
@@ -910,11 +1055,11 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         System.out.println("Tipo registro  " + regEncontrado.getIdTipoReg().getUrlPagina());
         System.out.println(" regEncontrado.getIdTipoReg()..getUrlPagina().startsWith(g_)  = " + regEncontrado.getIdTipoReg().getNombre().startsWith("g_"));
 
-        if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_")) { //si es de los nuevos reportes con mas de 40 campos
-            cargarFuenteDatosReportesGrandes(regEncontrado);
-        } else {
-            cargarFuenteDatos(regEncontrado);
-        }
+//        if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_") ) { //si es de los nuevos reportes con mas de 40 campos
+//            cargarFuenteDatosReportesGrandes(regEncontrado);
+//        } else {
+        cargarFuenteDatos(regEncontrado);
+//        }
 
         System.out.println("...Num datos encontrados " + listaRegistrosParaPdf.size());
 
@@ -929,7 +1074,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         rutaReporte = rutaReporte.substring(0, rutaReporte.length() - 6);//quito .xhtml
         rutaReporte = rutaReporte + ".jasper";
 
-        System.out.println("Reporte" + rutaReporte);
+        System.out.println("Reporte --> " + rutaReporte);
+        System.out.println("....................................");
 
         beanCollectionDataSource = new JRBeanCollectionDataSource(listaRegistrosParaPdf);
         httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -1291,6 +1437,63 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             } else {
                 administradoraPaciente = "";
             }
+
+            //
+            if (pacienteSeleccionado.getOcupacion()!= null) {
+                ocupacion = pacienteSeleccionado.getOcupacion().getDescripcion();
+            } else {
+                ocupacion = "";
+            }
+            if (pacienteSeleccionado.getEscolaridad()!= null) {
+                escolaridad = pacienteSeleccionado.getEscolaridad().getDescripcion();
+            } else {
+                escolaridad = "";
+            }
+            if (pacienteSeleccionado.getReligion() != null) {
+                religion = pacienteSeleccionado.getReligion().getDescripcion();
+            } else {
+                religion = "";
+            }
+            if (pacienteSeleccionado.getDiscapacidad() != null) {
+                discapacidad = pacienteSeleccionado.getDiscapacidad().getDescripcion();
+            } else {
+                discapacidad = "";
+            }
+            if (pacienteSeleccionado.getGestacion() != null) {
+                gestacion = pacienteSeleccionado.getGestacion().getDescripcion();
+            } else {
+                gestacion = "";
+            }
+            if (pacienteSeleccionado.getDesplazado() != null) {
+                desplazado = pacienteSeleccionado.getDesplazado();
+                desplazadoStr = (desplazado)? "SI" : "NO";
+            } else {
+                desplazado = false;
+                desplazadoStr = "";
+            }
+            if (pacienteSeleccionado.getPoblacionLBGT() != null) {
+                poblacionLBGT = pacienteSeleccionado.getPoblacionLBGT();
+                poblacionLBGTStr = (poblacionLBGT)? "SI" : "NO";
+            } else {
+                poblacionLBGT = false;
+                poblacionLBGTStr = "";
+            }
+            if (pacienteSeleccionado.getVictimaMaltrato() != null) {
+                victimaMaltrato = pacienteSeleccionado.getVictimaMaltrato();
+                victimaMaltratoStr = (victimaMaltrato)? "SI" : "NO";
+            } else {
+                victimaMaltrato = false;
+                victimaMaltratoStr = "";
+            }
+            if (pacienteSeleccionado.getVictimaConflicto() != null) {
+                victimaConflicto = pacienteSeleccionado.getVictimaConflicto();
+                victimaConflictoStr = (victimaConflicto)? "SI" : "NO";
+            } else {
+                victimaConflicto = false;
+                victimaConflictoStr = "";
+            }
+
+            //
             tipoRegistroClinico = "";
             cambiaTipoRegistroClinico();
             if (!cargandoDesdeTab) {
@@ -1362,38 +1565,38 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             } else if (nombreTextoPredefinido.trim().length() == 0) {
                 imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
             } else//es nuevo se debe crear
-            if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
-                imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
-            } else {
-                CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
-                nuevoPredefinido.setNombre(nombreTextoPredefinido);
-                nuevoPredefinido.setIdMaestro(txtPredefinidoActual.getIdMaestro());
-                nuevoPredefinido.setDetalle(detalleTextoPredef);
-                txtPredefinidosFacade.create(nuevoPredefinido);
-                recargarMaestrosTxtPredefinidos();
-                RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
-                imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
-            }
+             if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+                    imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
+                } else {
+                    CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
+                    nuevoPredefinido.setNombre(nombreTextoPredefinido);
+                    nuevoPredefinido.setIdMaestro(txtPredefinidoActual.getIdMaestro());
+                    nuevoPredefinido.setDetalle(detalleTextoPredef);
+                    txtPredefinidosFacade.create(nuevoPredefinido);
+                    recargarMaestrosTxtPredefinidos();
+                    RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
+                    imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
+                }
         } else//se debe agregar a la categoria
-        if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
-            if (nombreTextoPredefinido.trim().length() == 0) {
-                imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
-            } else//es nuevo se debe crear
-            if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
-                imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
+         if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
+                if (nombreTextoPredefinido.trim().length() == 0) {
+                    imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
+                } else//es nuevo se debe crear
+                 if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+                        imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
+                    } else {
+                        CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
+                        nuevoPredefinido.setNombre(nombreTextoPredefinido);
+                        nuevoPredefinido.setIdMaestro(maestrosTxtPredefinidosFacade.find(Integer.parseInt(idMaestroTextoPredef)));
+                        nuevoPredefinido.setDetalle(detalleTextoPredef);
+                        txtPredefinidosFacade.create(nuevoPredefinido);
+                        recargarMaestrosTxtPredefinidos();
+                        RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
+                        imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
+                    }
             } else {
-                CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
-                nuevoPredefinido.setNombre(nombreTextoPredefinido);
-                nuevoPredefinido.setIdMaestro(maestrosTxtPredefinidosFacade.find(Integer.parseInt(idMaestroTextoPredef)));
-                nuevoPredefinido.setDetalle(detalleTextoPredef);
-                txtPredefinidosFacade.create(nuevoPredefinido);
-                recargarMaestrosTxtPredefinidos();
-                RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
-                imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
+                imprimirMensaje("Error", "No se ha seleccionado ninguna categoría", FacesMessage.SEVERITY_ERROR);
             }
-        } else {
-            imprimirMensaje("Error", "No se ha seleccionado ninguna categoría", FacesMessage.SEVERITY_ERROR);
-        }
     }
 
     public void eliminarPredefinido() {//eliminar un texto predefinido de una categoria seleccionada
@@ -1490,7 +1693,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     }
 
     public String getNombrePaciente() {
-        return nombrePaciente;
+        return nombrePaciente.toUpperCase();
     }
 
     public void setNombrePaciente(String nombrePaciente) {
@@ -1759,6 +1962,126 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
+    }
+
+    public String getReligion() {
+        return religion;
+    }
+
+    public void setReligion(String religion) {
+        this.religion = religion;
+    }
+
+    public String getGestacion() {
+        return gestacion;
+    }
+
+    public void setGestacion(String gestacion) {
+        this.gestacion = gestacion;
+    }
+
+    public String getDiscapacidad() {
+        return discapacidad;
+    }
+
+    public void setDiscapacidad(String discapacidad) {
+        this.discapacidad = discapacidad;
+    }
+
+    public Boolean getVictimaMaltrato() {
+        return victimaMaltrato;
+    }
+
+    public void setVictimaMaltrato(Boolean victimaMaltrato) {
+        this.victimaMaltrato = victimaMaltrato;
+    }
+
+    public Boolean getVictimaConflicto() {
+        return victimaConflicto;
+    }
+
+    public void setVictimaConflicto(Boolean victimaConflicto) {
+        this.victimaConflicto = victimaConflicto;
+    }
+
+    public Boolean getDesplazado() {
+        return desplazado;
+    }
+
+    public void setDesplazado(Boolean desplazado) {
+        this.desplazado = desplazado;
+    }
+
+    public Boolean getPoblacionLBGT() {
+        return poblacionLBGT;
+    }
+
+    public void setPoblacionLBGT(Boolean poblacionLBGT) {
+        this.poblacionLBGT = poblacionLBGT;
+    }
+
+    public String getImc() {
+        return imc;
+    }
+
+    public void setImc(String imc) {
+        this.imc = imc;
+    }
+
+    public String getEscolaridad() {
+        return escolaridad;
+    }
+
+    public void setEscolaridad(String escolaridad) {
+        this.escolaridad = escolaridad;
+    }
+
+    public String getOcupacion() {
+        return ocupacion;
+    }
+
+    public void setOcupacion(String ocupacion) {
+        this.ocupacion = ocupacion;
+    }
+
+    public String getEtnia() {
+        return etnia;
+    }
+
+    public void setEtnia(String etnia) {
+        this.etnia = etnia;
+    }
+
+    public String getVictimaMaltratoStr() {
+        return victimaMaltratoStr;
+    }
+
+    public void setVictimaMaltratoStr(String victimaMaltratoStr) {
+        this.victimaMaltratoStr = victimaMaltratoStr;
+    }
+
+    public String getVictimaConflictoStr() {
+        return victimaConflictoStr;
+    }
+
+    public void setVictimaConflictoStr(String victimaConflictoStr) {
+        this.victimaConflictoStr = victimaConflictoStr;
+    }
+
+    public String getDesplazadoStr() {
+        return desplazadoStr;
+    }
+
+    public void setDesplazadoStr(String desplazadoStr) {
+        this.desplazadoStr = desplazadoStr;
+    }
+
+    public String getPoblacionLBGTStr() {
+        return poblacionLBGTStr;
+    }
+
+    public void setPoblacionLBGTStr(String poblacionLBGTStr) {
+        this.poblacionLBGTStr = poblacionLBGTStr;
     }
 
 }
