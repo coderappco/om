@@ -1,5 +1,6 @@
 package managedBeans.historias;
 
+import beans.utilidades.FilaDataTable;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -30,6 +31,7 @@ import managedBeans.seguridad.LoginMB;
 import modelo.entidades.CfgClasificaciones;
 import modelo.entidades.CfgDiagnostico;
 import modelo.entidades.CfgEmpresa;
+import modelo.entidades.CfgFamiliar;
 import modelo.entidades.CfgMaestrosTxtPredefinidos;
 import modelo.entidades.CfgPacientes;
 import modelo.entidades.CfgTxtPredefinidos;
@@ -44,6 +46,7 @@ import modelo.entidades.HcTipoReg;
 import modelo.fachadas.CfgClasificacionesFacade;
 import modelo.fachadas.CfgDiagnosticoFacade;
 import modelo.fachadas.CfgEmpresaFacade;
+import modelo.fachadas.CfgFamiliarFacade;
 import modelo.fachadas.CfgMaestrosTxtPredefinidosFacade;
 import modelo.fachadas.CfgPacientesFacade;
 import modelo.fachadas.CfgTxtPredefinidosFacade;
@@ -98,6 +101,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     FacServicioFacade servicioFacade;
     @EJB
     CfgEmpresaFacade empresaFacade;
+    @EJB
+    CfgFamiliarFacade familiarFacade;
 
     //---------------------------------------------------
     //-----------------ENTIDADES ------------------------
@@ -183,7 +188,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     private String religion = "";
     private String gestacion = "";
     private String discapacidad = "";
-    
+
     private Boolean victimaMaltrato = false; // Un booleano y un Str, el str es para mostrar nada, o SI o NO
     private String victimaMaltratoStr = "";
     private Boolean victimaConflicto = false;
@@ -192,8 +197,16 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     private String desplazadoStr = "";
     private Boolean poblacionLBGT = false;
     private String poblacionLBGTStr = "";
-    
+
     private String imc = "";
+
+    private List<FilaDataTable> listaEstructuraFamiliar = new ArrayList<>();
+    private List<FilaDataTable> listaEstructuraFamiliarFiltro = new ArrayList<>();
+    private FilaDataTable familiarSeleccionado = new FilaDataTable();
+    private String nombreFamiliar = "";
+    private String edadFamiliar = "";
+    private String parentescoFamiliar = "";
+    private String ocupacionFamiliar = "";
 
 //---------------------------------------------------
     //----------------- FUNCIONES INICIALES -----------------------
@@ -214,6 +227,40 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
     }
 
+    public void cargarEstructuraFamiliar() {
+        listaEstructuraFamiliar = new ArrayList<>();
+        List<CfgFamiliar> listaM = null;
+        if (datosFormulario != null) {
+            listaM = familiarFacade.findFamiliaresByPaciente(pacienteSeleccionado);
+            System.out.println("buscando familiares del paciente ... " + pacienteSeleccionado.getIdPaciente());
+        }
+
+        if (listaM != null) {
+
+            System.out.println("Fam encontrados " + listaM.size());
+
+            familiarSeleccionado = new FilaDataTable();
+
+            for (CfgFamiliar cfgFamiliar : listaM) {
+                FilaDataTable r = new FilaDataTable();
+                r.setColumna1(cfgFamiliar.getNombre());
+                r.setColumna2(cfgFamiliar.getEdad().toString());
+                r.setColumna3(cfgFamiliar.getIdParentesco().getId().toString());
+                r.setColumna4(cfgFamiliar.getIdOcupacion().getId().toString());
+                r.setColumna5(cfgFamiliar.getIdParentesco().getDescripcion());
+                r.setColumna6(cfgFamiliar.getIdOcupacion().getDescripcion());
+
+                listaEstructuraFamiliar.add(r);
+                System.out.println("listaEstructuraFamiliar.size = " + listaEstructuraFamiliar.size());
+
+            }
+        } else {
+
+            System.out.println("Fam no encontrados ");
+        }
+
+    }
+
     @PostConstruct
     public void inicializar() {
         recargarMaestrosTxtPredefinidos();
@@ -225,6 +272,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         listaPrestadores = usuariosFacade.buscarUsuariosParaHistorias();
         seleccionaTodosRegCliHis();
         empresa = empresaFacade.findAll().get(0);
+
+        familiarSeleccionado = new FilaDataTable();
     }
 
     private void valoresPorDefecto() {
@@ -239,6 +288,84 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 //                datosFormulario.setDato1("475");//en este combo quede seleccionado ENFERMEDAD GENERAL                
 //            }
         }
+    }
+
+    public void cargarDialogoAgregarFamiliar() {
+
+        nombreFamiliar = "";
+        edadFamiliar = "";
+        parentescoFamiliar = "";
+        ocupacionFamiliar = "";
+
+        RequestContext.getCurrentInstance().update("IdFormDialogs:IdPanelAgregarFamiliar");
+        RequestContext.getCurrentInstance().execute("PF('dialogoAgregarFamiliar').show();");
+    }
+
+    public void quitarFamiliar() {
+
+        System.out.println("From quitarFamiliar()" + listaEstructuraFamiliar.size());
+        listaEstructuraFamiliar.remove(familiarSeleccionado);
+        System.out.println("/From quitarFamiliar()" + listaEstructuraFamiliar.size());
+
+        RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
+        RequestContext.getCurrentInstance().execute("PF('wvtablaEstructuraFamiliar').clearFilters(); PF('wvtablaEstructuraFamiliar').getPaginator().setPage(0);");
+    }
+
+    public void cerrar() {
+        RequestContext.getCurrentInstance().execute("PF('dialogoAgregarFamiliar').hide(); PF('wvtablaEstructuraFamiliar').clearFilters(); PF('wvtablaEstructuraFamiliar').getPaginator().setPage(0);");
+        RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
+    }
+
+    public void agregarFamiliar() {
+        System.out.println("From agregarFamiliar()");
+
+        if (validacionCampoVacio(nombreFamiliar, "Nombre")) {
+            return;
+        }
+        if (validacionCampoVacio(edadFamiliar, "Edad")) {
+            return;
+        }
+        if (validacionCampoVacio(parentescoFamiliar, "Parentesco")) {
+            return;
+        }
+
+        familiarSeleccionado = new FilaDataTable();
+        familiarSeleccionado.setColumna1(nombreFamiliar);
+        familiarSeleccionado.setColumna2(edadFamiliar);
+        familiarSeleccionado.setColumna3(parentescoFamiliar);
+        familiarSeleccionado.setColumna4(ocupacionFamiliar);
+
+        CfgClasificaciones clasificacion;
+        if (parentescoFamiliar != null) {
+            clasificacion = clasificacionesFacade.find(Integer.parseInt(parentescoFamiliar));
+            if (clasificacion != null) {
+                familiarSeleccionado.setColumna5(clasificacion.getDescripcion());
+            }
+        } else {
+            familiarSeleccionado.setColumna5("");
+
+        }
+        System.out.println("ocupacionFamiliar " + ocupacionFamiliar);
+        if (ocupacionFamiliar != null) {
+            clasificacion = clasificacionesFacade.find(Integer.parseInt(ocupacionFamiliar));
+            if (clasificacion != null) {
+                familiarSeleccionado.setColumna6(clasificacion.getDescripcion());
+            }
+        } else {
+            familiarSeleccionado.setColumna6("");
+        }
+
+        listaEstructuraFamiliar.add(familiarSeleccionado);
+        RequestContext.getCurrentInstance().execute("PF('wvtablaEstructuraFamiliar').clearFilters(); PF('wvtablaEstructuraFamiliar').getPaginator().setPage(0);");
+
+        nombreFamiliar = "";
+        edadFamiliar = "";
+        parentescoFamiliar = "";
+        ocupacionFamiliar = "";
+        RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
+
+        System.out.println("/From agregarFamiliar()");
+
     }
 
     private String calcularIMC(float peso, float talla) {
@@ -281,9 +408,9 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     public void calcularIMCHisCliUrgencias() {
         try {
-            float peso = Float.parseFloat(datosFormulario.getDato64().toString());
-            float talla = Float.parseFloat(datosFormulario.getDato65().toString());
-            datosFormulario.setDato66(calcularIMC(peso, talla));
+            float peso = Float.parseFloat(datosFormulario.getDato65().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato66().toString());
+            datosFormulario.setDato67(calcularIMC(peso, talla));
 
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
@@ -322,7 +449,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             System.out.println("" + e.getMessage());
         }
     }
-    
+
     public void calcularIMCHisClinica() {
         try {
             float peso = Float.parseFloat(datosFormulario.getDato60().toString());
@@ -568,6 +695,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             cargarMunicipios();//intento cargar municipios sea o no necesario
 
         }
+
         modificandoRegCli = true;
         mostrarFormularioRegistroClinico();
         RequestContext.getCurrentInstance().execute("PF('dlgHistorico').hide();");
@@ -715,7 +843,6 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
         datosReporte.setValor(102, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
 
-        
         //y enfoque diferencial        
         datosReporte.setValor(103, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
         datosReporte.setValor(104, "<b>DISCAPACIDAD :</b>" + discapacidad);
@@ -727,7 +854,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(110, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
         datosReporte.setValor(111, "<b>DESPLAZADO :</b>" + desplazadoStr);
         datosReporte.setValor(112, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
-        
+
 //        <td><p:outputLabel value="Nivel educativo" /></td>
 //        <td><p:outputLabel value="Discapacidad" /></td>
 //        <td><p:outputLabel value="Gestación" /></td>
@@ -738,9 +865,6 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 //        <p:outputLabel value="Población LBGT" />
 //        <p:outputLabel value="Desplazado" />
 //        <p:outputLabel value="Víctima de maltrato" />
-
-        
-        
         //----------------------------------------------------------------------
         //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
         //----------------------------------------------------------------------
@@ -860,7 +984,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             datosReporte.setValor(215, "<b>OCUPACION: </b> ");
         }
         //59
-        datosReporte.setValor(216, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion()));
+        datosReporte.setValor(265, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion()));
         //60
         datosReporte.setValor(216, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResidencia()));
 
@@ -914,7 +1038,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
 
         //69
-        datosReporte.setValor(227, pacienteSeleccionado.nombreCompleto() + "<br/>" + datosReporte.getValor(227));//NOMBRE EN FIRMA PACIENTE        
+        datosReporte.setValor(227, pacienteSeleccionado.nombreCompleto() + "<br/>" + datosReporte.getValor(217));//NOMBRE EN FIRMA PACIENTE        
 
         //70
         //empresa
@@ -939,12 +1063,12 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 //72
                 datosReporte.setValor(233, regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//ESPECIALIDAD MEDICO
                 //84
-                datosReporte.setValor(234, datosReporte.getValor(234) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//PARA FIRMA  NOMBRE MEDICO
+                datosReporte.setValor(234, datosReporte.getValor(229) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//PARA FIRMA  NOMBRE MEDICO
             }
             //73
             datosReporte.setValor(235, obtenerCadenaNoNula(regEncontrado.getIdMedico().getRegistroProfesional()));//REGISTRO PROFESIONAL MEDICO
             //84
-            datosReporte.setValor(235, datosReporte.getValor(235) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional());//NOMBRE MEDICO
+            datosReporte.setValor(235, datosReporte.getValor(234) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional());//NOMBRE MEDICO
 
             //74
             if (regEncontrado.getIdMedico().getFirma() != null) {
@@ -983,6 +1107,37 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(249, "CONSULTORIO " + empresa.getDireccion() + " " + empresa.getCodMunicipio().getDescripcion() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
         //datosReporte.setValor(85, "<b>ASEGURADORA RESPONSABLE DE LA ATENCION, NUMERO DE POLIZA SI ES SOAT Y VIGENCIA: </b> ");
 
+//         datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
+//        datosReporte.setValor(102, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
+//
+//        //y enfoque diferencial        
+//        datosReporte.setValor(103, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
+//        datosReporte.setValor(104, "<b>DISCAPACIDAD :</b>" + discapacidad);
+//        datosReporte.setValor(105, "<b>GESTACIÓN :</b>" + gestacion);
+//        datosReporte.setValor(106, "<b>OCUPACIÓN :</b>" + ocupacion);
+//        datosReporte.setValor(107, "<b>RELIGIÓN :</b>" + religion);
+//        datosReporte.setValor(108, "<b>ETNIA :</b>" + etnia);
+//        datosReporte.setValor(109, "<b>VIC. DE CONFLICTO ARMADO :</b>" + victimaConflictoStr);
+//        datosReporte.setValor(110, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
+//        datosReporte.setValor(111, "<b>DESPLAZADO :</b>" + desplazadoStr);
+//        datosReporte.setValor(112, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
+//        
+        //datos acudiente
+        datosReporte.setValor(250, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
+        datosReporte.setValor(251, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
+
+        //y enfoque diferencial        
+        datosReporte.setValor(252, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
+        datosReporte.setValor(253, "<b>DISCAPACIDAD :</b>" + discapacidad);
+        datosReporte.setValor(254, "<b>GESTACIÓN :</b>" + gestacion);
+        datosReporte.setValor(255, "<b>OCUPACIÓN :</b>" + ocupacion);
+        datosReporte.setValor(256, "<b>RELIGIÓN :</b>" + religion);
+        datosReporte.setValor(257, "<b>ETNIA :</b>" + etnia);
+        datosReporte.setValor(258, "<b>VIC. DE CONFLICTO ARMADO :</b>" + victimaConflictoStr);
+        datosReporte.setValor(259, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
+        datosReporte.setValor(260, "<b>DESPLAZADO :</b>" + desplazadoStr);
+        datosReporte.setValor(261, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
+        
         //----------------------------------------------------------------------
         //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
         //----------------------------------------------------------------------
@@ -1055,11 +1210,11 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         System.out.println("Tipo registro  " + regEncontrado.getIdTipoReg().getUrlPagina());
         System.out.println(" regEncontrado.getIdTipoReg()..getUrlPagina().startsWith(g_)  = " + regEncontrado.getIdTipoReg().getNombre().startsWith("g_"));
 
-//        if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_") ) { //si es de los nuevos reportes con mas de 40 campos
-//            cargarFuenteDatosReportesGrandes(regEncontrado);
-//        } else {
-        cargarFuenteDatos(regEncontrado);
-//        }
+        if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_")) { //si es de los nuevos reportes con mas de 40 campos
+            cargarFuenteDatosReportesGrandes(regEncontrado);
+        } else {
+            cargarFuenteDatos(regEncontrado);
+        }
 
         System.out.println("...Num datos encontrados " + listaRegistrosParaPdf.size());
 
@@ -1174,6 +1329,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                     }
                     cargarMunicipios();//intento cargar municipios sea o no necesario
                 }
+
+                cargarEstructuraFamiliar();
                 imprimirMensaje("Informacion", "Para su facilidad se cargo los datos de la última historia de este tipo de registro", FacesMessage.SEVERITY_INFO);
             } else {
                 valoresPorDefecto();
@@ -1346,6 +1503,21 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             }
         }
 
+        //guardar estructura familiar si es que existe
+        for (FilaDataTable familiar : listaEstructuraFamiliar) {
+            CfgFamiliar fam = new CfgFamiliar();
+            fam.setIdPaciente(pacienteSeleccionado);
+            fam.setNombre(familiar.getColumna1());
+            fam.setEdad(Integer.parseInt(familiar.getColumna2()));
+            CfgClasificaciones parentesco1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna3()));
+            CfgClasificaciones ocupacion1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna4()));
+
+            fam.setIdParentesco(parentesco1);
+            fam.setIdOcupacion(ocupacion1);
+
+            familiarFacade.create(fam);
+        }
+
         if (tipoRegistroClinicoActual.getIdTipoReg() == 8) {//SOLICITUD DE AUTORIZACION DE SERVICIOS            
             tipoRegistroClinicoActual.setConsecutivo(tipoRegistroClinicoActual.getConsecutivo() + 1);
             tipoRegCliFacade.edit(tipoRegistroClinicoActual);//incrementar consecutivo a tipo de registro clinico actual           
@@ -1439,12 +1611,12 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             }
 
             //
-            if (pacienteSeleccionado.getOcupacion()!= null) {
+            if (pacienteSeleccionado.getOcupacion() != null) {
                 ocupacion = pacienteSeleccionado.getOcupacion().getDescripcion();
             } else {
                 ocupacion = "";
             }
-            if (pacienteSeleccionado.getEscolaridad()!= null) {
+            if (pacienteSeleccionado.getEscolaridad() != null) {
                 escolaridad = pacienteSeleccionado.getEscolaridad().getDescripcion();
             } else {
                 escolaridad = "";
@@ -1466,28 +1638,28 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             }
             if (pacienteSeleccionado.getDesplazado() != null) {
                 desplazado = pacienteSeleccionado.getDesplazado();
-                desplazadoStr = (desplazado)? "SI" : "NO";
+                desplazadoStr = (desplazado) ? "SI" : "NO";
             } else {
                 desplazado = false;
                 desplazadoStr = "";
             }
             if (pacienteSeleccionado.getPoblacionLBGT() != null) {
                 poblacionLBGT = pacienteSeleccionado.getPoblacionLBGT();
-                poblacionLBGTStr = (poblacionLBGT)? "SI" : "NO";
+                poblacionLBGTStr = (poblacionLBGT) ? "SI" : "NO";
             } else {
                 poblacionLBGT = false;
                 poblacionLBGTStr = "";
             }
             if (pacienteSeleccionado.getVictimaMaltrato() != null) {
                 victimaMaltrato = pacienteSeleccionado.getVictimaMaltrato();
-                victimaMaltratoStr = (victimaMaltrato)? "SI" : "NO";
+                victimaMaltratoStr = (victimaMaltrato) ? "SI" : "NO";
             } else {
                 victimaMaltrato = false;
                 victimaMaltratoStr = "";
             }
             if (pacienteSeleccionado.getVictimaConflicto() != null) {
                 victimaConflicto = pacienteSeleccionado.getVictimaConflicto();
-                victimaConflictoStr = (victimaConflicto)? "SI" : "NO";
+                victimaConflictoStr = (victimaConflicto) ? "SI" : "NO";
             } else {
                 victimaConflicto = false;
                 victimaConflictoStr = "";
@@ -2082,6 +2254,62 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     public void setPoblacionLBGTStr(String poblacionLBGTStr) {
         this.poblacionLBGTStr = poblacionLBGTStr;
+    }
+
+    public List<FilaDataTable> getListaEstructuraFamiliar() {
+        return listaEstructuraFamiliar;
+    }
+
+    public void setListaEstructuraFamiliar(List<FilaDataTable> listaEstructuraFamiliar) {
+        this.listaEstructuraFamiliar = listaEstructuraFamiliar;
+    }
+
+    public List<FilaDataTable> getListaEstructuraFamiliarFiltro() {
+        return listaEstructuraFamiliarFiltro;
+    }
+
+    public void setListaEstructuraFamiliarFiltro(List<FilaDataTable> listaEstructuraFamiliarFiltro) {
+        this.listaEstructuraFamiliarFiltro = listaEstructuraFamiliarFiltro;
+    }
+
+    public FilaDataTable getFamiliarSeleccionado() {
+        return familiarSeleccionado;
+    }
+
+    public void setFamiliarSeleccionado(FilaDataTable familiarSeleccionado) {
+        this.familiarSeleccionado = familiarSeleccionado;
+    }
+
+    public String getNombreFamiliar() {
+        return nombreFamiliar;
+    }
+
+    public void setNombreFamiliar(String nombreFamiliar) {
+        this.nombreFamiliar = nombreFamiliar;
+    }
+
+    public String getEdadFamiliar() {
+        return edadFamiliar;
+    }
+
+    public void setEdadFamiliar(String edadFamiliar) {
+        this.edadFamiliar = edadFamiliar;
+    }
+
+    public String getParentescoFamiliar() {
+        return parentescoFamiliar;
+    }
+
+    public void setParentescoFamiliar(String parentescoFamiliar) {
+        this.parentescoFamiliar = parentescoFamiliar;
+    }
+
+    public String getOcupacionFamiliar() {
+        return ocupacionFamiliar;
+    }
+
+    public void setOcupacionFamiliar(String ocupacionFamiliar) {
+        this.ocupacionFamiliar = ocupacionFamiliar;
     }
 
 }

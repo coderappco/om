@@ -1,0 +1,690 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">  
+    <h:head>
+        <title>Usuarios</title>
+        <link href="../recursos/css/estilos.css" rel="stylesheet"/>        
+        <link href="../recursos/css/metro-bootstrap.css" rel="stylesheet"/>
+        <link href="../recursos/css/iconFont.css" rel="stylesheet"/>
+        <script type="text/javascript" src="../recursos/js/calendario.js"></script> 
+    </h:head>
+    <h:body>
+        #{historiasMB.inicializar()}
+        <h:form id="IdFormRegistroClinico">  
+            <p:growl id="IdMensajeUsuarios"  showDetail="true" sticky="false" autoUpdate="true" life="2000"/>
+            <table style="margin-left: auto; margin-right: auto;" >
+
+                <tr><td colspan="2"><h2>HISTORIA CLINICA DE PSICOLOGIA</h2></td></tr>
+
+                <!--DATOS DEL ACUDIENTE-->
+                <div>
+                    <tr><td colspan="2"><h2>DATOS DEL ACUDIENTE</h2></td></tr>         
+                    <tr>
+                        <td><p:outputLabel value="Nombre" /></td>
+                        <td><p:outputLabel value="Dirección" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.acompanante}"  /></td> <!--Este campo pen realidad es el acudiente-->
+                        <td><p:inputText  disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.direccion}"  /></td>                    
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Acompañante" /></td>
+                        <td><p:outputLabel value="Parentesco" /></td>
+                    </tr>
+                    <tr>
+                        <p:focus for="IdFocus" />
+                        <td><p:inputText id="IdFocus" styleClass="width1" value="#{historiasMB.datosFormulario.dato0}"  /></td>                    
+                        <td>
+                            <p:selectOneMenu  style="width: 100%;" value="#{historiasMB.datosFormulario.dato1}" filter="true" filterMatchMode="contains">
+                                <f:selectItem itemLabel="" itemValue=""/>
+                                <f:selectItems value="#{aplicacionGeneralMB.listaParentesco}" />
+                            </p:selectOneMenu>  
+
+
+                        </td>                    
+                    </tr>
+
+                    <tr>
+                        <td><p:outputLabel value="Teléfono" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato2}"  /></td>                    
+                    </tr>
+                </div>
+                <!--FIN DATOS DEL ACUDIENTE-->
+
+                <!--ENFOQUE DIFERENCIAL-->
+                <div>
+                    <tr><td colspan="2"><h2>ENFOQUE DIFERENCIAL</h2></td></tr>         
+                    <tr>
+                        <td><p:outputLabel value="Nivel educativo" /></td>
+                        <td><p:outputLabel value="Discapacidad" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.escolaridad.descripcion}"  /></td>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.discapacidad.descripcion}"  /></td>                    
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Gestación" /></td>
+                        <td><p:outputLabel value="Ocupación" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.gestacion.descripcion}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.ocupacion.descripcion}"  /></td>                    
+                    </tr>
+                    <tr>
+                        <td><p:outputLabel value="Religión" /></td>
+                        <td><p:outputLabel value="Etnia" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.religion.descripcion}"  /></td>                    
+                        <td><p:inputText disabled="true" styleClass="width1" value="#{historiasMB.pacienteSeleccionado.etnia.descripcion}"  /></td>                    
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Víctima de conflicto armado" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.victimaConflicto}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Población LBGT" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.poblacionLBGT}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Desplazado" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.desplazado}"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width:100%">
+                                <tr>
+                                    <td width="55%">
+                                        <p:outputLabel value="Víctima de maltrato" />
+                                    </td>
+                                    <td>
+                                        <p:selectBooleanCheckbox disabled="true" value="#{historiasMB.pacienteSeleccionado.victimaMaltrato}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+
+                </div>
+                <!--FIN ENFOQUE DIFERENCIAL-->
+
+                <div>
+
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="MOTIVO CONSULTA"/></h2></td>                                        
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p:inputTextarea  styleClass="width2"  value="#{historiasMB.datosFormulario.dato3}"/>
+
+                        </td>                    
+                    </tr>
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="DESENCADENANTE DEL PROBLEMA"/></h2></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:inputTextarea styleClass="width2" value="#{historiasMB.datosFormulario.dato4}"/></td>
+                    </tr>
+                </div>
+
+
+                <!--ESTRUCTURA FAMILIAR-->
+                <tr>
+                    <td colspan="2"><h2><p:outputLabel value="ESTRUCTURA FAMILIAR"/></h2></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div style="width: 80%; margin-left: auto; margin-right: auto;">
+
+                            <p:commandButton 
+                                title="Agregar" value="&nbsp;"
+                                styleClass="icon-plus-2 fg-lightBlue bg-white no-border"
+                                actionListener="#{historiasMB.cargarDialogoAgregarFamiliar}"
+                                style="font-size: 20px; width: 20px; height: 20px; left: 20px; "  /> 
+                            &nbsp;
+                            <p:commandButton 
+                                title="Quitar medicamento" value="&nbsp;"                                        
+                                styleClass="icon-minus-2 fg-lightBlue bg-white no-border"                     
+                                actionListener="#{historiasMB.quitarFamiliar}"
+                                style="font-size: 20px; width: 20px; height: 20px; left: 20px; " update="tablaEstructuraFamiliar"/> 
+                            <br/><br/>
+
+                            <p:dataTable 
+                                id="tablaEstructuraFamiliar" 
+                                var="item" 
+                                widgetVar="wvtablaEstructuraFamiliar"
+                                value="#{historiasMB.listaEstructuraFamiliar}" 
+                                filteredValue="#{historiasMB.listaEstructuraFamiliarFiltro}"
+                                rowKey="#{historiasMB.familiarSeleccionado.columna1}"    
+                                selection="#{historiasMB.familiarSeleccionado}"                                     
+                                paginator="true"
+                                rows="5"                                    
+                                paginatorPosition="bottom"                                
+                                emptyMessage="No hay registros"
+                                scrollable="true" 
+                                scrollHeight="250"
+                                currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords}"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                pageLinks="5"
+                                selectionMode="single"
+                                resizableColumns="false">                                                                                               
+                                <p:column headerText="NOMBRE Y APELLIDO"  filterBy="#{item.columna1}" filterMatchMode="contains">
+                                    #{item.columna1}
+                                </p:column>
+                                <p:column headerText="EDAD" filterBy="#{item.columna2}" filterMatchMode="contains">
+                                    #{item.columna2}
+                                </p:column>
+                                <p:column headerText="PARENTESCO"  filterBy="#{item.columna5}" filterMatchMode="contains">
+                                    #{item.columna5}
+                                </p:column>
+                                <p:column headerText="OCUPACIÓN" filterBy="#{item.columna6}" filterMatchMode="contains">
+                                    #{item.columna6}
+                                </p:column>
+                            </p:dataTable>  
+                        </div>
+                    </td>
+
+                </tr>
+                <!--/ESTRUCTURA FAMILIAR-->
+
+                <tr>
+                    <td colspan="2"><h2><p:outputLabel value="MANTENEDOR DEL PROBLEMA"/></h2></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><p:inputTextarea styleClass="width2" value="#{historiasMB.datosFormulario.dato5}"/></td>
+                </tr>
+
+
+                <!--entrevista-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="ENTREVISTA" /></h2></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Área escolar" /></td>
+                        <td colspan="1"><p:outputLabel value="Área familiar" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato6}"/></td>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato7}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Área sexual" /></td>
+                        <td colspan="1"><p:outputLabel value="Area social" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato8}"/></td>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato9}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Área laboral" /></td>
+                        <td colspan="1"><p:outputLabel value="Área religión" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato10}"/></td>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato11}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Área personal" /></td>
+                        <td colspan="1"><p:outputLabel value="Área económica" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato12}"/></td>
+                        <td colspan="1"><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato13}"/></td>
+                    </tr>
+
+                </div>
+
+                <!--VIOLENCIA FAMILIAR-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="VIOLENCIA FAMILIAR" /></h2></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><p:outputLabel value="¿Alguna vez ha sido maltratado física y/o emocionalente por alguien? " /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato14}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:outputLabel value="¿Se siente en riesgo en este momento?" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato15}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><p:outputLabel value="Tipo de violencia" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><p:inputText  styleClass="width2" value="#{historiasMB.datosFormulario.dato16}"/></td>
+                    </tr>
+
+                </div>
+
+                <!--/VIOLENCIA FAMILIAR-->
+
+                <!-- IDEACIÓN SUICIDA-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2><p:outputLabel value="IDEACIÓN SUICIDA Y ACTITUDES ANTE LA VIDA" /></h2></td>
+                    </tr>
+
+                    <tr>
+                        <td><p:outputLabel value="Conducta suicida" /></td>
+                        <td><p:outputLabel value="Red de apoyo" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato17}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato18}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td><p:outputLabel value="Remision" /></td>
+                        <td><p:outputLabel value="Consumo de SPA" /></td>
+                    </tr>
+                    <tr>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato19}"/></td>
+                        <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato20}"/></td>
+                    </tr>
+                </div>
+                <!-- /IDEACIÓN SUICIDA-->
+
+                <!--INFORMACION Y EDUCACIÓN-->
+                <tr>
+                    <td colspan="2"><h2><p:outputLabel value="INFORMACION Y EDUCACIÓN" /></h2></td>
+                </tr>
+
+                <tr>
+                    <td><p:outputLabel value="Orientación general" /></td>
+                    <td><p:outputLabel value="Violencia y maltrato" /></td>
+                </tr>
+                <tr>
+                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato21}"/></td>
+                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato22}"/></td>
+                </tr>
+
+                <tr>
+                    <td><p:outputLabel value="Rutas de violencia" /></td>
+                    <td><p:outputLabel value="Gestante - caso IVE" /></td>
+                </tr>
+
+                 <tr>
+                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato23}"/></td>
+                    <td><p:inputText  styleClass="width1" value="#{historiasMB.datosFormulario.dato24}"/></td>
+                </tr>
+
+                
+                <!--/INFORMACION Y EDUCACIÓN-->
+
+
+                <!--ANTECEDENTES PERSONALES-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2>ANTECEDENTES PERSONALES</h2></td>
+                    </tr>                
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Generales"/></td>
+                        <td colspan="1"><p:outputLabel value="Patológicos"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato25}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato26}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Farmacológicos"/></td>
+                        <td colspan="1"><p:outputLabel value="Tóxicos"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato27}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato28}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Otros antecedentes"/></td>
+                        <td colspan="1"></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato29}"/></td>
+                    </tr>
+                </div>
+                <!--/ANTECEDENTES PERSONALES-->
+
+                <!--ANTECEDENTES FAMILIARES-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2>ANTECEDENTES FAMILIARES</h2></td>
+                    </tr>                
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Generales"/></td>
+                        <td colspan="1"><p:outputLabel value="Patológicos"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato30}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato31}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Tóxicos"/></td>
+                        <td colspan="1"><p:outputLabel value="Farmacológicos"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato32}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato33}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Alérgicos"/></td>
+                        <td colspan="1"><p:outputLabel value="Obstetricos"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato34}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato35}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Ginecológicos"/></td>
+                        <td colspan="1"></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato36}"/></td>
+                        <td colspan="1"></td>
+                    </tr>
+                </div>
+                <!--/ANTECEDENTES FAMILIARES-->
+
+                <!--ANTECEDENTES DEL MENOR (ENTRE 0 Y 13 AÑOS)-->
+                <tr>
+                    <td colspan="2"><h2>ANTECEDENTES DEL MENOR (ENTRE 0 Y 13 AÑOS)</h2></td>
+                </tr>                
+                <tr>
+                    <td colspan="1"><p:outputLabel value="Antecedentes de la madre en el periodo de gestación"/></td>
+                    <td colspan="1"><p:outputLabel value="Complicaciones del embarazo"/></td>
+
+                </tr>    
+                <tr>
+                    <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato37}"/></td>
+                    <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato38}"/></td>
+                </tr>
+
+                <tr>
+                    <td colspan="1"><p:outputLabel value="Tipo de parto"/></td>    
+
+                </tr>    
+                <tr>
+                    <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato39}"/></td>
+                </tr>
+                <!--/ANTECEDENTES DEL MENOR (ENTRE 0 Y 13 AÑOS)-->
+
+                <tr>
+                    <td colspan="2"><h2>COMO RESUELVE LOS PROBLEMAS CON SU HIJO/TECNICAS DISCIPLINARIAS</h2></td>
+                </tr>                
+                <tr>
+                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato40}"/></td>
+                </tr> 
+
+                <!--EXAMEN MENTAL-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2>EXAMEN MENTAL</h2></td>
+                    </tr>                
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Apariencia general"/></td>
+                        <td colspan="1"><p:outputLabel value="Actitud"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato41}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1"  value="#{historiasMB.datosFormulario.dato42}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Atención"/></td>
+                        <td colspan="1"><p:outputLabel value="Conciencia"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato43}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato44}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Orientación"/></td>
+                        <td colspan="1"><p:outputLabel value="Lenguaje"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato45}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato46}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Afecto"/></td>
+                        <td colspan="1"><p:outputLabel value="Memoria"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato47}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato48}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Pensamiento"/></td>
+                        <td colspan="1"><p:outputLabel value="Habito"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato49}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato50}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Sueño"/></td>
+                        <td colspan="1"><p:outputLabel value="Alimentación"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato51}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato52}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Inteligencia"/></td>
+                        <td colspan="1"><p:outputLabel value="Retardo mental"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato53}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato54}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Instrospeccion"/></td>
+                        <td colspan="1"><p:outputLabel value="Prospección"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato55}"/></td>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato56}"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"><p:outputLabel value="Somatizaciones"/></td>
+                    </tr>    
+                    <tr>
+                        <td colspan="1"><p:inputText styleClass="width1" value="#{historiasMB.datosFormulario.dato57}"/></td>
+                    </tr>
+                </div>
+                <!--Fin de examen mental-->
+
+                <tr>
+                    <td colspan="2"><h2>ANAMNESIS</h2></td>
+                </tr>                
+                <tr>
+                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato58}"/></td>
+                </tr>    
+                <tr>
+                    <td colspan="2"><h2>EXPECTATIVAS FRENTE AL PROCESO DE INTERVENCIÓN</h2></td>
+                </tr>                
+                <tr>
+                    <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato59}"/></td>
+                </tr>    
+
+
+
+                <!--INTERVENCIÓN DE MEDICINA FAMILIAR-->
+                <div>
+                    <tr>
+                        <td colspan="2"><h2>INTERVENCIÓN DE MEDICINA FAMILIAR</h2></td>
+                    </tr>                
+                    <tr>
+                        <td colspan="2"><p:inputText styleClass="width2"  value="#{historiasMB.datosFormulario.dato60}"/></td>
+                    </tr>
+                </div>
+                <!--FIN DE INTERVENCIÓN DE MEDICINA FAMILIAR-->
+
+                <tr>
+                    <td colspan="2"><h2>DIAGNOSTICO </h2></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p:outputLabel styleClass="labelFormulario" style="width: 182px;" value="DIAGNOSTICO PRINCIPAL"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p:autoComplete size="100" value="#{historiasMB.datosFormulario.dato61}" completeMethod="#{historiasMB.autocompletarDiagnostico}" forceSelection="true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h2>PLAN DE MANEJO</h2>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p:inputTextarea  styleClass="width2" value="#{historiasMB.datosFormulario.dato62}"  />
+                    </td>
+                </tr>
+
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td colspan="1">
+                        <p:outputLabel value="FECHA-HORA REGISTRO"/><p:calendar navigator="true" locale="es" value="#{historiasMB.fechaReg}" pattern="dd/MM/yyyy HH:mm:ss" size="23" mask="true"  />
+                    </td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td><p:outputLabel value="MEDICO"/></td>
+                    <td><p:outputLabel value="ESPECIALIDAD"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:selectOneMenu style="width: 315px;" value="#{historiasMB.idPrestador}" filter="true" filterMatchMode="contains">                            
+                            <p:ajax event="change" listener="#{historiasMB.cambiaMedico}" update="IdEspecialidad"/>
+                            <f:selectItem itemLabel="" itemValue=""/>
+                            <f:selectItems value="#{historiasMB.listaPrestadores}" var="p" itemLabel="#{p.primerNombre} #{p.segundoNombre} #{p.primerApellido} #{p.segundoApellido}" itemValue="#{p.idUsuario}"/>
+                        </p:selectOneMenu>
+                    </td>
+                    <td><p:inputText id="IdEspecialidad" readonly="true" styleClass="width1" value="#{historiasMB.especialidadPrestador}"/></td>
+                </tr>                
+                <tr><td>&nbsp;</td></tr>
+                <tr>
+                    <td colspan="1">
+                        <p:commandButton icon="ui-icon-disk" value="Guardar Nuevo Registro" actionListener="#{historiasMB.guardarRegistro}" disabled="#{historiasMB.modificandoRegCli}" update="IdFormRegistroClinico"/>
+                        <p:commandButton icon="ui-icon-arrowthickstop-1-s" value="Actualizar Registro" actionListener="#{historiasMB.actualizarRegistro}" disabled="#{!historiasMB.modificandoRegCli}" rendered="#{loginMB.superUsuario}"/>
+                        <p:commandButton icon="ui-icon-document" value="Limpiar Formulario" actionListener="#{historiasMB.btnLimpiarFormulario}" update="IdFormRegistroClinico"/>
+                    </td>
+                </tr>
+            </table>
+
+            <p:dialog id="IdDialogoAgregarFamiliar" header="AGREGAR FAMILIAR" widgetVar="dialogoAgregarFamiliar" resizable="false" modal="true">  
+                <p:panelGrid id="IdPanelAgregarFamiliar" styleClass="panelGridSinBordes" columns="2">
+
+                    <p:outputLabel styleClass="campoObligatorio" value="Nombre" />
+                    <p:inputText id="IdNombre" value="#{historiasMB.nombreFamiliar}"/>
+                    <p:outputLabel styleClass="campoObligatorio" value="Edad" />
+                    <p:inputText id="IdEdad" value="#{historiasMB.edadFamiliar}"/>
+                    <p:outputLabel styleClass="campoObligatorio" value="Parentesco" />
+                    <p:selectOneMenu  style="width: 100%;" value="#{historiasMB.parentescoFamiliar}"  filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="" itemValue=""/>
+                        <f:selectItems value="#{aplicacionGeneralMB.listaParentesco}" />
+                    </p:selectOneMenu>  
+                    <p:outputLabel styleClass="campoObligatorio"  value="Ocupación" />
+                    <p:selectOneMenu  style="width: 100%;" value="#{historiasMB.ocupacionFamiliar}"  filter="true" filterMatchMode="contains">
+                        <f:selectItem itemLabel="" itemValue=""/>
+                        <f:selectItems value="#{aplicacionGeneralMB.listaOcupaciones}" />
+                    </p:selectOneMenu>  
+
+                    <p:commandButton 
+                        value="Agregar"                         
+                        actionListener="#{historiasMB.agregarFamiliar}" update="tablaEstructuraFamiliar"/>
+                    <p:commandButton 
+                        value="Cerrar"                         
+                        actionListener="#{historiasMB.cerrar}" update="tablaEstructuraFamiliar"/>
+                </p:panelGrid>
+            </p:dialog>
+
+            <p:dialog id="IdTextosDlgPredefinidos" header="TEXTOS PREDEFINIDOS" width="645" widgetVar="dlgTextosPredefinidos" resizable="false" closable="true" modal="true">                                
+                <p:panelGrid styleClass="panelGridSinBordes" id="IdPanelTextosPredefinidos">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel   styleClass="labelFormulario" style="width: 60px;" value="Categoría: "/>
+                            <p:selectOneMenu styleClass="campoFormulario" style="width: 220px;" value="#{historiasMB.idMaestroTextoPredef}" >
+                                <f:ajax event="change" listener="#{historiasMB.cambiaMaestro}" render="IdComboTextosPredefinidos IdEditorTextoPredefinido IdNombrePredefinido"/> 
+                                <f:selectItem itemLabel="" itemValue=""/>
+                                <f:selectItems value="#{historiasMB.listaMaestrosTxtPredefinidos}" var="maestro" itemValue="#{maestro.idMaestro}" itemLabel="#{maestro.nombre}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel   styleClass="labelFormulario" style="width: 60px;" value="Predefinidos: "/>
+                            <p:selectOneMenu styleClass="campoFormulario" style="width: 220px;" id="IdComboTextosPredefinidos"  value="#{historiasMB.idTextoPredef}" >
+                                <f:ajax 
+                                    event="change"
+                                    listener="#{historiasMB.cambiaTextoPredefinido}"                                                
+                                    render="IdEditorTextoPredefinido IdNombrePredefinido"/>                                 
+                                <f:selectItems value="#{historiasMB.listaTxtPredefinidos}" var="texto" itemValue="#{texto.idTxtPredefinido}" itemLabel="#{texto.nombre}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel styleClass="labelFormulario" value="Nombre: " style="width: 60px;"/>
+                            <p:inputText   styleClass="campoFormulario" id="IdNombrePredefinido" size="39" value="#{historiasMB.nombreTextoPredefinido}"/>                                                    
+                            <p:commandButton icon="ui-icon-circle-arrow-s" title="Usar seleccionado"    actionListener="#{historiasMB.usarTextoPredefinido}"/>
+                            <p:commandButton icon="ui-icon-disk"           title="Guardar/Actualizar"   actionListener="#{historiasMB.guardarTextoPredefinido}" />            
+                            <p:commandButton icon="ui-icon-trash"          title="Eliminar predefinido" id="IdBtnEliminarPredefinido"/>                                        
+                            <p:overlayPanel for="IdBtnEliminarPredefinido" widgetVar="opEliminarPredefinido">
+                                <p:outputLabel   styleClass="labelFormulario" value="¿Confirma la eliminación?  "/>
+                                <p:commandButton value="Si" title="Crear nueva categoría" actionListener="#{historiasMB.eliminarPredefinido}" oncomplete="PF('opEliminarPredefinido').hide();"/>                        
+                            </p:overlayPanel> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:editor id="IdEditorTextoPredefinido" value="#{historiasMB.detalleTextoPredef}" width="600" controls="bold italic underline font size bullets numbering alignleft center alignright justify undo redo"/>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>             
+            </p:dialog>
+        </h:form>        
+    </h:body>
+</html>

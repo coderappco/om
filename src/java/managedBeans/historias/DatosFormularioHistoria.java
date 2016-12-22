@@ -214,8 +214,72 @@ public class DatosFormularioHistoria {
     private Object dato198 = "";
     private Object dato199 = "";
     private Object dato200 = "";
+    private Object dato201 = "";
+    private Object dato202 = "";
+    private Object dato203 = "";
+    private Object dato204 = "";
+    private Object dato205 = "";
+    private Object dato206 = "";
+    private Object dato207 = "";
+    private Object dato208 = "";
+    private Object dato209 = "";
+    private Object dato210 = "";
+    private Object dato211 = "";
+    private Object dato212 = "";
+    private Object dato213 = "";
+    private Object dato214 = "";
+    private Object dato215 = "";
+    private Object dato216 = "";
+    private Object dato217 = "";
+    private Object dato218 = "";
+    private Object dato219 = "";
+    private Object dato220 = "";
+    private Object dato221 = "";
+    private Object dato222 = "";
+    private Object dato223 = "";
+    private Object dato224 = "";
+    private Object dato225 = "";
+    private Object dato226 = "";
+    private Object dato227 = "";
+    private Object dato228 = "";
+    private Object dato229 = "";
+    private Object dato230 = "";
+    private Object dato231 = "";
+    private Object dato232 = "";
+    private Object dato233 = "";
+    private Object dato234 = "";
+    private Object dato235 = "";
+    private Object dato236 = "";
+    private Object dato237 = "";
+    private Object dato238 = "";
+    private Object dato239 = "";
+    private Object dato240 = "";
+    private Object dato241 = "";
+    private Object dato242 = "";
+    private Object dato243 = "";
+    private Object dato244 = "";
+    private Object dato245 = "";
+    private Object dato246 = "";
+    private Object dato247 = "";
+    private Object dato248 = "";
+    private Object dato249 = "";
+    private Object dato250 = "";
+    private Object dato251 = "";
+    private Object dato252 = "";
+    private Object dato253 = "";
+    private Object dato254 = "";
+    private Object dato255 = "";
+    private Object dato256 = "";
+    private Object dato257 = "";
+    private Object dato258 = "";
+    private Object dato259 = "";
+    private Object dato260 = "";
+    private Object dato261 = "";
+    private Object dato262 = "";
+    private Object dato263 = "";
+    private Object dato264 = "";
+    private Object dato265 = "";
 
-   
     private List<DatosSubReporteHistoria> listaDatosAdicionales;//USADO PARA SUB REPORTE
 
     public DatosFormularioHistoria() {
@@ -834,6 +898,210 @@ public class DatosFormularioHistoria {
             case 200:
                 dato200 = valor;
                 break;
+
+            case 201:
+                dato201 = valor;
+                break;
+
+            case 202:
+                dato202 = valor;
+                break;
+
+            case 203:
+                dato203 = valor;
+                break;
+
+            case 204:
+                dato204 = valor;
+                break;
+
+            case 205:
+                dato205 = valor;
+                break;
+
+            case 206:
+                dato206 = valor;
+                break;
+
+            case 207:
+                dato207 = valor;
+                break;
+
+            case 208:
+                dato208 = valor;
+                break;
+            case 209:
+                dato209 = valor;
+                break;
+            case 210:
+                dato210 = valor;
+                break;
+            case 211:
+                dato211 = valor;
+                break;
+            case 212:
+                dato212 = valor;
+                break;
+            case 213:
+                dato213 = valor;
+                break;
+            case 214:
+                dato214 = valor;
+                break;
+            case 215:
+                dato215 = valor;
+                break;
+            case 216:
+                dato216 = valor;
+                break;
+            case 217:
+                dato217 = valor;
+                break;
+            case 218:
+                dato218 = valor;
+                break;
+            case 219:
+                dato219 = valor;
+                break;
+            case 220:
+                dato220 = valor;
+                break;
+            case 221:
+                dato221 = valor;
+                break;
+            case 222:
+                dato222 = valor;
+                break;
+            case 223:
+                dato223 = valor;
+                break;
+            case 224:
+                dato224 = valor;
+                break;
+            case 225:
+                dato225 = valor;
+                break;
+            case 226:
+                dato226 = valor;
+                break;
+            case 227:
+                dato227 = valor;
+                break;
+            case 228:
+                dato228 = valor;
+                break;
+            case 229:
+                dato229 = valor;
+                break;
+            case 230:
+                dato230 = valor;
+                break;
+            case 231:
+                dato231 = valor;
+                break;
+            case 232:
+                dato232 = valor;
+                break;
+            case 233:
+                dato233 = valor;
+                break;
+            case 234:
+                dato234 = valor;
+                break;
+            case 235:
+                dato235 = valor;
+                break;
+            case 236:
+                dato236 = valor;
+                break;
+            case 237:
+                dato237 = valor;
+                break;
+            case 238:
+                dato238 = valor;
+                break;
+            case 239:
+                dato239 = valor;
+                break;
+            case 240:
+                dato240 = valor;
+                break;
+            case 241:
+                dato241 = valor;
+                break;
+            case 242:
+                dato242 = valor;
+                break;
+            case 243:
+                dato243 = valor;
+                break;
+            case 244:
+                dato244 = valor;
+                break;
+            case 245:
+                dato245 = valor;
+                break;
+            case 246:
+                dato246 = valor;
+                break;
+            case 247:
+                dato247 = valor;
+                break;
+            case 248:
+                dato248 = valor;
+                break;
+            case 249:
+                dato249 = valor;
+                break;
+            case 250:
+                dato250 = valor;
+                break;
+            case 251:
+                dato251 = valor;
+                break;
+            case 252:
+                dato252 = valor;
+                break;
+            case 253:
+                dato253 = valor;
+                break;
+            case 254:
+                dato254 = valor;
+                break;
+            case 255:
+                dato255 = valor;
+                break;
+            case 256:
+                dato256 = valor;
+                break;
+            case 257:
+                dato257 = valor;
+                break;
+            case 258:
+                dato258 = valor;
+                break;
+            case 259:
+                dato259 = valor;
+                break;
+            case 260:
+                dato260 = valor;
+                break;
+            case 261:
+                dato261 = valor;
+                break;
+            case 262:
+                dato262 = valor;
+                break;
+            case 263:
+                dato263 = valor;
+                break;
+            case 264:
+                dato265 = valor;
+                break;
+            case 265:
+                dato265 = valor;
+                break;
+
         }
     }
 
@@ -1239,8 +1507,140 @@ public class DatosFormularioHistoria {
                 return dato198;
             case 199:
                 return dato199;
+
             case 200:
                 return dato200;
+            case 201:
+                return dato201;
+            case 202:
+                return dato202;
+            case 203:
+                return dato203;
+            case 204:
+                return dato204;
+            case 205:
+                return dato205;
+            case 206:
+                return dato206;
+            case 207:
+                return dato207;
+            case 208:
+                return dato208;
+            case 209:
+                return dato209;
+            case 210:
+                return dato210;
+            case 211:
+                return dato211;
+            case 212:
+                return dato212;
+            case 213:
+                return dato213;
+            case 214:
+                return dato214;
+            case 215:
+                return dato215;
+            case 216:
+                return dato216;
+            case 217:
+                return dato217;
+            case 218:
+                return dato218;
+            case 219:
+                return dato219;
+            case 220:
+                return dato220;
+            case 221:
+                return dato221;
+            case 222:
+                return dato222;
+            case 223:
+                return dato223;
+            case 224:
+                return dato224;
+            case 225:
+                return dato225;
+            case 226:
+                return dato226;
+            case 227:
+                return dato227;
+            case 228:
+                return dato228;
+            case 229:
+                return dato229;
+            case 230:
+                return dato230;
+            case 231:
+                return dato231;
+            case 232:
+                return dato232;
+            case 233:
+                return dato233;
+            case 234:
+                return dato234;
+            case 235:
+                return dato235;
+            case 236:
+                return dato236;
+            case 237:
+                return dato237;
+            case 238:
+                return dato238;
+            case 239:
+                return dato239;
+            case 240:
+                return dato240;
+            case 241:
+                return dato241;
+            case 242:
+                return dato242;
+            case 243:
+                return dato243;
+            case 244:
+                return dato244;
+            case 245:
+                return dato245;
+            case 246:
+                return dato246;
+            case 247:
+                return dato247;
+            case 248:
+                return dato248;
+            case 249:
+                return dato249;
+            case 250:
+                return dato250;
+            case 251:
+                return dato251;
+            case 252:
+                return dato252;
+            case 253:
+                return dato253;
+            case 254:
+                return dato254;
+            case 255:
+                return dato255;
+            case 256:
+                return dato256;
+            case 257:
+                return dato257;
+            case 258:
+                return dato258;
+            case 259:
+                return dato259;
+            case 260:
+                return dato260;
+            case 261:
+                return dato261;
+            case 262:
+                return dato262;
+            case 263:
+                return dato263;
+            case 264:
+                return dato264;
+            case 265:
+                return dato265;
+
         }
         return null;
     }
@@ -1447,6 +1847,71 @@ public class DatosFormularioHistoria {
         dato198 = "";
         dato199 = "";
         dato200 = "";
+        dato201 = "";
+        dato202 = "";
+        dato203 = "";
+        dato204 = "";
+        dato205 = "";
+        dato206 = "";
+        dato207 = "";
+        dato208 = "";
+        dato209 = "";
+        dato210 = "";
+        dato211 = "";
+        dato212 = "";
+        dato213 = "";
+        dato214 = "";
+        dato215 = "";
+        dato216 = "";
+        dato217 = "";
+        dato218 = "";
+        dato219 = "";
+        dato220 = "";
+        dato221 = "";
+        dato222 = "";
+        dato223 = "";
+        dato224 = "";
+        dato225 = "";
+        dato226 = "";
+        dato227 = "";
+        dato228 = "";
+        dato229 = "";
+        dato230 = "";
+        dato231 = "";
+        dato232 = "";
+        dato233 = "";
+        dato234 = "";
+        dato235 = "";
+        dato236 = "";
+        dato237 = "";
+        dato238 = "";
+        dato239 = "";
+        dato240 = "";
+        dato241 = "";
+        dato242 = "";
+        dato243 = "";
+        dato244 = "";
+        dato245 = "";
+        dato246 = "";
+        dato247 = "";
+        dato248 = "";
+        dato249 = "";
+        dato250 = "";
+        dato251 = "";
+        dato252 = "";
+        dato253 = "";
+        dato254 = "";
+        dato255 = "";
+        dato256 = "";
+        dato257 = "";
+        dato258 = "";
+        dato259 = "";
+        dato260 = "";
+        dato261 = "";
+        dato262 = "";
+        dato263 = "";
+        dato264 = "";
+        dato265 = "";
 
     }
 
@@ -2258,7 +2723,7 @@ public class DatosFormularioHistoria {
         this.dato100 = dato100;
     }
 
-     public Object getDato101() {
+    public Object getDato101() {
         return dato101;
     }
 
@@ -3056,6 +3521,526 @@ public class DatosFormularioHistoria {
 
     public void setDato200(Object dato200) {
         this.dato200 = dato200;
+    }
+
+    public Object getDato201() {
+        return dato201;
+    }
+
+    public void setDato201(Object dato201) {
+        this.dato201 = dato201;
+    }
+
+    public Object getDato202() {
+        return dato202;
+    }
+
+    public void setDato202(Object dato202) {
+        this.dato202 = dato202;
+    }
+
+    public Object getDato203() {
+        return dato203;
+    }
+
+    public void setDato203(Object dato203) {
+        this.dato203 = dato203;
+    }
+
+    public Object getDato204() {
+        return dato204;
+    }
+
+    public void setDato204(Object dato204) {
+        this.dato204 = dato204;
+    }
+
+    public Object getDato205() {
+        return dato205;
+    }
+
+    public void setDato205(Object dato205) {
+        this.dato205 = dato205;
+    }
+
+    public Object getDato206() {
+        return dato206;
+    }
+
+    public void setDato206(Object dato206) {
+        this.dato206 = dato206;
+    }
+
+    public Object getDato207() {
+        return dato207;
+    }
+
+    public void setDato207(Object dato207) {
+        this.dato207 = dato207;
+    }
+
+    public Object getDato208() {
+        return dato208;
+    }
+
+    public void setDato208(Object dato208) {
+        this.dato208 = dato208;
+    }
+
+    public Object getDato209() {
+        return dato209;
+    }
+
+    public void setDato209(Object dato209) {
+        this.dato209 = dato209;
+    }
+
+    public Object getDato210() {
+        return dato210;
+    }
+
+    public void setDato210(Object dato210) {
+        this.dato210 = dato210;
+    }
+
+    public Object getDato211() {
+        return dato211;
+    }
+
+    public void setDato211(Object dato211) {
+        this.dato211 = dato211;
+    }
+
+    public Object getDato212() {
+        return dato212;
+    }
+
+    public void setDato212(Object dato212) {
+        this.dato212 = dato212;
+    }
+
+    public Object getDato213() {
+        return dato213;
+    }
+
+    public void setDato213(Object dato213) {
+        this.dato213 = dato213;
+    }
+
+    public Object getDato214() {
+        return dato214;
+    }
+
+    public void setDato214(Object dato214) {
+        this.dato214 = dato214;
+    }
+
+    public Object getDato215() {
+        return dato215;
+    }
+
+    public void setDato215(Object dato215) {
+        this.dato215 = dato215;
+    }
+
+    public Object getDato216() {
+        return dato216;
+    }
+
+    public void setDato216(Object dato216) {
+        this.dato216 = dato216;
+    }
+
+    public Object getDato217() {
+        return dato217;
+    }
+
+    public void setDato217(Object dato217) {
+        this.dato217 = dato217;
+    }
+
+    public Object getDato218() {
+        return dato218;
+    }
+
+    public void setDato218(Object dato218) {
+        this.dato218 = dato218;
+    }
+
+    public Object getDato219() {
+        return dato219;
+    }
+
+    public void setDato219(Object dato219) {
+        this.dato219 = dato219;
+    }
+
+    public Object getDato220() {
+        return dato220;
+    }
+
+    public void setDato220(Object dato220) {
+        this.dato220 = dato220;
+    }
+
+    public Object getDato221() {
+        return dato221;
+    }
+
+    public void setDato221(Object dato221) {
+        this.dato221 = dato221;
+    }
+
+    public Object getDato222() {
+        return dato222;
+    }
+
+    public void setDato222(Object dato222) {
+        this.dato222 = dato222;
+    }
+
+    public Object getDato223() {
+        return dato223;
+    }
+
+    public void setDato223(Object dato223) {
+        this.dato223 = dato223;
+    }
+
+    public Object getDato224() {
+        return dato224;
+    }
+
+    public void setDato224(Object dato224) {
+        this.dato224 = dato224;
+    }
+
+    public Object getDato225() {
+        return dato225;
+    }
+
+    public void setDato225(Object dato225) {
+        this.dato225 = dato225;
+    }
+
+    public Object getDato226() {
+        return dato226;
+    }
+
+    public void setDato226(Object dato226) {
+        this.dato226 = dato226;
+    }
+
+    public Object getDato227() {
+        return dato227;
+    }
+
+    public void setDato227(Object dato227) {
+        this.dato227 = dato227;
+    }
+
+    public Object getDato228() {
+        return dato228;
+    }
+
+    public void setDato228(Object dato228) {
+        this.dato228 = dato228;
+    }
+
+    public Object getDato229() {
+        return dato229;
+    }
+
+    public void setDato229(Object dato229) {
+        this.dato229 = dato229;
+    }
+
+    public Object getDato230() {
+        return dato230;
+    }
+
+    public void setDato230(Object dato230) {
+        this.dato230 = dato230;
+    }
+
+    public Object getDato231() {
+        return dato231;
+    }
+
+    public void setDato231(Object dato231) {
+        this.dato231 = dato231;
+    }
+
+    public Object getDato232() {
+        return dato232;
+    }
+
+    public void setDato232(Object dato232) {
+        this.dato232 = dato232;
+    }
+
+    public Object getDato233() {
+        return dato233;
+    }
+
+    public void setDato233(Object dato233) {
+        this.dato233 = dato233;
+    }
+
+    public Object getDato234() {
+        return dato234;
+    }
+
+    public void setDato234(Object dato234) {
+        this.dato234 = dato234;
+    }
+
+    public Object getDato235() {
+        return dato235;
+    }
+
+    public void setDato235(Object dato235) {
+        this.dato235 = dato235;
+    }
+
+    public Object getDato236() {
+        return dato236;
+    }
+
+    public void setDato236(Object dato236) {
+        this.dato236 = dato236;
+    }
+
+    public Object getDato237() {
+        return dato237;
+    }
+
+    public void setDato237(Object dato237) {
+        this.dato237 = dato237;
+    }
+
+    public Object getDato238() {
+        return dato238;
+    }
+
+    public void setDato238(Object dato238) {
+        this.dato238 = dato238;
+    }
+
+    public Object getDato239() {
+        return dato239;
+    }
+
+    public void setDato239(Object dato239) {
+        this.dato239 = dato239;
+    }
+
+    public Object getDato240() {
+        return dato240;
+    }
+
+    public void setDato240(Object dato240) {
+        this.dato240 = dato240;
+    }
+
+    public Object getDato241() {
+        return dato241;
+    }
+
+    public void setDato241(Object dato241) {
+        this.dato241 = dato241;
+    }
+
+    public Object getDato242() {
+        return dato242;
+    }
+
+    public void setDato242(Object dato242) {
+        this.dato242 = dato242;
+    }
+
+    public Object getDato243() {
+        return dato243;
+    }
+
+    public void setDato243(Object dato243) {
+        this.dato243 = dato243;
+    }
+
+    public Object getDato244() {
+        return dato244;
+    }
+
+    public void setDato244(Object dato244) {
+        this.dato244 = dato244;
+    }
+
+    public Object getDato245() {
+        return dato245;
+    }
+
+    public void setDato245(Object dato245) {
+        this.dato245 = dato245;
+    }
+
+    public Object getDato246() {
+        return dato246;
+    }
+
+    public void setDato246(Object dato246) {
+        this.dato246 = dato246;
+    }
+
+    public Object getDato247() {
+        return dato247;
+    }
+
+    public void setDato247(Object dato247) {
+        this.dato247 = dato247;
+    }
+
+    public Object getDato248() {
+        return dato248;
+    }
+
+    public void setDato248(Object dato248) {
+        this.dato248 = dato248;
+    }
+
+    public Object getDato249() {
+        return dato249;
+    }
+
+    public void setDato249(Object dato249) {
+        this.dato249 = dato249;
+    }
+
+    public Object getDato250() {
+        return dato250;
+    }
+
+    public void setDato250(Object dato250) {
+        this.dato250 = dato250;
+    }
+
+    public Object getDato251() {
+        return dato251;
+    }
+
+    public void setDato251(Object dato251) {
+        this.dato251 = dato251;
+    }
+
+    public Object getDato252() {
+        return dato252;
+    }
+
+    public void setDato252(Object dato252) {
+        this.dato252 = dato252;
+    }
+
+    public Object getDato253() {
+        return dato253;
+    }
+
+    public void setDato253(Object dato253) {
+        this.dato253 = dato253;
+    }
+
+    public Object getDato254() {
+        return dato254;
+    }
+
+    public void setDato254(Object dato254) {
+        this.dato254 = dato254;
+    }
+
+    public Object getDato255() {
+        return dato255;
+    }
+
+    public void setDato255(Object dato255) {
+        this.dato255 = dato255;
+    }
+
+    public Object getDato256() {
+        return dato256;
+    }
+
+    public void setDato256(Object dato256) {
+        this.dato256 = dato256;
+    }
+
+    public Object getDato257() {
+        return dato257;
+    }
+
+    public void setDato257(Object dato257) {
+        this.dato257 = dato257;
+    }
+
+    public Object getDato258() {
+        return dato258;
+    }
+
+    public void setDato258(Object dato258) {
+        this.dato258 = dato258;
+    }
+
+    public Object getDato259() {
+        return dato259;
+    }
+
+    public void setDato259(Object dato259) {
+        this.dato259 = dato259;
+    }
+
+    public Object getDato260() {
+        return dato260;
+    }
+
+    public void setDato260(Object dato260) {
+        this.dato260 = dato260;
+    }
+
+    public Object getDato261() {
+        return dato261;
+    }
+
+    public void setDato261(Object dato261) {
+        this.dato261 = dato261;
+    }
+
+    public Object getDato262() {
+        return dato262;
+    }
+
+    public void setDato262(Object dato262) {
+        this.dato262 = dato262;
+    }
+
+    public Object getDato263() {
+        return dato263;
+    }
+
+    public void setDato263(Object dato263) {
+        this.dato263 = dato263;
+    }
+
+    public Object getDato264() {
+        return dato264;
+    }
+
+    public void setDato264(Object dato264) {
+        this.dato264 = dato264;
+    }
+
+    public Object getDato265() {
+        return dato265;
+    }
+
+    public void setDato265(Object dato265) {
+        this.dato265 = dato265;
     }
 
 }
