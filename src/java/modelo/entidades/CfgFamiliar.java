@@ -48,12 +48,12 @@ public class CfgFamiliar implements Serializable {
 //    @ManyToOne
 //    private CfgClasificaciones parentesco;
 //     
-    @JoinColumn(name = "id_parentesco", referencedColumnName = "id", nullable = true)
-    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_parentesco", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private CfgClasificaciones idParentesco;
     
-    @JoinColumn(name = "id_ocupacion", referencedColumnName = "id", nullable = true)
-    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_ocupacion", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private CfgClasificaciones idOcupacion;
      
     public CfgFamiliar() {

@@ -239,8 +239,6 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
             System.out.println("Fam encontrados " + listaM.size());
 
-            familiarSeleccionado = new FilaDataTable();
-
             for (CfgFamiliar cfgFamiliar : listaM) {
                 FilaDataTable r = new FilaDataTable();
                 r.setColumna1(cfgFamiliar.getNombre());
@@ -249,11 +247,12 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 r.setColumna4(cfgFamiliar.getIdOcupacion().getId().toString());
                 r.setColumna5(cfgFamiliar.getIdParentesco().getDescripcion());
                 r.setColumna6(cfgFamiliar.getIdOcupacion().getDescripcion());
-
+                r.setColumna7(cfgFamiliar.getIdEstructuraFamiliar().toString());
+                r.setColumna8(cfgFamiliar.getIdPaciente().getIdPaciente().toString());
                 listaEstructuraFamiliar.add(r);
-                System.out.println("listaEstructuraFamiliar.size = " + listaEstructuraFamiliar.size());
-
             }
+
+            System.out.println("listaEstructuraFamiliar.size = " + listaEstructuraFamiliar.size());
         } else {
 
             System.out.println("Fam no encontrados ");
@@ -273,7 +272,6 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         seleccionaTodosRegCliHis();
         empresa = empresaFacade.findAll().get(0);
 
-        familiarSeleccionado = new FilaDataTable();
     }
 
     private void valoresPorDefecto() {
@@ -304,7 +302,18 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     public void quitarFamiliar() {
 
         System.out.println("From quitarFamiliar()" + listaEstructuraFamiliar.size());
-        listaEstructuraFamiliar.remove(familiarSeleccionado);
+        
+        CfgFamiliar familiar = new CfgFamiliar();
+        familiar.setIdEstructuraFamiliar(Integer.parseInt(familiarSeleccionado.getColumna7()));
+        familiar.setNombre(familiarSeleccionado.getColumna1());
+        familiar.setEdad(Integer.parseInt(familiarSeleccionado.getColumna2()));
+        familiar.setIdParentesco(new CfgClasificaciones(Integer.parseInt(familiarSeleccionado.getColumna3())));
+        familiar.setIdOcupacion(new CfgClasificaciones(Integer.parseInt(familiarSeleccionado.getColumna4())));
+        familiar.setIdPaciente(new CfgPacientes(Integer.parseInt(familiarSeleccionado.getColumna8())));
+        
+        familiarFacade.remove(familiar); //quitar de base de datos
+        
+        listaEstructuraFamiliar.remove(familiarSeleccionado); //quitar de lista
         System.out.println("/From quitarFamiliar()" + listaEstructuraFamiliar.size());
 
         RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
@@ -400,6 +409,17 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             float peso = Float.parseFloat(datosFormulario.getDato28().toString());
             float talla = Float.parseFloat(datosFormulario.getDato29().toString());
             datosFormulario.setDato30(calcularIMC(peso, talla));
+
+        } catch (Exception e) {
+            System.out.println("" + e.getMessage());
+        }
+    }
+    
+    public void calcularIMCMaterna() {
+        try {
+            float peso = Float.parseFloat(datosFormulario.getDato148().toString());
+            float talla = Float.parseFloat(datosFormulario.getDato149().toString());
+            datosFormulario.setDato150(calcularIMC(peso, talla));
 
         } catch (Exception e) {
             System.out.println("" + e.getMessage());
@@ -1137,7 +1157,13 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         datosReporte.setValor(259, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
         datosReporte.setValor(260, "<b>DESPLAZADO :</b>" + desplazadoStr);
         datosReporte.setValor(261, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
-        
+
+        //datos informacion general de referencia-contrareferencia
+        datosReporte.setValor(190, "<b>INSTITUCION :</b>" + loginMB.getEmpresaActual().getRazonSocial());
+        datosReporte.setValor(191, "<b>E.S.E.IO :</b>" + loginMB.getEmpresaActual().getCodMunicipio().getDescripcion());
+        datosReporte.setValor(192, "<b>ESPECIALIDAD :</b>" + loginMB.getUsuarioActual().getEspecialidad().getDescripcion());
+        datosReporte.setValor(193, "<b>NIVEL :</b>" + loginMB.getEmpresaActual().getNivel());
+
         //----------------------------------------------------------------------
         //CARGO DATOS QUE SE LLENARON EN EL REGISTRO (hc_detalle)---------------
         //----------------------------------------------------------------------
@@ -1178,7 +1204,22 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor());
             }
         }
-        //datosReporte.setListaDatosAdicionales(listadoDatosAdicionales);//CUANDO SE USE SUBRREPORTES USAR ESTA LINEA
+
+        cargarEstructuraFamiliar();
+        List<DatosSubReporteHistoria> listaDatosAdicionales = new ArrayList<>();
+        for (FilaDataTable item : listaEstructuraFamiliar) {
+            DatosSubReporteHistoria datosS = new DatosSubReporteHistoria();
+            datosS.setDato0(item.getColumna1());
+            datosS.setDato1(item.getColumna2());
+            datosS.setDato2(item.getColumna3());
+            datosS.setDato3(item.getColumna4());
+            listaDatosAdicionales.add(datosS);
+            System.out.println("Familiar " + item.getColumna1());
+        }
+
+        System.out.println("listaDatosAdicionales size " + listaDatosAdicionales.size());
+
+        datosReporte.setListaDatosAdicionales(listaDatosAdicionales);//CUANDO SE USE SUBRREPORTES USAR ESTA LINEA
         listaRegistrosParaPdf.add(datosReporte);
     }
 
@@ -1211,7 +1252,9 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         System.out.println(" regEncontrado.getIdTipoReg()..getUrlPagina().startsWith(g_)  = " + regEncontrado.getIdTipoReg().getNombre().startsWith("g_"));
 
         if (regEncontrado.getIdTipoReg().getUrlPagina().startsWith("g_")) { //si es de los nuevos reportes con mas de 40 campos
+
             cargarFuenteDatosReportesGrandes(regEncontrado);
+
         } else {
             cargarFuenteDatos(regEncontrado);
         }
@@ -1329,6 +1372,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                     }
                     cargarMunicipios();//intento cargar municipios sea o no necesario
                 }
+                System.out.println("Tipo registro " + registroEncontrado.getIdTipoReg().getIdTipoReg());
 
                 cargarEstructuraFamiliar();
                 imprimirMensaje("Informacion", "Para su facilidad se cargo los datos de la última historia de este tipo de registro", FacesMessage.SEVERITY_INFO);
@@ -1503,19 +1547,21 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             }
         }
 
-        //guardar estructura familiar si es que existe
-        for (FilaDataTable familiar : listaEstructuraFamiliar) {
-            CfgFamiliar fam = new CfgFamiliar();
-            fam.setIdPaciente(pacienteSeleccionado);
-            fam.setNombre(familiar.getColumna1());
-            fam.setEdad(Integer.parseInt(familiar.getColumna2()));
-            CfgClasificaciones parentesco1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna3()));
-            CfgClasificaciones ocupacion1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna4()));
+        if (listaEstructuraFamiliar != null) {
+            //guardar estructura familiar si es que existe
+            for (FilaDataTable familiar : listaEstructuraFamiliar) {
+                CfgFamiliar fam = new CfgFamiliar();
+                fam.setIdPaciente(pacienteSeleccionado);
+                fam.setNombre(familiar.getColumna1());
+                fam.setEdad(Integer.parseInt(familiar.getColumna2()));
+                CfgClasificaciones parentesco1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna3()));
+                CfgClasificaciones ocupacion1 = new CfgClasificaciones(Integer.parseInt(familiar.getColumna4()));
 
-            fam.setIdParentesco(parentesco1);
-            fam.setIdOcupacion(ocupacion1);
+                fam.setIdParentesco(parentesco1);
+                fam.setIdOcupacion(ocupacion1);
 
-            familiarFacade.create(fam);
+                familiarFacade.create(fam);
+            }
         }
 
         if (tipoRegistroClinicoActual.getIdTipoReg() == 8) {//SOLICITUD DE AUTORIZACION DE SERVICIOS            

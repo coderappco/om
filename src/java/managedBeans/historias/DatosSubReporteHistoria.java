@@ -23,6 +23,8 @@ public class DatosSubReporteHistoria {
     private String dato9 = "";
     private String dato10 = "";
 
+    public DatosSubReporteHistoria() {
+    }
     public DatosSubReporteHistoria(String dato0, String dato1) {
         this.dato0 = dato0;
         this.dato1 = dato1;

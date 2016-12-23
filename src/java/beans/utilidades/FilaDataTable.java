@@ -142,6 +142,7 @@ public class FilaDataTable {
     }
 
     public String getColumna1() {
+        System.out.println("Columna 1 = " + columna1);
         return columna1;
     }
 

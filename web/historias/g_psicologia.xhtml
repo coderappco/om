@@ -183,14 +183,18 @@
                                 style="font-size: 20px; width: 20px; height: 20px; left: 20px; " update="tablaEstructuraFamiliar"/> 
                             <br/><br/>
 
-                            <p:dataTable 
+
+                            <!--<-->  
+  
+                                <p:dataTable 
                                 id="tablaEstructuraFamiliar" 
                                 var="item" 
                                 widgetVar="wvtablaEstructuraFamiliar"
                                 value="#{historiasMB.listaEstructuraFamiliar}" 
                                 filteredValue="#{historiasMB.listaEstructuraFamiliarFiltro}"
-                                rowKey="#{historiasMB.familiarSeleccionado.columna1}"    
                                 selection="#{historiasMB.familiarSeleccionado}"                                     
+                                rowKey="#{item.columna1}"
+                                selectionMode="single"
                                 paginator="true"
                                 rows="5"                                    
                                 paginatorPosition="bottom"                                
@@ -200,7 +204,6 @@
                                 currentPageReportTemplate="Mostrando {startRecord}-{endRecord} de {totalRecords}"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 pageLinks="5"
-                                selectionMode="single"
                                 resizableColumns="false">                                                                                               
                                 <p:column headerText="NOMBRE Y APELLIDO"  filterBy="#{item.columna1}" filterMatchMode="contains">
                                     #{item.columna1}
