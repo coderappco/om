@@ -5,8 +5,11 @@
  */
 package modelo.fachadas;
 
+import java.util.List;
 import javax.ejb.Stateless;
+import modelo.entidades.CfgClasificaciones;
 import modelo.entidades.HcItems;
+import modelo.entidades.HcRegistro;
 
 /**
  *
@@ -19,4 +22,14 @@ public class HcItemsFacade extends AbstractFacade<HcItems> {
         super(HcItems.class);
     }
     
+    public List<HcItems> findByIdRegistro(HcRegistro idRegistro) {
+        try {
+            String hql = "SELECT c FROM HcItems c WHERE c.idRegistro = :idRegistro order by c.idItem ASC";
+            return getEntityManager().createQuery(hql).setParameter("idRegistro", idRegistro).getResultList();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -1,0 +1,1438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="762" leftMargin="40" rightMargin="40" topMargin="40" bottomMargin="40" uuid="9f7fc654-ee1d-4b56-916d-b168aa7d7a43">
+	<property name="ireport.zoom" value="1.0533250172243216"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="132"/>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="ItemsDatosAdicionales" uuid="2f9699a9-b849-4d89-9bec-90f19949eae2">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="dato0" class="java.lang.String">
+			<fieldDescription><![CDATA[dato0]]></fieldDescription>
+		</field>
+		<field name="dato1" class="java.lang.String">
+			<fieldDescription><![CDATA[dato1]]></fieldDescription>
+		</field>
+		<field name="dato2" class="java.lang.String">
+			<fieldDescription><![CDATA[dato2]]></fieldDescription>
+		</field>
+		<field name="dato3" class="java.lang.String">
+			<fieldDescription><![CDATA[dato3]]></fieldDescription>
+		</field>
+		<field name="dato4" class="java.lang.String">
+			<fieldDescription><![CDATA[dato4]]></fieldDescription>
+		</field>
+		<field name="dato5" class="java.lang.String">
+			<fieldDescription><![CDATA[dato5]]></fieldDescription>
+		</field>
+		<field name="dato6" class="java.lang.String">
+			<fieldDescription><![CDATA[dato6]]></fieldDescription>
+		</field>
+		<field name="dato7" class="java.lang.String">
+			<fieldDescription><![CDATA[dato7]]></fieldDescription>
+		</field>
+		<field name="dato8" class="java.lang.String">
+			<fieldDescription><![CDATA[dato8]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/media/santos/INFORMACION/INFORMACION OPENMEDICAL/CODIGO NETBEANS/OPENMEDICAL/web/"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="class" class="java.lang.Class">
+		<fieldDescription><![CDATA[class]]></fieldDescription>
+	</field>
+	<field name="dato0" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato0]]></fieldDescription>
+	</field>
+	<field name="dato1" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato1]]></fieldDescription>
+	</field>
+	<field name="dato10" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato10]]></fieldDescription>
+	</field>
+	<field name="dato100" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato100]]></fieldDescription>
+	</field>
+	<field name="dato11" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato11]]></fieldDescription>
+	</field>
+	<field name="dato12" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato12]]></fieldDescription>
+	</field>
+	<field name="dato13" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato13]]></fieldDescription>
+	</field>
+	<field name="dato14" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato14]]></fieldDescription>
+	</field>
+	<field name="dato15" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato15]]></fieldDescription>
+	</field>
+	<field name="dato16" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato16]]></fieldDescription>
+	</field>
+	<field name="dato17" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato17]]></fieldDescription>
+	</field>
+	<field name="dato18" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato18]]></fieldDescription>
+	</field>
+	<field name="dato19" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato19]]></fieldDescription>
+	</field>
+	<field name="dato2" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato2]]></fieldDescription>
+	</field>
+	<field name="dato20" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato20]]></fieldDescription>
+	</field>
+	<field name="dato21" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato21]]></fieldDescription>
+	</field>
+	<field name="dato22" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato22]]></fieldDescription>
+	</field>
+	<field name="dato23" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato23]]></fieldDescription>
+	</field>
+	<field name="dato24" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato24]]></fieldDescription>
+	</field>
+	<field name="dato25" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato25]]></fieldDescription>
+	</field>
+	<field name="dato26" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato26]]></fieldDescription>
+	</field>
+	<field name="dato27" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato27]]></fieldDescription>
+	</field>
+	<field name="dato28" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato28]]></fieldDescription>
+	</field>
+	<field name="dato29" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato29]]></fieldDescription>
+	</field>
+	<field name="dato3" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato3]]></fieldDescription>
+	</field>
+	<field name="dato30" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato30]]></fieldDescription>
+	</field>
+	<field name="dato31" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato31]]></fieldDescription>
+	</field>
+	<field name="dato32" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato32]]></fieldDescription>
+	</field>
+	<field name="dato33" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato33]]></fieldDescription>
+	</field>
+	<field name="dato34" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato34]]></fieldDescription>
+	</field>
+	<field name="dato35" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato35]]></fieldDescription>
+	</field>
+	<field name="dato36" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato36]]></fieldDescription>
+	</field>
+	<field name="dato37" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato37]]></fieldDescription>
+	</field>
+	<field name="dato38" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato38]]></fieldDescription>
+	</field>
+	<field name="dato39" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato39]]></fieldDescription>
+	</field>
+	<field name="dato4" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato4]]></fieldDescription>
+	</field>
+	<field name="dato40" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato40]]></fieldDescription>
+	</field>
+	<field name="dato41" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato41]]></fieldDescription>
+	</field>
+	<field name="dato42" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato42]]></fieldDescription>
+	</field>
+	<field name="dato43" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato43]]></fieldDescription>
+	</field>
+	<field name="dato44" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato44]]></fieldDescription>
+	</field>
+	<field name="dato45" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato45]]></fieldDescription>
+	</field>
+	<field name="dato46" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato46]]></fieldDescription>
+	</field>
+	<field name="dato47" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato47]]></fieldDescription>
+	</field>
+	<field name="dato48" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato48]]></fieldDescription>
+	</field>
+	<field name="dato49" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato49]]></fieldDescription>
+	</field>
+	<field name="dato5" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato5]]></fieldDescription>
+	</field>
+	<field name="dato50" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato50]]></fieldDescription>
+	</field>
+	<field name="dato51" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato51]]></fieldDescription>
+	</field>
+	<field name="dato52" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato52]]></fieldDescription>
+	</field>
+	<field name="dato53" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato53]]></fieldDescription>
+	</field>
+	<field name="dato54" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato54]]></fieldDescription>
+	</field>
+	<field name="dato55" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato55]]></fieldDescription>
+	</field>
+	<field name="dato56" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato56]]></fieldDescription>
+	</field>
+	<field name="dato57" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato57]]></fieldDescription>
+	</field>
+	<field name="dato58" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato58]]></fieldDescription>
+	</field>
+	<field name="dato59" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato59]]></fieldDescription>
+	</field>
+	<field name="dato6" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato6]]></fieldDescription>
+	</field>
+	<field name="dato60" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato60]]></fieldDescription>
+	</field>
+	<field name="dato61" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato61]]></fieldDescription>
+	</field>
+	<field name="dato62" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato62]]></fieldDescription>
+	</field>
+	<field name="dato63" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato63]]></fieldDescription>
+	</field>
+	<field name="dato64" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato64]]></fieldDescription>
+	</field>
+	<field name="dato65" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato65]]></fieldDescription>
+	</field>
+	<field name="dato66" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato66]]></fieldDescription>
+	</field>
+	<field name="dato67" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato67]]></fieldDescription>
+	</field>
+	<field name="dato68" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato68]]></fieldDescription>
+	</field>
+	<field name="dato69" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato69]]></fieldDescription>
+	</field>
+	<field name="dato7" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato7]]></fieldDescription>
+	</field>
+	<field name="dato70" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato70]]></fieldDescription>
+	</field>
+	<field name="dato71" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato71]]></fieldDescription>
+	</field>
+	<field name="dato72" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato72]]></fieldDescription>
+	</field>
+	<field name="dato73" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato73]]></fieldDescription>
+	</field>
+	<field name="dato74" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato74]]></fieldDescription>
+	</field>
+	<field name="dato75" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato75]]></fieldDescription>
+	</field>
+	<field name="dato76" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato76]]></fieldDescription>
+	</field>
+	<field name="dato77" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato77]]></fieldDescription>
+	</field>
+	<field name="dato78" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato78]]></fieldDescription>
+	</field>
+	<field name="dato79" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato79]]></fieldDescription>
+	</field>
+	<field name="dato8" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato8]]></fieldDescription>
+	</field>
+	<field name="dato80" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato80]]></fieldDescription>
+	</field>
+	<field name="dato81" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato81]]></fieldDescription>
+	</field>
+	<field name="dato82" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato82]]></fieldDescription>
+	</field>
+	<field name="dato83" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato83]]></fieldDescription>
+	</field>
+	<field name="dato84" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato84]]></fieldDescription>
+	</field>
+	<field name="dato85" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato85]]></fieldDescription>
+	</field>
+	<field name="dato86" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato86]]></fieldDescription>
+	</field>
+	<field name="dato87" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato87]]></fieldDescription>
+	</field>
+	<field name="dato88" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato88]]></fieldDescription>
+	</field>
+	<field name="dato89" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato89]]></fieldDescription>
+	</field>
+	<field name="dato9" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato9]]></fieldDescription>
+	</field>
+	<field name="dato90" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato90]]></fieldDescription>
+	</field>
+	<field name="dato91" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato91]]></fieldDescription>
+	</field>
+	<field name="dato92" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato92]]></fieldDescription>
+	</field>
+	<field name="dato93" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato93]]></fieldDescription>
+	</field>
+	<field name="dato94" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato94]]></fieldDescription>
+	</field>
+	<field name="dato95" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato95]]></fieldDescription>
+	</field>
+	<field name="dato96" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato96]]></fieldDescription>
+	</field>
+	<field name="dato97" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato97]]></fieldDescription>
+	</field>
+	<field name="dato98" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato98]]></fieldDescription>
+	</field>
+	<field name="dato99" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato99]]></fieldDescription>
+	</field>
+	<field name="dato101" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato101]]></fieldDescription>
+	</field>
+	<field name="dato102" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato102]]></fieldDescription>
+	</field>
+	<field name="dato103" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato103]]></fieldDescription>
+	</field>
+	<field name="dato104" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato104]]></fieldDescription>
+	</field>
+	<field name="dato105" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato105]]></fieldDescription>
+	</field>
+	<field name="dato106" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato106]]></fieldDescription>
+	</field>
+	<field name="dato107" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato107]]></fieldDescription>
+	</field>
+	<field name="dato108" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato108]]></fieldDescription>
+	</field>
+	<field name="dato109" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato109]]></fieldDescription>
+	</field>
+	<field name="dato110" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato110]]></fieldDescription>
+	</field>
+	<field name="dato111" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato111]]></fieldDescription>
+	</field>
+	<field name="dato112" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato112]]></fieldDescription>
+	</field>
+	<field name="dato113" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato113]]></fieldDescription>
+	</field>
+	<field name="dato114" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato114]]></fieldDescription>
+	</field>
+	<field name="dato115" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato115]]></fieldDescription>
+	</field>
+	<field name="dato116" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato116]]></fieldDescription>
+	</field>
+	<field name="dato117" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato117]]></fieldDescription>
+	</field>
+	<field name="dato118" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato118]]></fieldDescription>
+	</field>
+	<field name="dato119" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato119]]></fieldDescription>
+	</field>
+	<field name="dato120" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato120]]></fieldDescription>
+	</field>
+	<field name="dato121" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato121]]></fieldDescription>
+	</field>
+	<field name="dato122" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato122]]></fieldDescription>
+	</field>
+	<field name="dato123" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato123]]></fieldDescription>
+	</field>
+	<field name="dato124" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato124]]></fieldDescription>
+	</field>
+	<field name="dato125" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato125]]></fieldDescription>
+	</field>
+	<field name="dato126" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato126]]></fieldDescription>
+	</field>
+	<field name="dato127" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato127]]></fieldDescription>
+	</field>
+	<field name="dato128" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato128]]></fieldDescription>
+	</field>
+	<field name="dato129" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato129]]></fieldDescription>
+	</field>
+	<field name="dato130" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato130]]></fieldDescription>
+	</field>
+	<field name="dato131" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato131]]></fieldDescription>
+	</field>
+	<field name="dato132" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato132]]></fieldDescription>
+	</field>
+	<field name="dato133" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato133]]></fieldDescription>
+	</field>
+	<field name="dato134" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato134]]></fieldDescription>
+	</field>
+	<field name="dato135" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato135]]></fieldDescription>
+	</field>
+	<field name="dato136" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato136]]></fieldDescription>
+	</field>
+	<field name="dato137" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato137]]></fieldDescription>
+	</field>
+	<field name="dato138" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato138]]></fieldDescription>
+	</field>
+	<field name="dato139" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato139]]></fieldDescription>
+	</field>
+	<field name="dato140" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato140]]></fieldDescription>
+	</field>
+	<field name="dato141" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato141]]></fieldDescription>
+	</field>
+	<field name="dato142" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato142]]></fieldDescription>
+	</field>
+	<field name="dato143" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato143]]></fieldDescription>
+	</field>
+	<field name="dato144" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato144]]></fieldDescription>
+	</field>
+	<field name="dato145" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato145]]></fieldDescription>
+	</field>
+	<field name="dato146" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato146]]></fieldDescription>
+	</field>
+	<field name="dato147" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato147]]></fieldDescription>
+	</field>
+	<field name="dato148" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato148]]></fieldDescription>
+	</field>
+	<field name="dato149" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato149]]></fieldDescription>
+	</field>
+	<field name="dato150" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato150]]></fieldDescription>
+	</field>
+	<field name="dato151" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato151]]></fieldDescription>
+	</field>
+	<field name="dato152" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato152]]></fieldDescription>
+	</field>
+	<field name="dato153" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato153]]></fieldDescription>
+	</field>
+	<field name="dato154" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato154]]></fieldDescription>
+	</field>
+	<field name="dato155" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato155]]></fieldDescription>
+	</field>
+	<field name="dato156" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato156]]></fieldDescription>
+	</field>
+	<field name="dato157" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato157]]></fieldDescription>
+	</field>
+	<field name="dato158" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato158]]></fieldDescription>
+	</field>
+	<field name="dato159" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato159]]></fieldDescription>
+	</field>
+	<field name="dato160" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato160]]></fieldDescription>
+	</field>
+	<field name="dato161" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato161]]></fieldDescription>
+	</field>
+	<field name="dato162" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato162]]></fieldDescription>
+	</field>
+	<field name="dato163" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato163]]></fieldDescription>
+	</field>
+	<field name="dato164" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato164]]></fieldDescription>
+	</field>
+	<field name="dato165" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato165]]></fieldDescription>
+	</field>
+	<field name="dato166" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato166]]></fieldDescription>
+	</field>
+	<field name="dato167" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato167]]></fieldDescription>
+	</field>
+	<field name="dato168" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato168]]></fieldDescription>
+	</field>
+	<field name="dato169" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato169]]></fieldDescription>
+	</field>
+	<field name="dato170" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato170]]></fieldDescription>
+	</field>
+	<field name="dato171" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato171]]></fieldDescription>
+	</field>
+	<field name="dato172" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato172]]></fieldDescription>
+	</field>
+	<field name="dato173" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato173]]></fieldDescription>
+	</field>
+	<field name="dato174" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato174]]></fieldDescription>
+	</field>
+	<field name="dato175" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato175]]></fieldDescription>
+	</field>
+	<field name="dato176" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato176]]></fieldDescription>
+	</field>
+	<field name="dato177" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato177]]></fieldDescription>
+	</field>
+	<field name="dato178" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato178]]></fieldDescription>
+	</field>
+	<field name="dato179" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato179]]></fieldDescription>
+	</field>
+	<field name="dato180" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato180]]></fieldDescription>
+	</field>
+	<field name="dato181" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato181]]></fieldDescription>
+	</field>
+	<field name="dato182" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato182]]></fieldDescription>
+	</field>
+	<field name="dato183" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato183]]></fieldDescription>
+	</field>
+	<field name="dato184" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato184]]></fieldDescription>
+	</field>
+	<field name="dato185" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato185]]></fieldDescription>
+	</field>
+	<field name="dato186" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato186]]></fieldDescription>
+	</field>
+	<field name="dato187" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato187]]></fieldDescription>
+	</field>
+	<field name="dato188" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato188]]></fieldDescription>
+	</field>
+	<field name="dato189" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato189]]></fieldDescription>
+	</field>
+	<field name="dato190" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato190]]></fieldDescription>
+	</field>
+	<field name="dato191" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato191]]></fieldDescription>
+	</field>
+	<field name="dato192" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato192]]></fieldDescription>
+	</field>
+	<field name="dato193" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato193]]></fieldDescription>
+	</field>
+	<field name="dato194" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato194]]></fieldDescription>
+	</field>
+	<field name="dato195" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato195]]></fieldDescription>
+	</field>
+	<field name="dato196" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato196]]></fieldDescription>
+	</field>
+	<field name="dato197" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato197]]></fieldDescription>
+	</field>
+	<field name="dato198" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato198]]></fieldDescription>
+	</field>
+	<field name="dato199" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato199]]></fieldDescription>
+	</field>
+	<field name="dato200" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato200]]></fieldDescription>
+	</field>
+	<field name="dato201" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato201]]></fieldDescription>
+	</field>
+	<field name="dato202" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato202]]></fieldDescription>
+	</field>
+	<field name="dato203" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato203]]></fieldDescription>
+	</field>
+	<field name="dato204" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato204]]></fieldDescription>
+	</field>
+	<field name="dato205" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato205]]></fieldDescription>
+	</field>
+	<field name="dato206" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato206]]></fieldDescription>
+	</field>
+	<field name="dato207" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato207]]></fieldDescription>
+	</field>
+	<field name="dato208" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato208]]></fieldDescription>
+	</field>
+	<field name="dato209" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato209]]></fieldDescription>
+	</field>
+	<field name="dato210" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato210]]></fieldDescription>
+	</field>
+	<field name="dato211" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato211]]></fieldDescription>
+	</field>
+	<field name="dato212" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato212]]></fieldDescription>
+	</field>
+	<field name="dato213" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato213]]></fieldDescription>
+	</field>
+	<field name="dato214" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato214]]></fieldDescription>
+	</field>
+	<field name="dato215" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato215]]></fieldDescription>
+	</field>
+	<field name="dato216" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato216]]></fieldDescription>
+	</field>
+	<field name="dato217" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato217]]></fieldDescription>
+	</field>
+	<field name="dato218" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato218]]></fieldDescription>
+	</field>
+	<field name="dato219" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato219]]></fieldDescription>
+	</field>
+	<field name="dato220" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato220]]></fieldDescription>
+	</field>
+	<field name="dato221" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato221]]></fieldDescription>
+	</field>
+	<field name="dato222" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato222]]></fieldDescription>
+	</field>
+	<field name="dato223" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato223]]></fieldDescription>
+	</field>
+	<field name="dato224" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato224]]></fieldDescription>
+	</field>
+	<field name="dato225" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato225]]></fieldDescription>
+	</field>
+	<field name="dato226" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato226]]></fieldDescription>
+	</field>
+	<field name="dato227" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato227]]></fieldDescription>
+	</field>
+	<field name="dato228" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato228]]></fieldDescription>
+	</field>
+	<field name="dato229" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato229]]></fieldDescription>
+	</field>
+	<field name="dato230" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato230]]></fieldDescription>
+	</field>
+	<field name="dato231" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato231]]></fieldDescription>
+	</field>
+	<field name="dato232" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato232]]></fieldDescription>
+	</field>
+	<field name="dato233" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato233]]></fieldDescription>
+	</field>
+	<field name="dato234" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato234]]></fieldDescription>
+	</field>
+	<field name="dato235" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato235]]></fieldDescription>
+	</field>
+	<field name="dato236" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato236]]></fieldDescription>
+	</field>
+	<field name="dato237" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato237]]></fieldDescription>
+	</field>
+	<field name="dato238" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato238]]></fieldDescription>
+	</field>
+	<field name="dato239" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato239]]></fieldDescription>
+	</field>
+	<field name="dato240" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato240]]></fieldDescription>
+	</field>
+	<field name="dato241" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato241]]></fieldDescription>
+	</field>
+	<field name="dato242" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato242]]></fieldDescription>
+	</field>
+	<field name="dato243" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato243]]></fieldDescription>
+	</field>
+	<field name="dato244" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato244]]></fieldDescription>
+	</field>
+	<field name="dato245" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato245]]></fieldDescription>
+	</field>
+	<field name="dato246" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato246]]></fieldDescription>
+	</field>
+	<field name="dato247" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato247]]></fieldDescription>
+	</field>
+	<field name="dato248" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato248]]></fieldDescription>
+	</field>
+	<field name="dato249" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato249]]></fieldDescription>
+	</field>
+	<field name="dato250" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato250]]></fieldDescription>
+	</field>
+	<field name="dato251" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato251]]></fieldDescription>
+	</field>
+	<field name="dato252" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato252]]></fieldDescription>
+	</field>
+	<field name="dato253" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato253]]></fieldDescription>
+	</field>
+	<field name="dato254" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato254]]></fieldDescription>
+	</field>
+	<field name="dato255" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato255]]></fieldDescription>
+	</field>
+	<field name="dato256" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato256]]></fieldDescription>
+	</field>
+	<field name="dato257" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato257]]></fieldDescription>
+	</field>
+	<field name="dato258" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato258]]></fieldDescription>
+	</field>
+	<field name="dato259" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato259]]></fieldDescription>
+	</field>
+	<field name="dato260" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato260]]></fieldDescription>
+	</field>
+	<field name="dato261" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato261]]></fieldDescription>
+	</field>
+	<field name="dato262" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato262]]></fieldDescription>
+	</field>
+	<field name="dato263" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato263]]></fieldDescription>
+	</field>
+	<field name="dato264" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato264]]></fieldDescription>
+	</field>
+	<field name="dato265" class="java.lang.Object">
+		<fieldDescription><![CDATA[dato265]]></fieldDescription>
+	</field>
+	<field name="listaDatosAdicionales" class="java.util.List">
+		<fieldDescription><![CDATA[listaDatosAdicionales]]></fieldDescription>
+	</field>
+	<group name="paginaN">
+		<groupExpression><![CDATA[$V{PAGE_COUNT}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="62">
+			<frame>
+				<reportElement positionType="Float" x="0" y="0" width="762" height="62" uuid="8c3c6500-b0ac-4237-ab34-fe5e78823fd1"/>
+				<rectangle radius="10">
+					<reportElement positionType="Float" x="0" y="0" width="762" height="62" uuid="3dc8551e-a7ac-4d75-b1d2-d35c2605e1b1"/>
+				</rectangle>
+				<image scaleImage="FillFrame" onErrorType="Blank">
+					<reportElement positionType="Float" x="7" y="3" width="83" height="53" uuid="9c3bbc6e-8311-410d-a87e-f822b43f3dd0"/>
+					<imageExpression><![CDATA[$F{dato228}]]></imageExpression>
+				</image>
+				<frame>
+					<reportElement positionType="Float" x="570" y="3" width="167" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="138" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement markup="html">
+							<font fontName="SansSerif" size="9"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato206}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="570" y="16" width="167" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="138" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement markup="html">
+							<font fontName="SansSerif" size="9"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato207}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="90" y="0" width="480" height="13" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="480" height="13" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+							<font fontName="SansSerif" size="10" isBold="true"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato246}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="90" y="13" width="480" height="10" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="480" height="10" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+							<font fontName="SansSerif" size="7" isBold="false"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato247}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="90" y="23" width="480" height="13" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="480" height="13" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+							<font fontName="SansSerif" size="10" isBold="true"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato248}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement positionType="Float" x="90" y="36" width="480" height="10" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="261" height="10" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+						<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+							<font fontName="SansSerif" size="7" isBold="false"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{dato249}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement x="90" y="46" width="480" height="16" uuid="faf14165-e485-4341-90a0-429fd8508710"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FORMULACIÓN DE MEDICAMENTOS]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="570" y="29" width="167" height="12" uuid="13fde49d-7849-49c0-b75d-76e69d3cc57a"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato209}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement positionType="Float" x="570" y="42" width="167" height="12" uuid="4ae4e292-3b14-4d61-88a9-38eeac9f510d"/>
+					<textField>
+						<reportElement x="29" y="0" width="13" height="12" uuid="068129ed-d829-4725-8f9c-be76b588040d"/>
+						<textElement textAlignment="Right">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="1" y="0" width="34" height="12" uuid="d9152ce0-d426-48f4-af7f-3f5ce9ff6f85"/>
+						<textElement>
+							<font size="9" isBold="false"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<text><![CDATA[PAG.]]></text>
+					</staticText>
+					<staticText>
+						<reportElement x="40" y="0" width="20" height="12" uuid="58148155-ad5d-4fdf-a185-83370a201d15"/>
+						<textElement>
+							<font size="9" isBold="false"/>
+							<paragraph leftIndent="5"/>
+						</textElement>
+						<text><![CDATA[DE]]></text>
+					</staticText>
+					<textField evaluationTime="Report" isBlankWhenNull="true">
+						<reportElement x="59" y="0" width="13" height="12" uuid="0dff0d20-739e-4f46-ac4d-8ddaedc1c513"/>
+						<textElement textAlignment="Right">
+							<font size="9"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</frame>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="256" splitType="Stretch">
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="10" width="762" height="12" backcolor="#E6E6E6" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<staticText>
+					<reportElement x="0" y="0" width="252" height="12" uuid="217e7781-c369-49f2-bef4-df8bb3095af2"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<text><![CDATA[DATOS PACIENTE]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="22" width="570" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="372" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato218}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="34" width="570" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="372" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato208}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="570" y="34" width="192" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="185" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato216}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="430" y="57" width="332" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="325" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato225}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="58" width="431" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="250" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato219}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="104" width="762" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="760" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato0}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="129" width="762" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="755" height="12" uuid="846efd89-7874-49f6-af53-bb7b01d2c1ea"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato1}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="157" width="762" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="755" height="12" uuid="c859a557-46ba-4e51-b969-81c47e90dc92"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato2}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="92" width="762" height="12" backcolor="#E6E6E6" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<staticText>
+					<reportElement x="0" y="0" width="159" height="12" uuid="8a5da003-dfb4-45bf-9de5-a9566b4623c8"/>
+					<textElement>
+						<font size="9" isBold="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<text><![CDATA[DIAGNÓSTICOS]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="570" y="22" width="192" height="12" uuid="7f631f43-3f8e-4323-ab7c-83be265c3272"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="185" height="12" uuid="ce37a94e-ad6e-478f-b5fc-7ffb1be101d4"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato211}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="430" y="46" width="332" height="12" uuid="a5820815-d960-405c-8e24-d977fec060fc"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="323" height="12" uuid="c60c4dde-74c3-4ac0-b5eb-d207a9ff5c01"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato265}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="46" width="431" height="12" uuid="7ece3d65-ade2-405e-9b39-d0e2d8dd7115"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="418" height="12" uuid="4714ab0f-0fc4-4459-b9bf-19e749b7ada9"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato213}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="69" width="431" height="12" uuid="a316332a-50d5-463e-a0e8-0d0afd55ecd5"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="418" height="12" uuid="44d180b0-10b3-4e74-8089-0c8a14ffac2c"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato221}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="431" y="69" width="331" height="12" uuid="7f8a92cb-d1a2-410f-95ac-93f2dd47d6bf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="324" height="12" uuid="225b50a7-5e16-4911-bf4d-791bfaf09de6"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato222}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement style="table 4_TD" positionType="Float" x="0" y="215" width="762" height="12" uuid="1b0cbcea-0e82-47b4-8776-8ec892b6f8d3"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="755" height="12" uuid="767800b9-1e17-4e31-8305-1df2f7762ce2"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato3}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<componentElement>
+				<reportElement key="table 4" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="2" y="179" width="760" height="25" uuid="3e1ce657-8812-4b39-a137-05b48436891f"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="ItemsDatosAdicionales" uuid="d9a110c2-7c1a-4536-88e5-f8fdeb0e4db0">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listaDatosAdicionales})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="444a98c2-5310-4123-8b06-725b36da5a21">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:columnHeader style="table 4_TD" height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="60" height="12" uuid="e0fbbd20-7d26-4baf-b852-14470e9d9a22"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CODIGO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="36" uuid="4d949866-6bb7-42c5-b244-162e4a57dc46"/>
+								<textElement textAlignment="Center">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato0}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="effe816e-e7c7-47a5-a200-84eaee57e6d9">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="100" height="12" uuid="1caf3c63-5d98-4d68-9041-9e86d4ef88b1"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[MEDICAMENTO]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="100" height="36" uuid="9287e485-7e25-49b6-a13f-4ac0f030502e"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="645608fa-6a82-49ae-ac2d-cbcfe8f5934a">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="60" height="12" uuid="7a87309b-0388-4372-93c3-96f2db429a5b"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CANTIDAD]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="36" uuid="00833d42-1331-47a7-b835-90a22d3676dd"/>
+								<textElement textAlignment="Center">
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato2}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="caf5b410-16cf-4b24-a87f-77466b462dd7">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="60" height="12" uuid="5bc9d7df-bf3b-4f66-87de-2ea407c61eee"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[DOSIS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="36" uuid="11b2ae09-05c0-4f59-b276-826f270944da"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato3}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="8a3e4312-43ef-40b4-a18d-66d63965f107">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="100" height="12" uuid="2322ab71-3bc4-4aa5-b909-84ce7c60eddf"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[PRESENTACION	]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="100" height="36" uuid="20207da1-6328-44c5-b913-4aca7f722a4c"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato4}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="a5abe60d-3fe3-43fc-aa39-d2645d065342">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="100" height="12" uuid="fbd4c662-5563-4b64-acd2-f22809a77ef2"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CONCENTRACION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="100" height="36" uuid="49843814-eb7a-47f6-b70c-3fef5d4d1aa3"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato5}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="60" uuid="642349e5-74e2-424c-8d40-577bda8eb223">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="60" height="12" uuid="dd28c07a-1969-4feb-a9e3-42a880792d4b"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[VÍA ADMIN.	]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="36" uuid="f44db853-8a32-4b06-881f-ed003ac0010f"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato6}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="454b0a18-ec45-4476-abd8-4b5139e5e457">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="100" height="12" uuid="8cf3312d-faa0-446f-9510-13da79e0be07"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[POSOLOGÍA]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToTallestObject" x="0" y="0" width="100" height="36" uuid="dc57894d-f585-4d98-98c8-dbd226745725"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato7}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="d1b428b8-e3db-4d8b-9501-c947e337fb2d">
+						<jr:tableHeader height="30" rowSpan="1"/>
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:columnHeader height="12" rowSpan="1">
+							<staticText>
+								<reportElement style="table 4_TD" x="0" y="0" width="100" height="12" uuid="4f502482-6e21-4434-b9a2-7e43cdd15bb3"/>
+								<textElement textAlignment="Center">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[OBSERVACIONES]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="11" rowSpan="1"/>
+						<jr:detailCell height="36" rowSpan="1">
+							<textField>
+								<reportElement style="table 4_TD" stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="36" uuid="f3b3b465-c6a9-4104-84d3-38ae2e77ed8f"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dato8}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="19">
+			<frame>
+				<reportElement positionType="Float" x="232" y="0" width="278" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="274" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement textAlignment="Center" markup="html">
+						<font fontName="SansSerif" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato237}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="115">
+			<line>
+				<reportElement x="503" y="82" width="252" height="1" uuid="eab9670c-6faa-4f32-b945-3933c1079775"/>
+			</line>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement positionType="Float" x="21" y="0" width="204" height="82" uuid="9c3bbc6e-8311-410d-a87e-f822b43f3dd0"/>
+				<imageExpression><![CDATA[$F{dato236}]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement positionType="Float" x="-1" y="82" width="252" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="252" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato264}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="0" width="252" height="1" uuid="eab9670c-6faa-4f32-b945-3933c1079775"/>
+				</line>
+			</frame>
+			<frame>
+				<reportElement positionType="Float" x="503" y="82" width="252" height="12" uuid="80c48727-2be9-4b8f-ae92-9fbe6a16dbdf"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="0" width="252" height="12" uuid="a520721a-4d21-4583-941d-c71961057013"/>
+					<textElement markup="html">
+						<font fontName="SansSerif" size="9"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{dato227}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image scaleImage="FillFrame" onErrorType="Blank">
+				<reportElement positionType="Float" x="526" y="0" width="204" height="82" uuid="9c3bbc6e-8311-410d-a87e-f822b43f3dd0"/>
+				<imageExpression><![CDATA[$F{dato226}]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>

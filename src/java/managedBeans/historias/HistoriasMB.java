@@ -33,6 +33,7 @@ import modelo.entidades.CfgDiagnostico;
 import modelo.entidades.CfgEmpresa;
 import modelo.entidades.CfgFamiliar;
 import modelo.entidades.CfgMaestrosTxtPredefinidos;
+import modelo.entidades.CfgMedicamento;
 import modelo.entidades.CfgPacientes;
 import modelo.entidades.CfgTxtPredefinidos;
 import modelo.entidades.CfgUsuarios;
@@ -41,13 +42,16 @@ import modelo.entidades.FacConsecutivo;
 import modelo.entidades.FacServicio;
 import modelo.entidades.HcCamposReg;
 import modelo.entidades.HcDetalle;
+import modelo.entidades.HcItems;
 import modelo.entidades.HcRegistro;
 import modelo.entidades.HcTipoReg;
+import modelo.entidades.WrapperHcItems;
 import modelo.fachadas.CfgClasificacionesFacade;
 import modelo.fachadas.CfgDiagnosticoFacade;
 import modelo.fachadas.CfgEmpresaFacade;
 import modelo.fachadas.CfgFamiliarFacade;
 import modelo.fachadas.CfgMaestrosTxtPredefinidosFacade;
+import modelo.fachadas.CfgMedicamentoFacade;
 import modelo.fachadas.CfgPacientesFacade;
 import modelo.fachadas.CfgTxtPredefinidosFacade;
 import modelo.fachadas.CfgUsuariosFacade;
@@ -56,6 +60,7 @@ import modelo.fachadas.CitTurnosFacade;
 import modelo.fachadas.FacConsecutivoFacade;
 import modelo.fachadas.FacServicioFacade;
 import modelo.fachadas.HcCamposRegFacade;
+import modelo.fachadas.HcItemsFacade;
 import modelo.fachadas.HcRegistroFacade;
 import modelo.fachadas.HcTipoRegFacade;
 import net.sf.jasperreports.engine.JRException;
@@ -103,6 +108,10 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     CfgEmpresaFacade empresaFacade;
     @EJB
     CfgFamiliarFacade familiarFacade;
+    @EJB
+    HcItemsFacade itemsFacade;
+    @EJB
+    CfgMedicamentoFacade cfgMedicamento;
 
     //---------------------------------------------------
     //-----------------ENTIDADES ------------------------
@@ -202,11 +211,25 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     private List<FilaDataTable> listaEstructuraFamiliar = new ArrayList<>();
     private List<FilaDataTable> listaEstructuraFamiliarFiltro = new ArrayList<>();
+    private List<FilaDataTable> listaMedicamentos = new ArrayList<>();
+    private List<FilaDataTable> listaMedicamentosFiltro = new ArrayList<>();
     private FilaDataTable familiarSeleccionado = new FilaDataTable();
+    private FilaDataTable medicamentoSeleccionado = new FilaDataTable();
     private String nombreFamiliar = "";
     private String edadFamiliar = "";
     private String parentescoFamiliar = "";
     private String ocupacionFamiliar = "";
+
+    private String idMedicamento;
+    private String codigo;
+    private String descripcion;
+    private Integer cantidad;
+    private String dosis;
+    private String presentacion;
+    private String concentracion;
+    private String viaAdmin;
+    private String posologia;
+    private String observacion;
 
 //---------------------------------------------------
     //----------------- FUNCIONES INICIALES -----------------------
@@ -260,6 +283,45 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     }
 
+    public List<FilaDataTable> cargarListaMedicamentos(HcRegistro registro) {
+        listaMedicamentos = new ArrayList<>();
+        List<HcItems> listaM = null;
+        if (datosFormulario != null) {
+            listaM = itemsFacade.findByIdRegistro(registro);
+            System.out.println("buscando medicamentos  de ... " + pacienteSeleccionado.getIdPaciente());
+        }
+
+        List<FilaDataTable> listaItems = new ArrayList<>();
+
+        if (listaM != null) {
+            System.out.println("reg encontrados " + listaM.size());
+
+            for (HcItems itemMedicamento : listaM) {
+
+                CfgMedicamento medicamentoEncontrado = cfgMedicamento.find(Integer.parseInt(itemMedicamento.getIdTabla()));
+
+                FilaDataTable r = new FilaDataTable();
+                r.setColumna1(medicamentoEncontrado.getCodigoMedicamento());
+                r.setColumna2(medicamentoEncontrado.getNombreMedicamento());
+                r.setColumna3(itemMedicamento.getCantidad().toString());
+                r.setColumna4(itemMedicamento.getDosis());
+                r.setColumna5(medicamentoEncontrado.getFormaMedicamento());
+                r.setColumna6(medicamentoEncontrado.getConcentracion());
+                r.setColumna7(medicamentoEncontrado.getModAdmin());
+                r.setColumna8(itemMedicamento.getPosologia());
+                r.setColumna9(itemMedicamento.getObservacion());
+                listaItems.add(r);
+            }
+
+            System.out.println("medicamentos.size = " + listaItems.size());
+        } else {
+
+            System.out.println("medicamentos no encontrados ");
+        }
+        return listaItems;
+
+    }
+
     @PostConstruct
     public void inicializar() {
         recargarMaestrosTxtPredefinidos();
@@ -272,6 +334,16 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         seleccionaTodosRegCliHis();
         empresa = empresaFacade.findAll().get(0);
 
+        medicamentoSeleccionado = new FilaDataTable();
+        codigo = "";
+        descripcion = "";
+        cantidad = 0;
+        dosis = "";
+        presentacion = "";
+        concentracion = "";
+        viaAdmin = "";
+        posologia = "";
+        observacion = "";
     }
 
     private void valoresPorDefecto() {
@@ -299,10 +371,28 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('dialogoAgregarFamiliar').show();");
     }
 
+    public void cargarDialogoAgregarItemMedicamento() {
+        System.out.println("From cargarDialogoAgregarItemMedicamento()");
+
+        medicamentoSeleccionado = new FilaDataTable();
+        codigo = "";
+        descripcion = "";
+        cantidad = 0;
+        dosis = "";
+        presentacion = "";
+        concentracion = "";
+        viaAdmin = "";
+        posologia = "";
+        observacion = "";
+
+        RequestContext.getCurrentInstance().update("IdFormDialogs:IdPanelAgregarItemMedicamento");
+        RequestContext.getCurrentInstance().execute("PF('dialogoAgregarItemMedicamento').show();");
+    }
+
     public void quitarFamiliar() {
 
         System.out.println("From quitarFamiliar()" + listaEstructuraFamiliar.size());
-        
+
         CfgFamiliar familiar = new CfgFamiliar();
         familiar.setIdEstructuraFamiliar(Integer.parseInt(familiarSeleccionado.getColumna7()));
         familiar.setNombre(familiarSeleccionado.getColumna1());
@@ -310,11 +400,29 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         familiar.setIdParentesco(new CfgClasificaciones(Integer.parseInt(familiarSeleccionado.getColumna3())));
         familiar.setIdOcupacion(new CfgClasificaciones(Integer.parseInt(familiarSeleccionado.getColumna4())));
         familiar.setIdPaciente(new CfgPacientes(Integer.parseInt(familiarSeleccionado.getColumna8())));
-        
+
         familiarFacade.remove(familiar); //quitar de base de datos
-        
+
         listaEstructuraFamiliar.remove(familiarSeleccionado); //quitar de lista
         System.out.println("/From quitarFamiliar()" + listaEstructuraFamiliar.size());
+
+        RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
+        RequestContext.getCurrentInstance().execute("PF('wvtablaEstructuraFamiliar').clearFilters(); PF('wvtablaEstructuraFamiliar').getPaginator().setPage(0);");
+    }
+
+    public void quitarItemMedicamento() {
+
+        System.out.println("From quitarItemMedicamento()" + listaMedicamentos.size());
+
+//        HcItems item = new HcItems();
+//        item.setIdItem(medicamentoSeleccionado.getIdItem());
+//        item.setIdRegistro(medicamentoSeleccionado.getIdRegistro());
+//        item.setIdTabla(medicamentoSeleccionado.getIdTabla());
+
+//        itemsFacade.remove(item); //quitar de base de datos
+
+        listaMedicamentos.remove(medicamentoSeleccionado); //quitar de lista
+        System.out.println("/From quitarFamiliar()" + listaMedicamentos.size());
 
         RequestContext.getCurrentInstance().update("tablaEstructuraFamiliar");
         RequestContext.getCurrentInstance().execute("PF('wvtablaEstructuraFamiliar').clearFilters(); PF('wvtablaEstructuraFamiliar').getPaginator().setPage(0);");
@@ -377,6 +485,104 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     }
 
+    public void agregarMedicamento() {
+        System.out.println("From agregarMedicamento()");
+
+        if (validacionCampoVacio(descripcion, "Medicamento")) {
+            return;
+        }
+        if (validacionCampoVacio(presentacion, "Presentación")) {
+            return;
+        }
+        if (validacionCampoVacio(cantidad.toString(), "Cantidad")) {
+            return;
+        }
+        if (validacionCampoVacio(presentacion, "Presentación")) {
+            return;
+        }
+        if (validacionCampoVacio(presentacion, "Contentración")) {
+            return;
+        }
+        if (validacionCampoVacio(presentacion, "Vía de administración")) {
+            return;
+        }
+        if (validacionCampoVacio(presentacion, "Posología")) {
+            return;
+        }
+
+        medicamentoSeleccionado = new FilaDataTable();
+
+        System.out.println("Id Medicamento " + idMedicamento);
+
+        CfgMedicamento medicamento = cfgMedicamento.find(Integer.parseInt(idMedicamento));
+
+        System.out.println("Medicamento " + medicamento.getNombreMedicamento());
+
+        medicamentoSeleccionado.setColumna1(idMedicamento);
+        medicamentoSeleccionado.setColumna2(codigo);
+        medicamentoSeleccionado.setColumna3(descripcion);
+        medicamentoSeleccionado.setColumna4(cantidad.toString());
+        medicamentoSeleccionado.setColumna5(dosis);
+        medicamentoSeleccionado.setColumna6(presentacion);
+        medicamentoSeleccionado.setColumna7(concentracion);
+        medicamentoSeleccionado.setColumna8(viaAdmin);
+        medicamentoSeleccionado.setColumna9(posologia);
+        medicamentoSeleccionado.setColumna10(observacion);
+        medicamentoSeleccionado.setColumna11("cfg_medicamento");
+//        medicamentoSeleccionado.setDescripcion(descripcion);
+//        medicamentoSeleccionado.setIdTabla(idMedicamento);
+//        medicamentoSeleccionado.setTabla("cfg_medicamento");
+//        medicamentoSeleccionado.setConcentracion(concentracion);
+//        medicamentoSeleccionado.setPresentacion(presentacion);
+//        medicamentoSeleccionado.setObservacion(observacion);
+//        medicamentoSeleccionado.setCantidad(cantidad);
+//        medicamentoSeleccionado.setDosis(dosis);
+//        medicamentoSeleccionado.setCodigo(codigo);
+//        medicamentoSeleccionado.setPosologia(posologia);
+//        medicamentoSeleccionado.setViaAdmin(viaAdmin);
+
+        idMedicamento = "";
+        codigo = "";
+        descripcion = "";
+        cantidad = 0;
+        dosis = "";
+        presentacion = "";
+        concentracion = "";
+        viaAdmin = "";
+        posologia = "";
+        observacion = "";
+
+        listaMedicamentos.add(medicamentoSeleccionado);
+        RequestContext.getCurrentInstance().execute("PF('wvtablaMedicamentos').clearFilters(); PF('wvtablaMedicamentos').getPaginator().setPage(0);");
+
+        RequestContext.getCurrentInstance().update("tablaMedicamentos");
+        RequestContext.getCurrentInstance().update("IdPanelAgregarItemMedicamento");
+
+        System.out.println("/From agregarMedicamento()");
+
+    }
+
+    public void cerrarFormMedicamentos() {
+        RequestContext.getCurrentInstance().execute("PF('dialogoAgregarItemMedicamento').hide(); PF('wvtablaMedicamentos').clearFilters(); PF('wvtablaMedicamentos').getPaginator().setPage(0);");
+        RequestContext.getCurrentInstance().update("tablaAgregarItemMedicamento");
+    }
+
+    public void cambiarMedicamento() {
+        System.out.println("Id Medicamento " + idMedicamento);
+        CfgMedicamento medicamento = cfgMedicamento.find(Integer.parseInt(idMedicamento));
+        codigo = medicamento.getCodigoMedicamento();
+        descripcion = medicamento.getCodigoMedicamento();
+//        cantidad = medicamento.getCodigoMedicamento();
+//        dosis = ""
+        presentacion = medicamento.getFormaMedicamento();
+        concentracion = medicamento.getConcentracion();
+        viaAdmin = medicamento.getModAdmin();
+//        posologia = medicamento.getPos();
+//        observacion = medicamento.getCodigoMedicamento();
+
+        System.out.println("Medicamento " + medicamento.getNombreMedicamento());
+    }
+
     private String calcularIMC(float peso, float talla) {
 
         //Infrapeso	IMC menos de 18.5
@@ -414,7 +620,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             System.out.println("" + e.getMessage());
         }
     }
-    
+
     public void calcularIMCMaterna() {
         try {
             float peso = Float.parseFloat(datosFormulario.getDato148().toString());
@@ -644,13 +850,15 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 btnHistorialDisabled = false;
                 btnPdfAgrupadoDisabled = true;
             } else//hay mas de uno
-             if (igualTipoRegistro) {//son del mismo tipo
+            {
+                if (igualTipoRegistro) {//son del mismo tipo
                     btnHistorialDisabled = true;
                     btnPdfAgrupadoDisabled = false;
                 } else {//no son del mismo tipo
                     btnHistorialDisabled = true;
                     btnPdfAgrupadoDisabled = true;
                 }
+            }
         }
     }
 
@@ -740,20 +948,20 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         //----------------------------------------------------------------------
         //CARGO DATOS DESDE (hc_registro)(cfg_empresa) -------------------------
         //----------------------------------------------------------------------
-        datosReporte.setValor(44, "<b>PRIMER NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerNombre()));//
-        datosReporte.setValor(45, "<b>SEGUNDO NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoNombre()));//
-        datosReporte.setValor(46, "<b>PRIMER APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerApellido()));//
-        datosReporte.setValor(47, "<b>SEGUNDO APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
-        datosReporte.setValor(48, "<b>CELULAR: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
-        datosReporte.setValor(49, "<b>CORREO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getEmail()));//
+        datosReporte.setValor(44, "<b>PRIMER NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerNombre().toUpperCase()));//
+        datosReporte.setValor(45, "<b>SEGUNDO NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoNombre().toUpperCase()));//
+        datosReporte.setValor(46, "<b>PRIMER APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerApellido().toUpperCase()));//
+        datosReporte.setValor(47, "<b>SEGUNDO APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido().toUpperCase()));//
+        datosReporte.setValor(48, "<b>CELULAR: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido().toUpperCase()));//
+        datosReporte.setValor(49, "<b>CORREO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getEmail().toUpperCase()));//
         datosReporte.setValor(50, "<b>FOLIO: </b>" + regEncontrado.getFolio());//folio
-        datosReporte.setValor(51, "<b>HISTORIA No: </b>" + regEncontrado.getIdPaciente().getIdentificacion());//numero de historia
-        datosReporte.setValor(53, "<b>NOMBRE: </b>" + pacienteSeleccionado.nombreCompleto());//NOMBRES PACIENTE        
+        datosReporte.setValor(51, "<b>HISTORIA No: </b>" + regEncontrado.getIdPaciente().getIdentificacion().toUpperCase());//numero de historia
+        datosReporte.setValor(53, "<b>NOMBRE: </b>" + pacienteSeleccionado.nombreCompleto().toUpperCase());//NOMBRES PACIENTE        
 
         datosReporte.setValor(54, "<b>FECHA: </b> " + sdfDateHour.format(regEncontrado.getFechaReg()));
         datosReporte.setValor(88, "<b>FECHA: </b> " + sdfDate.format(regEncontrado.getFechaReg()) + "<b> HORA: </b> " + sdfHour.format(regEncontrado.getFechaReg()));
         if (pacienteSeleccionado.getIdAdministradora() != null) {
-            datosReporte.setValor(55, "<b>ENTIDAD: </b> " + pacienteSeleccionado.getIdAdministradora().getRazonSocial());
+            datosReporte.setValor(55, "<b>ENTIDAD: </b> " + pacienteSeleccionado.getIdAdministradora().getRazonSocial().toUpperCase());
         } else {
             datosReporte.setValor(55, "<b>ENTIDAD: </b> ");
         }
@@ -765,46 +973,46 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             datosReporte.setValor(43, "<b>FECHA NACIMIENTO: </b>");
         }
         if (pacienteSeleccionado.getGenero() != null) {
-            datosReporte.setValor(57, "<b>SEXO: </b> " + pacienteSeleccionado.getGenero().getDescripcion());
+            datosReporte.setValor(57, "<b>SEXO: </b> " + pacienteSeleccionado.getGenero().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(57, "<b>SEXO: </b> ");
         }
         if (pacienteSeleccionado.getOcupacion() != null) {
-            datosReporte.setValor(58, "<b>OCUPACION: </b> " + pacienteSeleccionado.getOcupacion().getDescripcion());
+            datosReporte.setValor(58, "<b>OCUPACION: </b> " + pacienteSeleccionado.getOcupacion().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(58, "<b>OCUPACION: </b> ");
         }
-        datosReporte.setValor(59, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion()));
+        datosReporte.setValor(59, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion().toUpperCase()));
         datosReporte.setValor(60, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResidencia()));
 
         if (pacienteSeleccionado.getTipoIdentificacion() != null) {
-            datosReporte.setValor(69, pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
-            datosReporte.setValor(61, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(69, pacienteSeleccionado.getTipoIdentificacion().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(61, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getTipoIdentificacion().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getIdentificacion());
         } else {
-            datosReporte.setValor(69, pacienteSeleccionado.getIdentificacion());
-            datosReporte.setValor(61, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(69, pacienteSeleccionado.getIdentificacion().toUpperCase());
+            datosReporte.setValor(61, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getIdentificacion().toUpperCase());
         }
         if (pacienteSeleccionado.getRegimen() != null) {
-            datosReporte.setValor(62, "<b>TIPO AFILIACION: </b> " + pacienteSeleccionado.getRegimen().getDescripcion());
-            datosReporte.setValor(42, "<b>COBERTURA EN SALUD: </b>" + pacienteSeleccionado.getRegimen().getDescripcion());
+            datosReporte.setValor(62, "<b>TIPO AFILIACION: </b> " + pacienteSeleccionado.getRegimen().getDescripcion().toUpperCase());
+            datosReporte.setValor(42, "<b>COBERTURA EN SALUD: </b>" + pacienteSeleccionado.getRegimen().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(62, "<b>TIPO AFILIACION: </b> ");
             datosReporte.setValor(42, "<b>COBERTURA EN SALUD: </b>");
         }
-        datosReporte.setValor(63, "<b>RESPONSABLE: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getResponsable()));
-        datosReporte.setValor(64, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResponsable()));
+        datosReporte.setValor(63, "<b>RESPONSABLE: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getResponsable().toUpperCase()));
+        datosReporte.setValor(64, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResponsable().toUpperCase()));
         if (pacienteSeleccionado.getEstadoCivil() != null) {
-            datosReporte.setValor(65, "<b>ESTADO CIVIL: </b> " + pacienteSeleccionado.getEstadoCivil().getDescripcion());
+            datosReporte.setValor(65, "<b>ESTADO CIVIL: </b> " + pacienteSeleccionado.getEstadoCivil().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(65, "<b>ESTADO CIVIL: </b> ");
         }
         if (pacienteSeleccionado.getDepartamento() != null) {
-            datosReporte.setValor(66, "<b>DEPARTAMENTO: </b>" + pacienteSeleccionado.getDepartamento().getDescripcion() + " " + pacienteSeleccionado.getDepartamento().getCodigo());
+            datosReporte.setValor(66, "<b>DEPARTAMENTO: </b>" + pacienteSeleccionado.getDepartamento().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getDepartamento().getCodigo());
         } else {
             datosReporte.setValor(66, "<b>DEPARTAMENTO: </b>");
         }
         if (pacienteSeleccionado.getMunicipio() != null) {
-            datosReporte.setValor(67, "<b>MUNICIPIO: </b>" + pacienteSeleccionado.getMunicipio().getDescripcion() + " " + pacienteSeleccionado.getMunicipio().getCodigo());//TELEFONO EMPRESA                
+            datosReporte.setValor(67, "<b>MUNICIPIO: </b>" + pacienteSeleccionado.getMunicipio().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getMunicipio().getCodigo());//TELEFONO EMPRESA                
         } else {
             datosReporte.setValor(67, "<b>MUNICIPIO: </b>");//TELEFONO EMPRESA                
         }
@@ -813,7 +1021,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         } else {
             datosReporte.setValor(68, null);
         }
-        datosReporte.setValor(69, pacienteSeleccionado.nombreCompleto() + "<br/>" + datosReporte.getValor(69));//NOMBRE EN FIRMA PACIENTE        
+        datosReporte.setValor(69, pacienteSeleccionado.nombreCompleto().toUpperCase() + "<br/>" + datosReporte.getValor(69));//NOMBRE EN FIRMA PACIENTE        
 
         //empresa
         if (loginMB.getEmpresaActual().getLogo() != null) {
@@ -825,16 +1033,16 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         System.out.println("Datos encontrados ... " + listaCamposDeRegistroEncontrado.size());
 
         if (regEncontrado.getIdMedico() != null) {
-            datosReporte.setValor(71, regEncontrado.getIdMedico().nombreCompleto());//NOMBRE MEDICO
+            datosReporte.setValor(71, regEncontrado.getIdMedico().nombreCompleto().toUpperCase());//NOMBRE MEDICO
             datosReporte.setValor(86, regEncontrado.getIdMedico().getTelefonoResidencia());//TELEFONO MEDICO
             datosReporte.setValor(87, regEncontrado.getIdMedico().getTelefonoOficina());//CELULAR MEDICO
-            datosReporte.setValor(84, regEncontrado.getIdMedico().nombreCompleto());//PARA FIRMA NOMBRE MEDICO
+            datosReporte.setValor(84, regEncontrado.getIdMedico().nombreCompleto().toUpperCase());//PARA FIRMA NOMBRE MEDICO
             if (regEncontrado.getIdMedico().getEspecialidad() != null) {
                 datosReporte.setValor(72, regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//ESPECIALIDAD MEDICO
-                datosReporte.setValor(84, datosReporte.getValor(84) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//PARA FIRMA  NOMBRE MEDICO
+                datosReporte.setValor(84, datosReporte.getValor(84) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion().toUpperCase());//PARA FIRMA  NOMBRE MEDICO
             }
             datosReporte.setValor(73, obtenerCadenaNoNula(regEncontrado.getIdMedico().getRegistroProfesional()));//REGISTRO PROFESIONAL MEDICO
-            datosReporte.setValor(84, datosReporte.getValor(84) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional());//NOMBRE MEDICO
+            datosReporte.setValor(84, datosReporte.getValor(84) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional().toUpperCase());//NOMBRE MEDICO
 
             if (regEncontrado.getIdMedico().getFirma() != null) {
                 datosReporte.setValor(74, loginMB.getRutaCarpetaImagenes() + regEncontrado.getIdMedico().getFirma().getUrlImagen());//FIRMA MEDICO            
@@ -842,34 +1050,34 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 datosReporte.setValor(74, null);//FIRMA MEDICO
             }
         }
-        datosReporte.setValor(75, "<b>Dirección: </b> " + empresa.getDireccion() + "      " + empresa.getWebsite() + "      <b>Teléfono: </b> " + empresa.getTelefono1());//DIR TEL EMPRESA        
-        datosReporte.setValor(76, "<b>NOMBRE: </b>" + empresa.getRazonSocial());//NOMBRE EMPRESA                
-        datosReporte.setValor(77, "<b>CODIGO: </b>" + empresa.getCodigoEmpresa());//CODIGO EMPRESA                
-        datosReporte.setValor(78, "<b>DIRECCION: </b>" + empresa.getDireccion());//DIRECCION EMPRESA                
+        datosReporte.setValor(75, "<b>Dirección: </b> " + empresa.getDireccion().toUpperCase() + "      " + empresa.getWebsite() + "      <b>Teléfono: </b> " + empresa.getTelefono1());//DIR TEL EMPRESA        
+        datosReporte.setValor(76, "<b>NOMBRE: </b>" + empresa.getRazonSocial().toUpperCase());//NOMBRE EMPRESA                
+        datosReporte.setValor(77, "<b>CODIGO: </b>" + empresa.getCodigoEmpresa().toUpperCase());//CODIGO EMPRESA                
+        datosReporte.setValor(78, "<b>DIRECCION: </b>" + empresa.getDireccion().toUpperCase());//DIRECCION EMPRESA                
         datosReporte.setValor(79, "<b>TELEFONO: </b>" + empresa.getTelefono1());//TELEFONO EMPRESA                
-        datosReporte.setValor(80, "<b>DEPARTAMENTO: </b>" + empresa.getCodDepartamento().getCodigo() + " " + empresa.getCodDepartamento().getDescripcion());//TELEFONO EMPRESA                
-        datosReporte.setValor(81, "<b>MUNICIPIO: </b>" + empresa.getCodMunicipio().getCodigo() + " " + empresa.getCodMunicipio().getDescripcion());//TELEFONO EMPRESA                
-        datosReporte.setValor(82, "<b>" + empresa.getTipoDoc().getDescripcion() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
+        datosReporte.setValor(80, "<b>DEPARTAMENTO: </b>" + empresa.getCodDepartamento().getCodigo() + " " + empresa.getCodDepartamento().getDescripcion().toUpperCase());//TELEFONO EMPRESA                
+        datosReporte.setValor(81, "<b>MUNICIPIO: </b>" + empresa.getCodMunicipio().getCodigo() + " " + empresa.getCodMunicipio().getDescripcion().toUpperCase());//TELEFONO EMPRESA                
+        datosReporte.setValor(82, "<b>" + empresa.getTipoDoc().getDescripcion().toUpperCase() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
         datosReporte.setValor(83, empresa.getWebsite());//sitio web       
 
         datosReporte.setValor(97, empresa.getNomRepLegal());//CONSTANSA PORTILLA BENAVIDES
-        datosReporte.setValor(98, empresa.getTipoDoc().getDescripcion() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones());//OPTOMETRA U.L SALLE-BOGOTA        
+        datosReporte.setValor(98, empresa.getTipoDoc().getDescripcion() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones().toUpperCase());//OPTOMETRA U.L SALLE-BOGOTA        
         datosReporte.setValor(100, empresa.getRazonSocial());//
-        datosReporte.setValor(99, "CONSULTORIO " + empresa.getDireccion() + " " + empresa.getCodMunicipio().getDescripcion() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
+        datosReporte.setValor(99, "CONSULTORIO " + empresa.getDireccion().toUpperCase() + " " + empresa.getCodMunicipio().getDescripcion().toUpperCase() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
         //datosReporte.setValor(85, "<b>ASEGURADORA RESPONSABLE DE LA ATENCION, NUMERO DE POLIZA SI ES SOAT Y VIGENCIA: </b> ");
 
         //datos fijos ... datos acudiente 
         //El siguiente dato getAcompañantee() en realidad trae el dato Nombre del acudiente
-        datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
-        datosReporte.setValor(102, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
+        datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante().toUpperCase()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
+        datosReporte.setValor(102, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion().toUpperCase()); //DIRECCION DEL PACIENTE
 
         //y enfoque diferencial        
-        datosReporte.setValor(103, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
-        datosReporte.setValor(104, "<b>DISCAPACIDAD :</b>" + discapacidad);
-        datosReporte.setValor(105, "<b>GESTACIÓN :</b>" + gestacion);
-        datosReporte.setValor(106, "<b>OCUPACIÓN :</b>" + ocupacion);
-        datosReporte.setValor(107, "<b>RELIGIÓN :</b>" + religion);
-        datosReporte.setValor(108, "<b>ETNIA :</b>" + etnia);
+        datosReporte.setValor(103, "<b>NIVEL EDUCATIVO :</b>" + escolaridad.toUpperCase());
+        datosReporte.setValor(104, "<b>DISCAPACIDAD :</b>" + discapacidad.toUpperCase());
+        datosReporte.setValor(105, "<b>GESTACIÓN :</b>" + gestacion.toUpperCase());
+        datosReporte.setValor(106, "<b>OCUPACIÓN :</b>" + ocupacion.toUpperCase());
+        datosReporte.setValor(107, "<b>RELIGIÓN :</b>" + religion.toUpperCase());
+        datosReporte.setValor(108, "<b>ETNIA :</b>" + etnia.toUpperCase());
         datosReporte.setValor(109, "<b>VIC. DE CONFLICTO ARMADO :</b>" + victimaConflictoStr);
         datosReporte.setValor(110, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
         datosReporte.setValor(111, "<b>DESPLAZADO :</b>" + desplazadoStr);
@@ -922,7 +1130,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                         break;
                 }
             } else {//NO ES CATEGORIA (sacar valor)
-                datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor());
+                datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor().toUpperCase());
             }
         }
         //datosReporte.setListaDatosAdicionales(listadoDatosAdicionales);//CUANDO SE USE SUBRREPORTES USAR ESTA LINEA
@@ -953,23 +1161,23 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         //CARGO DATOS DESDE (hc_registro)(cfg_empresa) -------------------------
         //----------------------------------------------------------------------
         //44
-        datosReporte.setValor(200, "<b>PRIMER NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerNombre()));//
+        datosReporte.setValor(200, "<b>PRIMER NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerNombre().toUpperCase()));//
         //45
-        datosReporte.setValor(201, "<b>SEGUNDO NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoNombre()));//
+        datosReporte.setValor(201, "<b>SEGUNDO NOMBRE: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoNombre().toUpperCase()));//
         //45
-        datosReporte.setValor(202, "<b>PRIMER APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerApellido()));//
+        datosReporte.setValor(202, "<b>PRIMER APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getPrimerApellido().toUpperCase()));//
         //47
-        datosReporte.setValor(203, "<b>SEGUNDO APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
+        datosReporte.setValor(203, "<b>SEGUNDO APELLIDO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido().toUpperCase()));//
         //48
-        datosReporte.setValor(204, "<b>CELULAR: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido()));//
+        datosReporte.setValor(204, "<b>CELULAR: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getSegundoApellido().toUpperCase()));//
         //49
-        datosReporte.setValor(205, "<b>CORREO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getEmail()));//
+        datosReporte.setValor(205, "<b>CORREO: </b>" + obtenerCadenaNoNula(pacienteSeleccionado.getEmail().toUpperCase()));//
         //50
         datosReporte.setValor(206, "<b>FOLIO: </b>" + regEncontrado.getFolio());//folio
         //51
-        datosReporte.setValor(207, "<b>HISTORIA No: </b>" + regEncontrado.getIdPaciente().getIdentificacion());//numero de historia
+        datosReporte.setValor(207, "<b>HISTORIA No: </b>" + regEncontrado.getIdPaciente().getIdentificacion().toUpperCase());//numero de historia
         //53
-        datosReporte.setValor(208, "<b>NOMBRE: </b>" + pacienteSeleccionado.nombreCompleto());//NOMBRES PACIENTE        
+        datosReporte.setValor(208, "<b>NOMBRE: </b>" + pacienteSeleccionado.nombreCompleto().toUpperCase());//NOMBRES PACIENTE        
 
         //54
         datosReporte.setValor(209, "<b>FECHA: </b> " + sdfDateHour.format(regEncontrado.getFechaReg()));
@@ -978,7 +1186,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
         //55
         if (pacienteSeleccionado.getIdAdministradora() != null) {
-            datosReporte.setValor(211, "<b>ENTIDAD: </b> " + pacienteSeleccionado.getIdAdministradora().getRazonSocial());
+            datosReporte.setValor(211, "<b>ENTIDAD: </b> " + pacienteSeleccionado.getIdAdministradora().getRazonSocial().toUpperCase());
         } else {
             datosReporte.setValor(211, "<b>ENTIDAD: </b> ");
         }
@@ -993,59 +1201,59 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
         //57
         if (pacienteSeleccionado.getGenero() != null) {
-            datosReporte.setValor(213, "<b>SEXO: </b> " + pacienteSeleccionado.getGenero().getDescripcion());
+            datosReporte.setValor(213, "<b>SEXO: </b> " + pacienteSeleccionado.getGenero().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(214, "<b>SEXO: </b> ");
         }
         //58
         if (pacienteSeleccionado.getOcupacion() != null) {
-            datosReporte.setValor(215, "<b>OCUPACION: </b> " + pacienteSeleccionado.getOcupacion().getDescripcion());
+            datosReporte.setValor(215, "<b>OCUPACION: </b> " + pacienteSeleccionado.getOcupacion().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(215, "<b>OCUPACION: </b> ");
         }
         //59
-        datosReporte.setValor(265, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion()));
+        datosReporte.setValor(265, "<b>DIRECCION: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getDireccion().toUpperCase()));
         //60
         datosReporte.setValor(216, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResidencia()));
 
         //69,61
         if (pacienteSeleccionado.getTipoIdentificacion() != null) {
             datosReporte.setValor(217, pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
-            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getTipoIdentificacion().getDescripcion() + " " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getTipoIdentificacion().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getIdentificacion().toUpperCase());
         } else {
             datosReporte.setValor(217, pacienteSeleccionado.getIdentificacion());
-            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getIdentificacion());
+            datosReporte.setValor(218, "<b>IDENTIFICACION: </b> " + pacienteSeleccionado.getIdentificacion().toUpperCase());
         }
         //62,42
         if (pacienteSeleccionado.getRegimen() != null) {
-            datosReporte.setValor(219, "<b>TIPO AFILIACION: </b> " + pacienteSeleccionado.getRegimen().getDescripcion());
-            datosReporte.setValor(220, "<b>COBERTURA EN SALUD: </b>" + pacienteSeleccionado.getRegimen().getDescripcion());
+            datosReporte.setValor(219, "<b>TIPO AFILIACION: </b> " + pacienteSeleccionado.getRegimen().getDescripcion().toUpperCase());
+            datosReporte.setValor(220, "<b>COBERTURA EN SALUD: </b>" + pacienteSeleccionado.getRegimen().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(219, "<b>TIPO AFILIACION: </b> ");
             datosReporte.setValor(220, "<b>COBERTURA EN SALUD: </b>");
         }
         //63
-        datosReporte.setValor(221, "<b>RESPONSABLE: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getResponsable()));
+        datosReporte.setValor(221, "<b>RESPONSABLE: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getResponsable().toUpperCase()));
         //64
-        datosReporte.setValor(222, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResponsable()));
+        datosReporte.setValor(222, "<b>TELEFONO: </b> " + obtenerCadenaNoNula(pacienteSeleccionado.getTelefonoResponsable().toUpperCase()));
 
         //65
         if (pacienteSeleccionado.getEstadoCivil() != null) {
-            datosReporte.setValor(223, "<b>ESTADO CIVIL: </b> " + pacienteSeleccionado.getEstadoCivil().getDescripcion());
+            datosReporte.setValor(223, "<b>ESTADO CIVIL: </b> " + pacienteSeleccionado.getEstadoCivil().getDescripcion().toUpperCase());
         } else {
             datosReporte.setValor(223, "<b>ESTADO CIVIL: </b> ");
         }
 
         //66
         if (pacienteSeleccionado.getDepartamento() != null) {
-            datosReporte.setValor(224, "<b>DEPARTAMENTO: </b>" + pacienteSeleccionado.getDepartamento().getDescripcion() + " " + pacienteSeleccionado.getDepartamento().getCodigo());
+            datosReporte.setValor(224, "<b>DEPARTAMENTO: </b>" + pacienteSeleccionado.getDepartamento().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getDepartamento().getCodigo());
         } else {
             datosReporte.setValor(224, "<b>DEPARTAMENTO: </b>");
         }
 
         //67
         if (pacienteSeleccionado.getMunicipio() != null) {
-            datosReporte.setValor(225, "<b>MUNICIPIO: </b>" + pacienteSeleccionado.getMunicipio().getDescripcion() + " " + pacienteSeleccionado.getMunicipio().getCodigo());//TELEFONO EMPRESA                
+            datosReporte.setValor(225, "<b>MUNICIPIO: </b>" + pacienteSeleccionado.getMunicipio().getDescripcion().toUpperCase() + " " + pacienteSeleccionado.getMunicipio().getCodigo());//TELEFONO EMPRESA                
         } else {
             datosReporte.setValor(225, "<b>MUNICIPIO: </b>");//TELEFONO EMPRESA                
         }
@@ -1058,7 +1266,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
 
         //69
-        datosReporte.setValor(227, pacienteSeleccionado.nombreCompleto() + "<br/>" + datosReporte.getValor(217));//NOMBRE EN FIRMA PACIENTE        
+        datosReporte.setValor(227, pacienteSeleccionado.nombreCompleto().toUpperCase() + "<br/>" + datosReporte.getValor(217));//NOMBRE EN FIRMA PACIENTE        
 
         //70
         //empresa
@@ -1071,22 +1279,22 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         if (regEncontrado.getIdMedico() != null) {
 
             //71
-            datosReporte.setValor(229, regEncontrado.getIdMedico().nombreCompleto());//NOMBRE MEDICO
+            datosReporte.setValor(229, regEncontrado.getIdMedico().nombreCompleto().toUpperCase());//NOMBRE MEDICO
             //86
             datosReporte.setValor(230, regEncontrado.getIdMedico().getTelefonoResidencia());//TELEFONO MEDICO
             //87
             datosReporte.setValor(231, regEncontrado.getIdMedico().getTelefonoOficina());//CELULAR MEDICO
             //84
-            datosReporte.setValor(232, regEncontrado.getIdMedico().nombreCompleto());//PARA FIRMA NOMBRE MEDICO
+            datosReporte.setValor(232, regEncontrado.getIdMedico().nombreCompleto().toUpperCase());//PARA FIRMA NOMBRE MEDICO
 
             if (regEncontrado.getIdMedico().getEspecialidad() != null) {
                 //72
-                datosReporte.setValor(233, regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//ESPECIALIDAD MEDICO
+                datosReporte.setValor(233, regEncontrado.getIdMedico().getEspecialidad().getDescripcion().toUpperCase());//ESPECIALIDAD MEDICO
                 //84
-                datosReporte.setValor(234, datosReporte.getValor(229) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion());//PARA FIRMA  NOMBRE MEDICO
+                datosReporte.setValor(234, datosReporte.getValor(229) + " <br/> " + regEncontrado.getIdMedico().getEspecialidad().getDescripcion().toUpperCase());//PARA FIRMA  NOMBRE MEDICO
             }
             //73
-            datosReporte.setValor(235, obtenerCadenaNoNula(regEncontrado.getIdMedico().getRegistroProfesional()));//REGISTRO PROFESIONAL MEDICO
+            datosReporte.setValor(235, obtenerCadenaNoNula(regEncontrado.getIdMedico().getRegistroProfesional().toUpperCase()));//REGISTRO PROFESIONAL MEDICO
             //84
             datosReporte.setValor(235, datosReporte.getValor(234) + " <br/> Reg. prof. " + regEncontrado.getIdMedico().getRegistroProfesional());//NOMBRE MEDICO
 
@@ -1099,13 +1307,13 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         }
 
         //75
-        datosReporte.setValor(237, "<b>Dirección: </b> " + empresa.getDireccion() + "      " + empresa.getWebsite() + "      <b>Teléfono: </b> " + empresa.getTelefono1());//DIR TEL EMPRESA        
+        datosReporte.setValor(237, "<b>Dirección: </b> " + empresa.getDireccion().toUpperCase() + "      " + empresa.getWebsite() + "      <b>Teléfono: </b> " + empresa.getTelefono1());//DIR TEL EMPRESA        
         //76
-        datosReporte.setValor(238, "<b>NOMBRE: </b>" + empresa.getRazonSocial());//NOMBRE EMPRESA                
+        datosReporte.setValor(238, "<b>NOMBRE: </b>" + empresa.getRazonSocial().toUpperCase());//NOMBRE EMPRESA                
         //77
-        datosReporte.setValor(239, "<b>CODIGO: </b>" + empresa.getCodigoEmpresa());//CODIGO EMPRESA                
+        datosReporte.setValor(239, "<b>CODIGO: </b>" + empresa.getCodigoEmpresa().toUpperCase());//CODIGO EMPRESA                
         //78
-        datosReporte.setValor(240, "<b>DIRECCION: </b>" + empresa.getDireccion());//DIRECCION EMPRESA                
+        datosReporte.setValor(240, "<b>DIRECCION: </b>" + empresa.getDireccion().toUpperCase());//DIRECCION EMPRESA                
         //79
         datosReporte.setValor(241, "<b>TELEFONO: </b>" + empresa.getTelefono1());//TELEFONO EMPRESA                
         //80
@@ -1113,18 +1321,18 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         //81
         datosReporte.setValor(243, "<b>MUNICIPIO: </b>" + empresa.getCodMunicipio().getCodigo() + " " + empresa.getCodMunicipio().getDescripcion());//TELEFONO EMPRESA                
         //82
-        datosReporte.setValor(244, "<b>" + empresa.getTipoDoc().getDescripcion() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
+        datosReporte.setValor(244, "<b>" + empresa.getTipoDoc().getDescripcion().toUpperCase() + ": </b>  " + empresa.getNumIdentificacion());//NIT        
         //83
         datosReporte.setValor(245, empresa.getWebsite());//sitio web       
 
         //97
-        datosReporte.setValor(246, empresa.getNomRepLegal());//CONSTANSA PORTILLA BENAVIDES
+        datosReporte.setValor(246, empresa.getNomRepLegal().toUpperCase());//CONSTANSA PORTILLA BENAVIDES
         //98
-        datosReporte.setValor(247, empresa.getTipoDoc().getDescripcion() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones());//OPTOMETRA U.L SALLE-BOGOTA        
+        datosReporte.setValor(247, empresa.getTipoDoc().getDescripcion().toUpperCase() + ":" + empresa.getNumIdentificacion() + " " + empresa.getObservaciones().toUpperCase());//OPTOMETRA U.L SALLE-BOGOTA        
         //100
         datosReporte.setValor(248, empresa.getRazonSocial());//
         //99
-        datosReporte.setValor(249, "CONSULTORIO " + empresa.getDireccion() + " " + empresa.getCodMunicipio().getDescripcion() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
+        datosReporte.setValor(249, "CONSULTORIO " + empresa.getDireccion().toUpperCase() + " " + empresa.getCodMunicipio().getDescripcion().toUpperCase() + "  TELEFONO: " + empresa.getTelefono1());//CONSULTRIO
         //datosReporte.setValor(85, "<b>ASEGURADORA RESPONSABLE DE LA ATENCION, NUMERO DE POLIZA SI ES SOAT Y VIGENCIA: </b> ");
 
 //         datosReporte.setValor(101, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
@@ -1143,25 +1351,25 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 //        datosReporte.setValor(112, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
 //        
         //datos acudiente
-        datosReporte.setValor(250, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
-        datosReporte.setValor(251, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion()); //DIRECCION DEL PACIENTE
+        datosReporte.setValor(250, "<b>NOMBRE :</b>" + pacienteSeleccionado.getAcompanante().toUpperCase()); // NOMBRE DEL ACUDIENTE, si es correcto; del acudiente
+        datosReporte.setValor(251, "<b>DIRECCION :</b>" + pacienteSeleccionado.getDireccion().toUpperCase()); //DIRECCION DEL PACIENTE
 
         //y enfoque diferencial        
-        datosReporte.setValor(252, "<b>NIVEL EDUCATIVO :</b>" + escolaridad);
-        datosReporte.setValor(253, "<b>DISCAPACIDAD :</b>" + discapacidad);
-        datosReporte.setValor(254, "<b>GESTACIÓN :</b>" + gestacion);
-        datosReporte.setValor(255, "<b>OCUPACIÓN :</b>" + ocupacion);
-        datosReporte.setValor(256, "<b>RELIGIÓN :</b>" + religion);
-        datosReporte.setValor(257, "<b>ETNIA :</b>" + etnia);
+        datosReporte.setValor(252, "<b>NIVEL EDUCATIVO :</b>" + escolaridad.toUpperCase());
+        datosReporte.setValor(253, "<b>DISCAPACIDAD :</b>" + discapacidad.toUpperCase());
+        datosReporte.setValor(254, "<b>GESTACIÓN :</b>" + gestacion.toUpperCase());
+        datosReporte.setValor(255, "<b>OCUPACIÓN :</b>" + ocupacion.toUpperCase());
+        datosReporte.setValor(256, "<b>RELIGIÓN :</b>" + religion.toUpperCase());
+        datosReporte.setValor(257, "<b>ETNIA :</b>" + etnia.toUpperCase());
         datosReporte.setValor(258, "<b>VIC. DE CONFLICTO ARMADO :</b>" + victimaConflictoStr);
         datosReporte.setValor(259, "<b>POBLACIÓN LBGT :</b>" + poblacionLBGTStr);
         datosReporte.setValor(260, "<b>DESPLAZADO :</b>" + desplazadoStr);
         datosReporte.setValor(261, "<b>VIC. DE MALTRATO :</b>" + victimaMaltratoStr);
 
         //datos informacion general de referencia-contrareferencia
-        datosReporte.setValor(190, "<b>INSTITUCION :</b>" + loginMB.getEmpresaActual().getRazonSocial());
-        datosReporte.setValor(191, "<b>E.S.E.IO :</b>" + loginMB.getEmpresaActual().getCodMunicipio().getDescripcion());
-        datosReporte.setValor(192, "<b>ESPECIALIDAD :</b>" + loginMB.getUsuarioActual().getEspecialidad().getDescripcion());
+        datosReporte.setValor(190, "<b>INSTITUCION :</b>" + loginMB.getEmpresaActual().getRazonSocial().toUpperCase());
+        datosReporte.setValor(191, "<b>E.S.E.IO :</b>" + loginMB.getEmpresaActual().getCodMunicipio().getDescripcion().toUpperCase());
+        datosReporte.setValor(192, "<b>ESPECIALIDAD :</b>" + loginMB.getUsuarioActual().getEspecialidad().getDescripcion().toUpperCase());
         datosReporte.setValor(193, "<b>NIVEL :</b>" + loginMB.getEmpresaActual().getNivel());
 
         //----------------------------------------------------------------------
@@ -1201,21 +1409,47 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                         break;
                 }
             } else {//NO ES CATEGORIA (sacar valor)
-                datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor());
+                datosReporte.setValor(campoDeRegistroEncontrado.getHcCamposReg().getPosicion(), "<b>" + campoDeRegistroEncontrado.getHcCamposReg().getNombrePdf() + " </b>" + campoDeRegistroEncontrado.getValor().toUpperCase());
             }
         }
 
-        cargarEstructuraFamiliar();
-        List<DatosSubReporteHistoria> listaDatosAdicionales = new ArrayList<>();
-        for (FilaDataTable item : listaEstructuraFamiliar) {
-            DatosSubReporteHistoria datosS = new DatosSubReporteHistoria();
-            datosS.setDato0(item.getColumna1());
-            datosS.setDato1(item.getColumna2());
-            datosS.setDato2(item.getColumna3());
-            datosS.setDato3(item.getColumna4());
-            listaDatosAdicionales.add(datosS);
-            System.out.println("Familiar " + item.getColumna1());
+            List<DatosSubReporteHistoria> listaDatosAdicionales = new ArrayList<>();
+        if (regEncontrado.getIdTipoReg().getIdTipoReg() == 17) { //psicologia
+            cargarEstructuraFamiliar();
+
+            for (FilaDataTable item : listaEstructuraFamiliar) {
+                DatosSubReporteHistoria datosS = new DatosSubReporteHistoria();
+                datosS.setDato0(item.getColumna1().toUpperCase());
+                datosS.setDato1(item.getColumna2().toUpperCase());
+                datosS.setDato2(item.getColumna5().toUpperCase());
+                datosS.setDato3(item.getColumna6().toUpperCase());
+                listaDatosAdicionales.add(datosS);
+
+                System.out.println("Familiar " + item.getColumna1());
+            }
         }
+
+        if (regEncontrado.getIdTipoReg().getIdTipoReg() == 19) { //formulacion medicamentos
+            List<FilaDataTable> listaMedicamentosParaReporte = cargarListaMedicamentos(regEncontrado);
+
+            for (FilaDataTable item : listaMedicamentosParaReporte) {
+                DatosSubReporteHistoria datosS = new DatosSubReporteHistoria();
+                datosS.setDato0(item.getColumna1().toUpperCase());
+                datosS.setDato1(item.getColumna2().toUpperCase());
+                datosS.setDato2(item.getColumna3().toUpperCase());
+                datosS.setDato3(item.getColumna4().toUpperCase());
+                datosS.setDato4(item.getColumna5().toUpperCase());
+                datosS.setDato5(item.getColumna6().toUpperCase());
+                datosS.setDato6(item.getColumna7().toUpperCase());
+                datosS.setDato7(item.getColumna8().toUpperCase());
+                datosS.setDato8(item.getColumna9().toUpperCase());
+                listaDatosAdicionales.add(datosS);
+                System.out.println("Medicamento  " + item.getColumna1());
+            }
+
+        }
+
+      
 
         System.out.println("listaDatosAdicionales size " + listaDatosAdicionales.size());
 
@@ -1325,6 +1559,11 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             }
         }
 
+        listaEstructuraFamiliar.clear();
+        listaEstructuraFamiliarFiltro.clear();
+        listaMedicamentos.clear();
+        listaMedicamentosFiltro.clear();
+
     }
 
     public void btnLimpiarFormulario() {//no se carga ultimo registro
@@ -1375,6 +1614,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 System.out.println("Tipo registro " + registroEncontrado.getIdTipoReg().getIdTipoReg());
 
                 cargarEstructuraFamiliar();
+
+                //cargar medicamentos recetados la ultima vez
                 imprimirMensaje("Informacion", "Para su facilidad se cargo los datos de la última historia de este tipo de registro", FacesMessage.SEVERITY_INFO);
             } else {
                 valoresPorDefecto();
@@ -1474,6 +1715,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
     }
 
     public void guardarRegistro() {//guardar un nuevo registro clinico        
+
+        System.out.println("Iniciando el guardado del registro");
 
         HcRegistro nuevoRegistro = new HcRegistro();
         List<HcDetalle> listaDetalle = new ArrayList<>();
@@ -1582,6 +1825,36 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
         nuevoRegistro.setFolio(registroFacade.buscarMaximoFolio(nuevoRegistro.getIdPaciente().getIdPaciente()) + 1);
         registroFacade.edit(nuevoRegistro);
 
+        //medicamentos asociados 
+        if (listaMedicamentos != null) {
+            for (FilaDataTable item : listaMedicamentos) {
+                HcItems nuevoMedicamento = new HcItems();
+                nuevoMedicamento.setIdRegistro(nuevoRegistro);
+                nuevoMedicamento.setIdTabla(item.getColumna1()); 
+                nuevoMedicamento.setTabla("cfg_medicamento");
+//                nuevoMedicamento.setDescripcion(item.getDescripcion());
+//                nuevoMedicamento.setConcentracion(item.getConcentracion());
+                nuevoMedicamento.setObservacion(item.getColumna10());
+                nuevoMedicamento.setCantidad(Integer.parseInt(item.getColumna4()));
+                nuevoMedicamento.setDosis(item.getColumna5());
+                nuevoMedicamento.setPosologia(item.getColumna9());
+//                nuevoMedicamento.setViaAdmin(item.getViaAdmin());
+
+//
+// medicamentoSeleccionado.setColumna4(cantidad.toString());
+//        medicamentoSeleccionado.setColumna5(dosis);
+//        medicamentoSeleccionado.setColumna6(presentacion);
+//        medicamentoSeleccionado.setColumna7(concentracion);
+//        medicamentoSeleccionado.setColumna8(viaAdmin);
+//        medicamentoSeleccionado.setColumna9(posologia);
+//        medicamentoSeleccionado.setColumna10(observacion);
+//        medicamentoSeleccionado.setColumna11("cfg_medicamento");
+        
+                itemsFacade.create(nuevoMedicamento);
+
+            }
+        }
+
         imprimirMensaje("Correcto", "Nuevo registro almacenado.", FacesMessage.SEVERITY_INFO);
         limpiarFormulario();
         valoresPorDefecto();
@@ -1626,6 +1899,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     public void cargarPaciente() {//cargar un paciente desde del dialogo de buscar paciente o al digitar una identificacion valida(esta en pacientes)        
         if (pacienteSeleccionadoTabla != null) {
+
             turnoCita = "";
             pacienteSeleccionado = pacientesFacade.find(pacienteSeleccionadoTabla.getIdPaciente());
             urlPagina = "";
@@ -1640,6 +1914,7 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                 tipoIdentificacion = "";
             }
             nombrePaciente = pacienteSeleccionado.nombreCompleto();
+            System.out.println("Paciente " + pacienteSeleccionado.getIdPaciente() + " ...  " + nombrePaciente);
             if (pacienteSeleccionado.getGenero() != null) {
                 generoPaciente = pacienteSeleccionado.getGenero().getObservacion();
             } else {
@@ -1783,7 +2058,8 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
             } else if (nombreTextoPredefinido.trim().length() == 0) {
                 imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
             } else//es nuevo se debe crear
-             if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+            {
+                if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
                     imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
                 } else {
                     CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
@@ -1795,12 +2071,15 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                     RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
                     imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
                 }
+            }
         } else//se debe agregar a la categoria
-         if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
+        {
+            if (idMaestroTextoPredef != null && idMaestroTextoPredef.length() != 0) {
                 if (nombreTextoPredefinido.trim().length() == 0) {
                     imprimirMensaje("Error", "Debe escribir un nombre para el texto predefinido", FacesMessage.SEVERITY_ERROR);
                 } else//es nuevo se debe crear
-                 if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
+                {
+                    if (txtPredefinidosFacade.buscarPorNombre(nombreTextoPredefinido) != null) {
                         imprimirMensaje("Error", "Ya existe un texto predefinido con este nombre", FacesMessage.SEVERITY_ERROR);
                     } else {
                         CfgTxtPredefinidos nuevoPredefinido = new CfgTxtPredefinidos();
@@ -1812,9 +2091,11 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
                         RequestContext.getCurrentInstance().update("IdFormRegistroClinico:IdPanelTextosPredefinidos");//se actualiza el editor
                         imprimirMensaje("Correcto", "El nuevo texto predefinido ha sido creado", FacesMessage.SEVERITY_INFO);
                     }
+                }
             } else {
                 imprimirMensaje("Error", "No se ha seleccionado ninguna categoría", FacesMessage.SEVERITY_ERROR);
             }
+        }
     }
 
     public void eliminarPredefinido() {//eliminar un texto predefinido de una categoria seleccionada
@@ -2356,6 +2637,111 @@ public class HistoriasMB extends MetodosGenerales implements Serializable {
 
     public void setOcupacionFamiliar(String ocupacionFamiliar) {
         this.ocupacionFamiliar = ocupacionFamiliar;
+    }
+
+    public List<FilaDataTable> getListaMedicamentos() {
+        return listaMedicamentos;
+    }
+
+    public void setListaMedicamentos(List<FilaDataTable> listaMedicamentos) {
+        this.listaMedicamentos = listaMedicamentos;
+    }
+
+    public List<FilaDataTable> getListaMedicamentosFiltro() {
+        return listaMedicamentosFiltro;
+    }
+
+    public void setListaMedicamentosFiltro(List<FilaDataTable> listaMedicamentosFiltro) {
+        this.listaMedicamentosFiltro = listaMedicamentosFiltro;
+    }
+
+    public FilaDataTable getMedicamentoSeleccionado() {
+        System.out.println(" ... getMedicamentoSeleccionado() ... ");
+        return medicamentoSeleccionado;
+    }
+
+    public void setMedicamentoSeleccionado(FilaDataTable medicamentoSeleccionado) {
+        this.medicamentoSeleccionado = medicamentoSeleccionado;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(String dosis) {
+        this.dosis = dosis;
+    }
+
+    public String getPresentacion() {
+        return presentacion;
+    }
+
+    public void setPresentacion(String presentacion) {
+        this.presentacion = presentacion;
+    }
+
+    public String getViaAdmin() {
+        return viaAdmin;
+    }
+
+    public void setViaAdmin(String viaAdmin) {
+        this.viaAdmin = viaAdmin;
+    }
+
+    public String getPosologia() {
+        return posologia;
+    }
+
+    public void setPosologia(String posologia) {
+        this.posologia = posologia;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
+    }
+
+    public String getConcentracion() {
+        return concentracion;
+    }
+
+    public void setConcentracion(String concentracion) {
+        this.concentracion = concentracion;
+    }
+
+    public String getIdMedicamento() {
+        return idMedicamento;
+    }
+
+    public void setIdMedicamento(String idMedicamento) {
+        this.idMedicamento = idMedicamento;
     }
 
 }

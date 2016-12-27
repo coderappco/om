@@ -16,7 +16,7 @@
         <h:form id="IdFormRegistroClinico">  
             <p:growl id="IdMensajeUsuarios"  showDetail="true" sticky="false" autoUpdate="true" life="2000"/>
             <table style="margin-left: auto; margin-right: auto;" >
-                <tr><td colspan="2"><h2>FORMULACION DE MEDICAMENTOS</h2></td></tr> 
+                <tr><td colspan="2"><h2>ORDENES MEDICAS</h2></td></tr> 
 
                 <!--...-->
                 <tr>
@@ -67,7 +67,7 @@
                                 value="#{historiasMB.listaMedicamentos}" 
                                 filteredValue="#{historiasMB.listaMedicamentosFiltro}"
                                 selection="#{historiasMB.medicamentoSeleccionado}"                                     
-                                rowKey="#{item.columna1}"
+                                rowKey="#{item.codigo}"
                                 selectionMode="single"
                                 paginator="true"
                                 rows="5"                                    
@@ -79,32 +79,32 @@
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 pageLinks="5"
                                 resizableColumns="false">                                                                                               
-                                <p:column headerText="CÓDIGO"  filterBy="#{item.columna1}" filterMatchMode="contains">
-                                    #{item.columna1}
+                                <p:column headerText="CÓDIGO"  filterBy="#{item.codigo}" filterMatchMode="contains">
+                                    #{item.codigo}
                                 </p:column>
-                                <p:column headerText="DESCRIPCIÓN" filterBy="#{item.columna2}" filterMatchMode="contains">
-                                    #{item.columna2}
+                                <p:column headerText="DESCRIPCIÓN" filterBy="#{item.descripcion}" filterMatchMode="contains">
+                                    #{item.descripcion}
                                 </p:column>
-                                <p:column headerText="CANT."  filterBy="#{item.columna3}" filterMatchMode="contains">
-                                    #{item.columna3}
+                                <p:column headerText="CANT."  filterBy="#{item.cantidad}" filterMatchMode="contains">
+                                    #{item.cantidad}
                                 </p:column>
-                                <p:column headerText="DOSIS" filterBy="#{item.columna4}" filterMatchMode="contains">
-                                    #{item.columna4}
+                                <p:column headerText="DOSIS" filterBy="#{item.dosis}" filterMatchMode="contains">
+                                    #{item.dosis}
                                 </p:column>
-                                <p:column headerText="PRESENTACIÓN" filterBy="#{item.columna5}" filterMatchMode="contains">
-                                    #{item.columna5}
+                                <p:column headerText="PRESENTACIÓN" filterBy="#{item.presentacion}" filterMatchMode="contains">
+                                    #{item.presentacion}
                                 </p:column>
-                                <p:column headerText="CONCENTRACIÓN" filterBy="#{item.columna6}" filterMatchMode="contains">
-                                    #{item.columna6}
+                                <p:column headerText="CONCENTRACIÓN" filterBy="#{item.concentracion}" filterMatchMode="contains">
+                                    #{item.concentracion}
                                 </p:column>
-                                <p:column headerText="VÍA ADMIN." filterBy="#{item.columna7}" filterMatchMode="contains">
-                                    #{item.columna7}
+                                <p:column headerText="VÍA ADMIN." filterBy="#{item.viaAdmin}" filterMatchMode="contains">
+                                    #{item.viaAdmin}
                                 </p:column>
-                                <p:column headerText="POSOLOGÍA" filterBy="#{item.columna8}" filterMatchMode="contains">
-                                    #{item.columna8}
+                                <p:column headerText="POSOLOGÍA" filterBy="#{item.posologia}" filterMatchMode="contains">
+                                    #{item.posologia}
                                 </p:column>
-                                <p:column headerText="OBSERVACIONES" filterBy="#{item.columna9}" filterMatchMode="contains">
-                                    #{item.columna9}
+                                <p:column headerText="OBSERVACIONES" filterBy="#{item.observacion}" filterMatchMode="contains">
+                                    #{item.observacion}
                                 </p:column>
                             </p:dataTable>  
                         </div>

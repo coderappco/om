@@ -51,6 +51,21 @@ public class HcItems implements Serializable {
     @JoinColumn(name = "id_registro", referencedColumnName = "id_registro")
     @ManyToOne
     private HcRegistro idRegistro;
+//    @Column(name = "codigo", length = 100)
+//    private String codigo;
+//    @Column(name = "descripcion", length = 100)
+//    private String descripcion;
+
+    @Column(name = "dosis", length = 100)
+    private String dosis;
+//    @Column(name = "presentacion", length = 100)
+//    private String presentacion;
+//    @Column(name = "concentracion", length = 100)
+//    private String concentracion;
+//    @Column(name = "via_admin", length = 100)
+//    private String viaAdmin;
+    @Column(name = "posologia", length = 100)
+    private String posologia;
 
     public HcItems() {
     }
@@ -131,5 +146,61 @@ public class HcItems implements Serializable {
     public String toString() {
         return "entidades2.HcItems[ idItem=" + idItem + " ]";
     }
-    
+
+    public String getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(String dosis) {
+        this.dosis = dosis;
+    }
+//
+//    public String getPresentacion() {
+//        return presentacion;
+//    }
+//
+//    public void setPresentacion(String presentacion) {
+//        this.presentacion = presentacion;
+//    }
+//
+//    public String getConcentracion() {
+//        return concentracion;
+//    }
+//
+//    public void setConcentracion(String concentracion) {
+//        this.concentracion = concentracion;
+//    }
+//
+//    public String getViaAdmin() {
+//        return viaAdmin;
+//    }
+//
+//    public void setViaAdmin(String viaAdmin) {
+//        this.viaAdmin = viaAdmin;
+//    }
+
+    public String getPosologia() {
+        return posologia;
+    }
+
+    public void setPosologia(String posologia) {
+        this.posologia = posologia;
+    }
+//    
+//    public String getCodigo() {
+//        return codigo;
+//    }
+//
+//    public void setCodigo(String codigo) {
+//        this.codigo = codigo;
+//    }
+//    
+//    
+//    public String getDescripcion() {
+//        return descripcion;
+//    }
+//
+//    public void setDescripcion(String descripcion) {
+//        this.descripcion = descripcion;
+//    }
 }

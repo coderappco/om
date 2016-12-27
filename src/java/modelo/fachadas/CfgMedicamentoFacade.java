@@ -7,6 +7,7 @@ package modelo.fachadas;
 
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.NamedQuery;
 import modelo.entidades.CfgMedicamento;
 
 /**
@@ -20,6 +21,17 @@ public class CfgMedicamentoFacade extends AbstractFacade<CfgMedicamento> {
         super(CfgMedicamento.class);
     }
 
+//    @NamedQuery(name = "CfgMedicamento.findByIdMedicamento", query = "SELECT c FROM CfgMedicamento c WHERE c.idMedicamento = :idMedicamento"),
+            
+    public List<CfgMedicamento> getMedicamentosById() {
+        try {
+            String hql = "SELECT c FROM CfgMedicamento c WHERE c.idMedicamento = :idMedicamento ";
+            return getEntityManager().createQuery(hql).getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     public List<CfgMedicamento> buscarOrdenado() {
         try {
             String hql = "SELECT m FROM CfgMedicamento m ORDER BY m.idMedicamento ASC";
