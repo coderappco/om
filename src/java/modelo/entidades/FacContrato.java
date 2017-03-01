@@ -186,6 +186,16 @@ public class FacContrato implements Serializable {
     private Boolean aplicarIva;
     @Column(name = "aplicar_cree")
     private Boolean aplicarCree;
+    @Column(name = "porcentaje", precision = 17, scale = 17)
+    private Double porcentaje;
+    @Column(name = "signo_porcentaje", length = 1)
+    private String signoPorcentaje;
+    @Column(name = "tipo_manual", nullable = false)
+    private Integer tipoManual;
+    @Column(name = "annio_manual", nullable = false)
+    private Integer annioManual;
+    
+    
     @OneToMany(mappedBy = "idContrato")
     private List<FacFacturaAdmi> facFacturaAdmiList;
     @OneToMany(mappedBy = "idContrato")
@@ -213,6 +223,7 @@ public class FacContrato implements Serializable {
     private String vigencia;
 
     public FacContrato() {
+        tipoManual = 0;
     }
 
     public String getVigencia() {
@@ -614,6 +625,38 @@ public class FacContrato implements Serializable {
 
     public void setAplicarCree(Boolean aplicarCree) {
         this.aplicarCree = aplicarCree;
+    }
+
+    public Double getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(Double porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    public String getSignoPorcentaje() {
+        return signoPorcentaje;
+    }
+
+    public void setSignoPorcentaje(String signoPorcentaje) {
+        this.signoPorcentaje = signoPorcentaje;
+    }
+
+    public Integer getTipoManual() {
+        return tipoManual;
+    }
+
+    public void setTipoManual(Integer tipoManual) {
+        this.tipoManual = tipoManual;
+    }
+
+    public Integer getAnnioManual() {
+        return annioManual;
+    }
+
+    public void setAnnioManual(Integer annioManual) {
+        this.annioManual = annioManual;
     }
 
     @XmlTransient

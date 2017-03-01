@@ -58,6 +58,8 @@ import modelo.entidades.FacManualTarifarioMedicamento;
 import modelo.entidades.FacManualTarifarioPaquete;
 import modelo.entidades.FacManualTarifarioServicio;
 import modelo.entidades.FacPeriodo;
+import modelo.entidades.FacServicio;
+import modelo.entidades.FacUnidadValor;
 import modelo.fachadas.CfgClasificacionesFacade;
 import modelo.fachadas.CfgDiagnosticoFacade;
 import modelo.fachadas.CfgInsumoFacade;
@@ -85,6 +87,7 @@ import modelo.fachadas.FacManualTarifarioFacade;
 import modelo.fachadas.FacPaqueteFacade;
 import modelo.fachadas.FacPeriodoFacade;
 import modelo.fachadas.FacServicioFacade;
+import modelo.fachadas.FacUnidadValorFacade;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -151,7 +154,9 @@ public class FacturarPacienteMB extends MetodosGenerales implements Serializable
     FacFacturaMedicamentoFacade facturaMedicamentoFacade;
     @EJB
     FacFacturaPaqueteFacade facturaPaqueteFacade;
-
+    @EJB
+    FacUnidadValorFacade unidadValorFacade;
+    
     @EJB
     FacConsumoServicioFacade consumoServicioFacade;
     @EJB
@@ -1812,6 +1817,7 @@ public class FacturarPacienteMB extends MetodosGenerales implements Serializable
             imprimirMensaje("Error", "Debe ingresar una fecha", FacesMessage.SEVERITY_ERROR);
             return;
         }
+        Double valorTarifa = validarTarifa(contratoActual.getTipoManual(),servicioFacade.find(Integer.parseInt(idServicioManual)));
         FilaDataTable nuevaFila = new FilaDataTable();
         nuevaFila.setColumna1(String.valueOf(listaServiciosFactura.size() + 1));
         nuevaFila.setColumna2(formateadorFecha.format(fechaServicio));
@@ -1819,7 +1825,7 @@ public class FacturarPacienteMB extends MetodosGenerales implements Serializable
         nuevaFila.setColumna4(tipoTarifaServicio);
         nuevaFila.setColumna5(String.valueOf(valorUnitarioServicio));
         nuevaFila.setColumna6(String.valueOf(cantidadServicio));
-        nuevaFila.setColumna7(String.valueOf(valorFinalServicio));
+        nuevaFila.setColumna7(String.valueOf(valorFinalServicio+Math.round(valorTarifa)));
         nuevaFila.setColumna8(usuariosFacade.find(Integer.parseInt(idPrestadorServicio)).nombreCompleto());
         nuevaFila.setColumna9(diagnosticoPrincipal);
         nuevaFila.setColumna10(diagnosticoRelacionado);
@@ -1831,6 +1837,7 @@ public class FacturarPacienteMB extends MetodosGenerales implements Serializable
         renumerarIdLista(listaServiciosFactura);
         listaServiciosFacturaFiltro = new ArrayList<>();
         listaServiciosFacturaFiltro.addAll(listaServiciosFactura);
+        
         recalcularValorFactura();
         tituloTabServiciosFactura = "Servicios (" + listaServiciosFactura.size() + ")";
         if (!cargandoDesdeTab) {
@@ -1840,6 +1847,36 @@ public class FacturarPacienteMB extends MetodosGenerales implements Serializable
         }
     }
 
+    private Double validarTarifa(Integer tarifa,FacServicio servicio){
+        Double valorTarifa =0d;
+        FacUnidadValor unidadValor =null;
+        if(tarifa!=null){
+            switch(tarifa){
+                case 2://ISS
+                    //obtenemos el factor unidad por año
+                    unidadValor =unidadValorFacade.buscarPorAnio(contratoActual.getAnnioManual());
+                    valorTarifa = unidadValor.getSmlvd()*servicio.getFactorIss();
+                    if(contratoActual.getPorcentaje()>0){
+                        Double valorPorcentaje = valorTarifa * (contratoActual.getPorcentaje()/100);
+                        if(contratoActual.getSignoPorcentaje().equals("+")){
+                                valorTarifa=valorTarifa+valorPorcentaje;
+                        }else{
+                            valorTarifa=valorTarifa-valorPorcentaje;
+                        }
+                    }
+                break;
+                case 3://SOAT
+                    //obtenemos el factor unidad por año
+                    unidadValor =unidadValorFacade.buscarPorAnio(contratoActual.getAnnioManual());
+                    valorTarifa = unidadValor.getSmlvd()*servicio.getFactorSoat();
+                break;
+                default://Valor especifico
+                break;
+            }
+        }
+        return valorTarifa;
+    }
+    
     public void agregarServiciosDesdeConsumos() {//agregar desde el dialogo de consumos
         if (serviciosConsumoSeleccionados == null || serviciosConsumoSeleccionados.isEmpty()) {
             imprimirMensaje("Error", "Ne se ha seleccionado ningún servicio", FacesMessage.SEVERITY_ERROR);

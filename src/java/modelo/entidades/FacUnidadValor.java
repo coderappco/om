@@ -41,6 +41,9 @@ public class FacUnidadValor implements Serializable {
     private Double smlvd;
     @Column(name = "uvr", precision = 17, scale = 17)
     private Double uvr;
+    @Column(name = "smlvm", precision = 17, scale = 17)
+    private Double smlvm;
+    
     @OneToMany(mappedBy = "anioUnidadValor")
     private List<FacManualTarifarioServicio> facManualTarifarioServicioList;
 
@@ -73,6 +76,14 @@ public class FacUnidadValor implements Serializable {
 
     public void setUvr(Double uvr) {
         this.uvr = uvr;
+    }
+
+    public Double getSmlvm() {
+        return smlvm;
+    }
+
+    public void setSmlvm(Double smlvdm) {
+        this.smlvm = smlvdm;
     }
 
     @XmlTransient

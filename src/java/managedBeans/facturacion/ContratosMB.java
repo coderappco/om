@@ -8,6 +8,7 @@ package managedBeans.facturacion;
 import beans.utilidades.MetodosGenerales;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -88,7 +89,8 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
 
     private boolean cargandoDesdeTab = false;
     private List<SelectItem> listaTipoFacturacion = new ArrayList<>();
-
+    private List<SelectItem> listaAnios;
+    
     private String codigo = "";
     private String descripcionContrato = "";
     private String administradora = "";
@@ -137,7 +139,12 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
     private String idManualTarifario = "";
     private boolean iva = false;
     private boolean cree = false;
-
+    private Double porcentaje;
+    private String signoPorcentaje;
+    private int tipoManual;
+    private int annioManual;
+    private final Date fechaActual = new Date();
+    private String anio = "0";
     //---------------------------------------------------
     //------------- FUNCIONES INICIALES  ----------------
     //---------------------------------------------------      
@@ -151,6 +158,12 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
     }
 
     public ContratosMB() {
+        anio = String.valueOf(fechaActual.getYear() + 1900);
+        listaAnios = new ArrayList<>();
+        int a = Integer.parseInt(anio) + 2;//aumenar doa años mas al actual
+        for (int i = a; i > a - 5; i--) {
+            listaAnios.add(new SelectItem(String.valueOf(i), String.valueOf(i)));
+        }
     }
 
     //---------------------------------------------------
@@ -167,6 +180,10 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
         idContratoACopiar = "";
         listaContratos = contratoFacade.buscarOrdenado();
         listaManuales = manualTarifarioFacade.buscarNoAsociados();
+        porcentaje=0d;
+        signoPorcentaje="0";
+        tipoManual=0;
+        annioManual = Calendar.getInstance().get(Calendar.YEAR);
         if (listaManuales == null) {//agregar manual 
             listaManuales = new ArrayList<>();
         }
@@ -327,7 +344,11 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
 
         iva = contratoSeleccionado.getAplicarIva();
         cree = contratoSeleccionado.getAplicarCree();
-
+        porcentaje = contratoSeleccionado.getPorcentaje();
+        signoPorcentaje = contratoSeleccionado.getSignoPorcentaje();
+        
+        annioManual = contratoSeleccionado.getAnnioManual()!=null?contratoSeleccionado.getAnnioManual():0;
+        tipoManual = contratoSeleccionado.getTipoManual()!=null?contratoSeleccionado.getTipoManual():0;
         tituloTabContratos = "Datos Contrato: " + descripcionContrato;
         //listaProgramas = contratoSeleccionado.getFacProgramaList();
         //tituloTabProgramas = "Programas (" + listaProgramas.size() + ")";
@@ -477,7 +498,10 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
 
         nuevoContrato.setAplicarIva(iva);
         nuevoContrato.setAplicarCree(cree);
-
+        nuevoContrato.setPorcentaje(porcentaje);
+        nuevoContrato.setSignoPorcentaje(signoPorcentaje);
+        nuevoContrato.setTipoManual(tipoManual);
+        nuevoContrato.setAnnioManual(annioManual);
         contratoFacade.create(nuevoContrato);
         limpiarFormularioContratos();
         listaContratos = contratoFacade.buscarOrdenado();
@@ -558,7 +582,10 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
 
         contratoSeleccionado.setAplicarIva(iva);
         contratoSeleccionado.setAplicarCree(cree);
-
+        contratoSeleccionado.setPorcentaje(porcentaje);
+        contratoSeleccionado.setSignoPorcentaje(signoPorcentaje);
+        contratoSeleccionado.setTipoManual(tipoManual);
+        contratoSeleccionado.setAnnioManual(annioManual);
         contratoFacade.edit(contratoSeleccionado);
         limpiarFormularioContratos();
         listaContratos = contratoFacade.buscarOrdenado();
@@ -942,6 +969,22 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
         this.cuentaConceptoDescuento = cuentaConceptoDescuento;
     }
 
+    public Double getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(Double porcentaje) {
+        this.porcentaje = porcentaje;
+    }
+
+    public String getSignoPorcentaje() {
+        return signoPorcentaje;
+    }
+
+    public void setSignoPorcentaje(String signoPorcentaje) {
+        this.signoPorcentaje = signoPorcentaje;
+    }
+
     public FacContrato getContratoSeleccionadoTabla() {
         return contratoSeleccionadoTabla;
     }
@@ -1242,6 +1285,38 @@ public class ContratosMB extends MetodosGenerales implements Serializable {
 
     public void setListaContratosCopia(List<FacContrato> listaContratosCopia) {
         this.listaContratosCopia = listaContratosCopia;
+    }
+
+    public List<SelectItem> getListaAnios() {
+        return listaAnios;
+    }
+
+    public void setListaAnios(List<SelectItem> listaAnios) {
+        this.listaAnios = listaAnios;
+    }
+
+    public int getTipoManual() {
+        return tipoManual;
+    }
+
+    public void setTipoManual(int tipoManual) {
+        this.tipoManual = tipoManual;
+    }
+
+    public int getAnnioManual() {
+        return annioManual;
+    }
+
+    public void setAnnioManual(int annioManual) {
+        this.annioManual = annioManual;
+    }
+
+    public String getAnio() {
+        return anio;
+    }
+
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
 
 }

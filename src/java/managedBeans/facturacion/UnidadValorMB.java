@@ -44,6 +44,7 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
     private String tituloTabUnidadValor = "Nueva unidad de valor";
     private String anio = "0";
     private double smlv = 0;
+    private double smlvm = 0;
     private double uvr = 0;
     private final Date fechaActual = new Date();
     private List<SelectItem> listaAnios;
@@ -70,6 +71,7 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
         anio = String.valueOf(fechaActual.getYear() + 1900);
         uvr = 0;
         smlv = 0;
+        smlvm=0;
     }
 
     public void buscarUnidadValor() {
@@ -86,6 +88,7 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
         unidadValorSeleccionada = unidadValorFacade.find(unidadValorSeleccionadaTabla.getAnio());
         anio = unidadValorSeleccionada.getAnio().toString();
         smlv = unidadValorSeleccionada.getSmlvd();
+        smlvm = unidadValorSeleccionada.getSmlvm();
         uvr = unidadValorSeleccionada.getUvr();
         tituloTabUnidadValor = "Datos Unidad de valor: " + anio;
         RequestContext.getCurrentInstance().execute("PF('dialogoBuscarUnidadValor').hide();");
@@ -131,6 +134,7 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
         nuevaUnidadValor.setAnio(Integer.parseInt(anio));
         nuevaUnidadValor.setUvr(uvr);
         nuevaUnidadValor.setSmlvd(smlv);
+        nuevaUnidadValor.setSmlvm(smlvm);
         unidadValorFacade.create(nuevaUnidadValor);
         limpiarFormularioUnidadValor();
         RequestContext.getCurrentInstance().update("IdFormUnidadValor");
@@ -141,6 +145,7 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
         unidadValorSeleccionada.setAnio(Integer.parseInt(anio));
         unidadValorSeleccionada.setSmlvd(smlv);
         unidadValorSeleccionada.setUvr(uvr);
+        unidadValorSeleccionada.setSmlvm(smlvm);
         unidadValorFacade.edit(unidadValorSeleccionada);
         limpiarFormularioUnidadValor();
         RequestContext.getCurrentInstance().update("IdFormUnidadValor");
@@ -206,6 +211,14 @@ public class UnidadValorMB extends MetodosGenerales implements Serializable {
 
     public void setUvr(double uvr) {
         this.uvr = uvr;
+    }
+
+    public double getSmlvm() {
+        return smlvm;
+    }
+
+    public void setSmlvm(double smlvm) {
+        this.smlvm = smlvm;
     }
 
     public FacUnidadValor getUnidadValorSeleccionadaTabla() {

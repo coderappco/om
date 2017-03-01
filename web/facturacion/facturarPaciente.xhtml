@@ -393,20 +393,24 @@
                         <td style="text-align: left;">
                             <p:outputLabel styleClass="campoNoObligatorio" value="VLR PARCIAL " />
                             <p:outputLabel styleClass="labelFormulario"    value="#{facturarPacienteMB.valorParcial}"  />                                 
-                            <p:outputLabel styleClass="campoNoObligatorio" value="IVA " />
-                            <p:outputLabel id="IdIva" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorIvaStr}" style="#{facturarPacienteMB.estiloIva}"/>                            
+                            <p:outputLabel styleClass="campoNoObligatorio" value="IVA " rendered="false"/>
+                            <p:outputLabel id="IdIva" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorIvaStr}" style="#{facturarPacienteMB.estiloIva}" rendered="false"/>                            
                             <p:tooltip for="IdIva" value="#{facturarPacienteMB.msjHtmlIva}" escape="false"/>
-                            <p:outputLabel styleClass="campoNoObligatorio" value="CREE" />
-                            <p:outputLabel id="IdCree" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorCreeStr}"  style="#{facturarPacienteMB.estiloCree}"/>                            
+                            <p:outputLabel styleClass="campoNoObligatorio" value="CREE" rendered="false"/>
+                            <p:outputLabel id="IdCree" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorCreeStr}"  style="#{facturarPacienteMB.estiloCree}" rendered="false"/>                            
                             <p:tooltip for="IdCree" value="#{facturarPacienteMB.msjHtmlCree}" escape="false"/>                            
+
+                            <!-- p:commandButton actionListener="# {facturarPacienteMB.mostrarValoresPrueba}" value="mostrar valores prueba"/ -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">
                             <p:outputLabel  styleClass="campoNoObligatorio" value="COPAGO" />
                             <p:outputLabel id="IdCopago" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorCopago}"/>                            
                             <p:tooltip for="IdCopago" value="#{facturarPacienteMB.msjHtmlCopago}" escape="false"/>
                             <p:outputLabel  styleClass="campoNoObligatorio" value="CUOTA MOD." />
                             <p:outputLabel id="IdCuota" styleClass="labelFormulario"    value="#{facturarPacienteMB.valorCuotaModeradora}"/>
                             <p:tooltip for="IdCuota" value="#{facturarPacienteMB.msjHtmlCuotaModeradora}" escape="false"/>
-
-                            <!-- p:commandButton actionListener="# {facturarPacienteMB.mostrarValoresPrueba}" value="mostrar valores prueba"/ -->
                         </td>
                     </tr>
                     <tr>
@@ -415,6 +419,11 @@
                             <p:outputLabel styleClass="labelFormulario"    value="#{facturarPacienteMB.valorEmpresa}"/>
                             <p:outputLabel styleClass="campoNoObligatorio" value="VLR USUARIO" />
                             <p:outputLabel styleClass="labelFormulario"    value="#{facturarPacienteMB.valorUsuario}"/>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">
                             <p:outputLabel styleClass="campoNoObligatorio" value="VLR FACTURA" />
                             <p:outputLabel styleClass="labelFormulario"    value="#{facturarPacienteMB.valorTotal}"/>
                         </td>

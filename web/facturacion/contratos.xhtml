@@ -254,6 +254,43 @@
                             <td>&nbsp;</td>
                         </tr>       
                     </table>
+                    <table style="margin-left:12%;">
+                        <tr>
+                            <td>
+                                <p:outputLabel styleClass="campoNoObligatorio" value="Tipo Tarifa"/> 
+                                <p:selectOneMenu value="#{contratosMB.tipoManual}">
+                                    <f:selectItem itemValue="0" itemLabel="-- Seleccione Tipo --"/>
+                                    <f:selectItem itemValue="1" itemLabel="Específica" />
+                                    <f:selectItem itemValue="2" itemLabel="ISS" />
+                                    <f:selectItem itemValue="3" itemLabel="SOAT" />
+                                </p:selectOneMenu>
+                            </td>
+                            <td>
+                            <p:outputLabel styleClass="campoNoObligatorio" value="Año"/>
+                            <p:selectOneMenu styleClass="campoFormulario" style="width: 140px;" value="#{contratosMB.annioManual}">                            
+                                <f:selectItems value="#{contratosMB.listaAnios}"/>
+                            </p:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin-left:12%;">
+                        <tr>
+                            <td>
+                                <p:outputLabel styleClass="campoNoObligatorio" value="Porcentaje"/>                                        
+                                <pe:inputNumber decimalSeparator="," styleClass="campoFormulario" value="#{contratosMB.porcentaje}"/>
+                            </td>
+                            <td>
+                                <p:outputLabel styleClass="campoNoObligatorio" value="Signo Porcentaje"/> 
+                                <p:selectOneMenu value="#{contratosMB.signoPorcentaje}">
+                                    <f:selectItem itemValue="0" itemLabel="-- Seleccione Signo --"/>
+                                    <f:selectItem itemValue="+" itemLabel=" + " />
+                                    <f:selectItem itemValue="-" itemLabel=" - " />
+                                </p:selectOneMenu>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
                     <br/><br/>                    
                 </p:tab>
             </p:tabView>

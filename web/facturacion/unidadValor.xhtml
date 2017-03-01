@@ -51,6 +51,8 @@
                         <p:selectOneMenu styleClass="campoFormulario" style="width: 140px;" value="#{unidadValorMB.anio}" disabled="#{unidadValorMB.unidadValorSeleccionada != null}">                            
                             <f:selectItems value="#{unidadValorMB.listaAnios}"/>
                         </p:selectOneMenu>
+                        <p:outputLabel styleClass="campoObligatorio" value="SMLVM"/>
+                        <pe:inputNumber decimalSeparator="," decimalPlaces="2" minValue="0"  value="#{unidadValorMB.smlvm}"/>                        
                         <p:outputLabel styleClass="campoObligatorio" value="SMLVD"/>
                         <pe:inputNumber decimalSeparator="," decimalPlaces="2" minValue="0"  value="#{unidadValorMB.smlv}"/>                        
                         <p:outputLabel styleClass="campoObligatorio" value="UVR"/>
@@ -86,8 +88,10 @@
                                 <p:column headerText="AÑO" width="1" filterBy="#{unidadValor.anio}" filterMatchMode="contains">
                                     #{unidadValor.anio}
                                 </p:column>                               
-
-                                <p:column headerText="SMLV" width="20" filterBy="#{unidadValor.anio}" filterMatchMode="contains">
+                                <p:column headerText="SMLVM" width="20" filterBy="#{unidadValor.smlvm}" filterMatchMode="contains">
+                                    #{unidadValor.smlvm}
+                                </p:column>                                
+                                <p:column headerText="SMLVD" width="20" filterBy="#{unidadValor.smlvd}" filterMatchMode="contains">
                                     #{unidadValor.smlvd}
                                 </p:column>                                
                                 <p:column headerText="UVR" width="20" filterBy="#{unidadValor.uvr}" filterMatchMode="contains">
