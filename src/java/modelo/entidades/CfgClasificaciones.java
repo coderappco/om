@@ -8,6 +8,7 @@ package modelo.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +37,19 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CfgClasificaciones.findByDescripcion", query = "SELECT c FROM CfgClasificaciones c WHERE c.descripcion = :descripcion"),
     @NamedQuery(name = "CfgClasificaciones.findByObservacion", query = "SELECT c FROM CfgClasificaciones c WHERE c.observacion = :observacion")})
 public class CfgClasificaciones implements Serializable {
+
+    @OneToMany(mappedBy = "idViaAdministracion")
+    private List<InvProductos> invProductosList;
+    @OneToMany(mappedBy = "idPresentacion")
+    private List<InvProductos> invProductosList1;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
+    private List<InvProveedores> invProveedoresList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMunicipio")
+    private List<InvProveedores> invProveedoresList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDocumento")
+    private List<InvProveedores> invProveedoresList2;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -763,5 +777,50 @@ public class CfgClasificaciones implements Serializable {
     public String toString() {
         return "modelo.entidades.CfgClasificaciones[ id=" + id + " ]";
     }
-    
+
+    @XmlTransient
+    public List<InvProveedores> getInvProveedoresList() {
+        return invProveedoresList;
+    }
+
+    public void setInvProveedoresList(List<InvProveedores> invProveedoresList) {
+        this.invProveedoresList = invProveedoresList;
+    }
+
+    @XmlTransient
+    public List<InvProveedores> getInvProveedoresList1() {
+        return invProveedoresList1;
+    }
+
+    public void setInvProveedoresList1(List<InvProveedores> invProveedoresList1) {
+        this.invProveedoresList1 = invProveedoresList1;
+    }
+
+    @XmlTransient
+    public List<InvProveedores> getInvProveedoresList2() {
+        return invProveedoresList2;
+    }
+
+    public void setInvProveedoresList2(List<InvProveedores> invProveedoresList2) {
+        this.invProveedoresList2 = invProveedoresList2;
+    }
+
+    @XmlTransient
+    public List<InvProductos> getInvProductosList() {
+        return invProductosList;
+    }
+
+    public void setInvProductosList(List<InvProductos> invProductosList) {
+        this.invProductosList = invProductosList;
+    }
+
+    @XmlTransient
+    public List<InvProductos> getInvProductosList1() {
+        return invProductosList1;
+    }
+
+    public void setInvProductosList1(List<InvProductos> invProductosList1) {
+        this.invProductosList1 = invProductosList1;
+    }
+
 }

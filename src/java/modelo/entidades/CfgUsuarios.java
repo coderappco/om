@@ -61,6 +61,22 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CfgUsuarios.findByVisible", query = "SELECT c FROM CfgUsuarios c WHERE c.visible = :visible"),
     @NamedQuery(name = "CfgUsuarios.findByMostrarEnHistorias", query = "SELECT c FROM CfgUsuarios c WHERE c.mostrarEnHistorias = :mostrarEnHistorias")})
 public class CfgUsuarios implements Serializable {
+
+    @OneToMany(mappedBy = "idUsuarioCrea")
+    private List<InvMovimientos> invMovimientosList1;
+    @OneToMany(mappedBy = "usuarioAprueba")
+    private List<InvMovimientos> invMovimientosList;
+
+    @OneToMany(mappedBy = "usuarioActualiza")
+    private List<InvOrdenCompra> invOrdenCompraList;
+    @OneToMany(mappedBy = "usuarioCrea")
+    private List<InvOrdenCompra> invOrdenCompraList1;
+
+    @OneToMany(mappedBy = "usuarioCrea")
+    private List<InvLotes> invLotesList;
+
+    @OneToMany(mappedBy = "responsable")
+    private List<InvBodegas> invBodegasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -599,6 +615,60 @@ public class CfgUsuarios implements Serializable {
     @Override
     public String toString() {
         return "modelo.entidades.CfgUsuarios[ idUsuario=" + idUsuario + " ]";
+    }
+
+    @XmlTransient
+    public List<InvBodegas> getInvBodegasList() {
+        return invBodegasList;
+    }
+
+    public void setInvBodegasList(List<InvBodegas> invBodegasList) {
+        this.invBodegasList = invBodegasList;
+    }
+
+    @XmlTransient
+    public List<InvLotes> getInvLotesList() {
+        return invLotesList;
+    }
+
+    public void setInvLotesList(List<InvLotes> invLotesList) {
+        this.invLotesList = invLotesList;
+    }
+
+    @XmlTransient
+    public List<InvOrdenCompra> getInvOrdenCompraList() {
+        return invOrdenCompraList;
+    }
+
+    public void setInvOrdenCompraList(List<InvOrdenCompra> invOrdenCompraList) {
+        this.invOrdenCompraList = invOrdenCompraList;
+    }
+
+    @XmlTransient
+    public List<InvOrdenCompra> getInvOrdenCompraList1() {
+        return invOrdenCompraList1;
+    }
+
+    public void setInvOrdenCompraList1(List<InvOrdenCompra> invOrdenCompraList1) {
+        this.invOrdenCompraList1 = invOrdenCompraList1;
+    }
+
+    @XmlTransient
+    public List<InvMovimientos> getInvMovimientosList() {
+        return invMovimientosList;
+    }
+
+    public void setInvMovimientosList(List<InvMovimientos> invMovimientosList) {
+        this.invMovimientosList = invMovimientosList;
+    }
+
+    @XmlTransient
+    public List<InvMovimientos> getInvMovimientosList1() {
+        return invMovimientosList1;
+    }
+
+    public void setInvMovimientosList1(List<InvMovimientos> invMovimientosList1) {
+        this.invMovimientosList1 = invMovimientosList1;
     }
     
 }

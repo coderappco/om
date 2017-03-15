@@ -6,6 +6,7 @@
 package modelo.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +44,19 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "CfgEmpresa.findByCodigoEmpresa", query = "SELECT c FROM CfgEmpresa c WHERE c.codigoEmpresa = :codigoEmpresa"),
     @NamedQuery(name = "CfgEmpresa.findByRegimen", query = "SELECT c FROM CfgEmpresa c WHERE c.regimen = :regimen")})
 public class CfgEmpresa implements Serializable {
+
+    
+    @OneToMany(mappedBy = "idEmpresa")
+    private List<InvMovimientos> invMovimientoList;
+    
+    @OneToMany(mappedBy = "idEmpresa")
+    private List<InvOrdenCompra> invOrdenCompraList;
+
+    @Size(max = 2147483647)
+    @Column(name = "razon_rip")
+    private String razonRip;
+    @OneToMany(mappedBy = "idEmpresa")
+    private List<InvBodegas> invBodegasList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -269,6 +286,41 @@ public class CfgEmpresa implements Serializable {
     @Override
     public String toString() {
         return "modelo.entidades.CfgEmpresa[ codEmpresa=" + codEmpresa + " ]";
+    }
+
+    public String getRazonRip() {
+        return razonRip;
+    }
+
+    public void setRazonRip(String razonRip) {
+        this.razonRip = razonRip;
+    }
+
+    @XmlTransient
+    public List<InvBodegas> getInvBodegasList() {
+        return invBodegasList;
+    }
+
+    public void setInvBodegasList(List<InvBodegas> invBodegasList) {
+        this.invBodegasList = invBodegasList;
+    }
+
+    @XmlTransient
+    public List<InvOrdenCompra> getInvOrdenCompraList() {
+        return invOrdenCompraList;
+    }
+
+    public void setInvOrdenCompraList(List<InvOrdenCompra> invOrdenCompraList) {
+        this.invOrdenCompraList = invOrdenCompraList;
+    }
+
+    @XmlTransient   
+    public List<InvMovimientos> getInvMovimientoList() {
+        return invMovimientoList;
+    }
+
+    public void setInvMovimientoList(List<InvMovimientos> invMovimientoList) {
+        this.invMovimientoList = invMovimientoList;
     }
 
 }

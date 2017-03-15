@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CfgSede.findByTelefono1", query = "SELECT c FROM CfgSede c WHERE c.telefono1 = :telefono1"),
     @NamedQuery(name = "CfgSede.findByTelefono2", query = "SELECT c FROM CfgSede c WHERE c.telefono2 = :telefono2")})
 public class CfgSede implements Serializable {
+
+    @OneToMany(mappedBy = "idSede")
+    private List<InvBodegas> invBodegasList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -188,6 +191,15 @@ public class CfgSede implements Serializable {
     @Override
     public String toString() {
         return "modelo.entidades.CfgSede[ idSede=" + idSede + " ]";
+    }
+
+    @XmlTransient
+    public List<InvBodegas> getInvBodegasList() {
+        return invBodegasList;
+    }
+
+    public void setInvBodegasList(List<InvBodegas> invBodegasList) {
+        this.invBodegasList = invBodegasList;
     }
     
 }
